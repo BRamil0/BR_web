@@ -1,5 +1,4 @@
 import asyncio
-import os
 
 import uvicorn
 import fastapi
@@ -33,14 +32,15 @@ async def start() -> None:
         allow_headers=["*"],
     )
 
-#    app.mount("/static", StaticFiles(directory="src/static"), name="static")
+    app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
     import_routers(app)
 
     config = uvicorn.Config(app=app,
                             host=settings.HOST,
                             port=settings.PORT,
-                            loop="asyncio")
+                            loop="asyncio",
+                            reload=True,)
     server = uvicorn.Server(config=config)
     await asyncio.gather(server.serve())
 
