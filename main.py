@@ -39,8 +39,7 @@ async def start() -> None:
     config = uvicorn.Config(app=app,
                             host=settings.HOST,
                             port=settings.PORT,
-                            loop="asyncio",
-                            reload=True,)
+                            loop="asyncio",)
     server = uvicorn.Server(config=config)
     await asyncio.gather(server.serve())
 

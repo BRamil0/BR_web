@@ -36,15 +36,9 @@ def start() -> None:
 
     import_routers(app)
 
-    config = uvicorn.Config(app=app,
-                            host=settings.HOST,
-                            port=settings.PORT,
-                            reload=True,
-                            log_level="info",)
-    server = uvicorn.Server(config=config)
-
-    asyncio.run(server.serve())
-
+    uvicorn.run(app=app,
+                host=settings.HOST,
+                port=settings.PORT,)
 
 if "__main__" == __name__:
     try:
