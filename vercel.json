@@ -11,7 +11,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "python main_synchronous.py"
+            "dest": "app.py"
         }
     ],
     "installCommand": "pip install -r requirements.txt"
