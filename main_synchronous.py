@@ -1,8 +1,5 @@
-import asyncio
-
 import uvicorn
 import fastapi
-from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from src.config.config import settings
 
