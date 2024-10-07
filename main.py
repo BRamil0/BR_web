@@ -32,8 +32,8 @@ async def start() -> None:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    print(os.path.join(os.path.dirname(__file__), "src/static/"))
-    app.mount("/static", StaticFiles(directory="src/static"), name="static")
+
+#    app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
     import_routers(app)
 
