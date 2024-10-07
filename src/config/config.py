@@ -2,7 +2,7 @@ import pydantic_settings
 
 
 class Settings(pydantic_settings.BaseSettings):
-    HOST: str = "0.0.0.0"
+    HOST: str = "localhost"
     PORT: int = 8080
     DEBUG: bool = False
 
