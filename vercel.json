@@ -3,7 +3,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "python main_synchronous.py",
+            "src": "app.py",
             "use": "@vercel/python",
             "config": { "runtime": "python3.12" }
         }
