@@ -1,6 +1,6 @@
 import fastapi
 from fastapi.staticfiles import StaticFiles
-from src.app.fastapi import main_router
+from src.app.fastapi import base
 
 
 def import_routers(app: fastapi.FastAPI) -> None:
@@ -9,7 +9,7 @@ def import_routers(app: fastapi.FastAPI) -> None:
     :param app: fastapi.FastAPI
     :return: None
     """
-    app.include_router(main_router.router)
+    app.include_router(base.router)
 
 
 app = fastapi.FastAPI()
