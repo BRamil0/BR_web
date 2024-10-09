@@ -9,7 +9,7 @@ async def get_index():
     with open("src/static/index.html", "r", encoding="utf-8") as f:
         return HTMLResponse(f.read())
 
-@router.get("/index.html", response_class=HTMLResponse)
+@router.get("/index", response_class=HTMLResponse)
 async def get_index():
     with open("src/static/index.html", "r", encoding="utf-8") as f:
         return HTMLResponse(f.read())

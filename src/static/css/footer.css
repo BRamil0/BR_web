@@ -1,0 +1,39 @@
+.footer {
+    position: relative;
+    margin: 5px;
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 10;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.footer-left {
+    flex: 1;
+    text-align: left;
+    vertical-align: center;
+}
+
+.footer-center {
+    flex: 1;
+    text-align: center;
+    vertical-align: center;
+}
+
+.footer-right {
+    flex: 1;
+    text-align: right;
+    vertical-align: center;
+}
+
+footer a {
+    color: var(--text-color);
+    text-decoration: none;
+}

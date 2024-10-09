@@ -1,0 +1,19 @@
+.main {
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    margin: calc(25px + 5px) auto;
+
+    width: auto;
+    min-height: 70vh;
+    min-width: 30px;
+    max-width: 75vw;
+}

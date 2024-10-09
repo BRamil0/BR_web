@@ -2,6 +2,9 @@
     --bg-color: #ffffff;
     --text-color: #000000;
 
+    --bg-color--alpha: 0.75;
+    --text-color--alpha: 0.75;
+
     --bg-color--rgb: 255, 255, 255;
     --text-color--rgb: 0, 0, 0;
 }
@@ -9,6 +12,9 @@
 [theme=dark] {
     --bg-color: #000000;
     --text-color: #ffffff;
+
+    --bg-color--alpha: 0.75;
+    --text-color--alpha: 0.75;
 
     --bg-color--rgb: 0, 0, 0;
     --text-color--rgb: 255, 255, 255;
