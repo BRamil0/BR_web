@@ -59,3 +59,14 @@ nav img {
     width: 25px;
     height: 18px;
 }
+
+#theme-toggle {
+    background: none; /* Без фону */
+    border: none; /* Без обводки */
+    color: var(--text-color); /* Колір тексту */
+    font-size: 18px; /* Розмір шрифту */
+    cursor: pointer; /* Залишає курсор для натискання */
+    padding: 0;
+    display: inline; /* Зберігає лише текст, без іконки чи кнопки */
+    visibility: visible; /* Текст залишаємо видимим */
+}

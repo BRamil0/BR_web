@@ -13,3 +13,15 @@ async def index(request: Request):
 @router.get("/index", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "title": "Головна"})
+
+@router.get("/terms_of_use", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("terms_of_use.html", {"request": request, "title": "Головна"})
+
+@router.get("/privacy_policy", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("privacy_policy.html", {"request": request, "title": "Головна"})
+
+@router.get("/cookie_policy", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("cookie_policy.html", {"request": request, "title": "Головна"})

@@ -1,4 +1,5 @@
 const toggleButton = document.getElementById('theme-toggle');
+const themeEmoji = document.getElementById('theme-emoji')
 const body = document.body;
 
 // Функція для отримання значення куків
@@ -14,10 +15,15 @@ function setCookie(name, value, days) {
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
 }
 
+function setThemeEmoji(value) {
+    value === "light" ? themeEmoji.textContent = "☀️" : themeEmoji.textContent = "🌒"
+}
+
 // Завантажуємо тему з куків при завантаженні сторінки
 window.onload = () => {
     const theme = getCookie('theme') || 'light';
     body.setAttribute('theme', theme);
+    setThemeEmoji(theme)
 };
 
 // Обробник подій для перемикання теми
@@ -27,6 +33,7 @@ toggleButton.addEventListener('click', () => {
     // Перемикаємо тему
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     body.setAttribute('theme', newTheme);
+    setThemeEmoji(newTheme)
 
     // Записуємо нову тему в куки
     setCookie('theme', newTheme, 7); // Кука зберігатиметься 7 днів
