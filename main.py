@@ -1,3 +1,5 @@
+"""the main application startup file"""
+
 import asyncio
 
 import uvicorn

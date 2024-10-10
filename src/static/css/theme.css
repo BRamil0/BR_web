@@ -2,6 +2,10 @@
     --bg-color: #ffffff;
     --text-color: #000000;
 
+    --text-color--cookie: #e3b300;
+    --bg-color--cookie: #e3b300;
+    --bg-color--cookie--btn: #e6b800;;
+
     --bg-color--alpha: 0.75;
     --text-color--alpha: 0.75;
 
@@ -12,6 +16,10 @@
 [theme=dark] {
     --bg-color: #000000;
     --text-color: #ffffff;
+
+    --text-color--cookie: #ffcc00;
+    --bg-color--cookie: #ffcc00;
+    --bg-color--cookie--btn: #e6b800;;
 
     --bg-color--alpha: 0.75;
     --text-color--alpha: 0.75;
