@@ -36,7 +36,7 @@ document.getElementById("accept-cookies").addEventListener("click", function() {
 });
 
 // Налаштування cookie (можна реалізувати більш детально)
-document.getElementById("cookie-settings").addEventListener("click", function() {
-    alert("Тут ви можете налаштувати cookie-файли.");
-});
+// document.getElementById("cookie-settings").addEventListener("click", function() {
+//     alert("Тут ви можете налаштувати cookie-файли.");
+// });
 // <button id="cookie-settings" class="cookie-btn">Налаштування cookie</button>

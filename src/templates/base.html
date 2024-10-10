@@ -19,14 +19,16 @@
     </div>
     <div class="nav-center">
         <ul>
-            <li><a href="/index">Головна</a></li>
-            <li><a href="/project">Мої проєкти</a></li>
-            <li><a href="/about">Про мене</a></li>
-            <li><a href="/contact">Контакти</a></li>
+            <li><a href="/index" data-translate="home">Головна</a></li>
+            <li><a href="/project" data-translate="projects">Мої проєкти</a></li>
+            <li><a href="/about" data-translate="about">Про мене</a></li>
+            <li><a href="/contact" data-translate="contact">Контакти</a></li>
         </ul>
     </div>
     <div class="nav-right">
         <button id="theme-toggle">Перемкнути Тему</button>
+        <button class="language-switcher" data-lang="ukr">Українська</button>
+        <button class="language-switcher" data-lang="eng">Англійська</button>
     </div>
 </nav>
 <main class="main">
@@ -57,6 +59,7 @@
     <button id="accept-cookies" class="cookie-btn">Прийняти всі cookie</button>
 </div>
 <script src="/static/js/theme_switcher.js"></script>
+<script src="/static/js/language_switcher.js"></script>
 <script src="/static/js/cookie_banner.js"></script>
 </body>
 </html>

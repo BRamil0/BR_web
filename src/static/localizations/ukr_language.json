@@ -1,5 +1,5 @@
 {
-  "info":{
+  "info": {
     "name": "Ukrainian",
     "original_name": "Українська",
     "code_2": "uk",
@@ -7,5 +7,8 @@
     "original_code": "укр",
     "emoji": "\uD83C\uDDFA\uD83C\uDDE6"
   },
-    "test": "ukr"
+  "home": "Головна",
+  "projects": "Мої проєкти",
+  "about": "Про мене",
+  "contact": "Контакти"
 }
