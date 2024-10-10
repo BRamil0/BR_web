@@ -3,3 +3,4 @@ starlette
 uvicorn
 pydantic
 pydantic_settings
+jinja2

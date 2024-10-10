@@ -1,0 +1,37 @@
+.cookie-banner {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 20;
+    display: none;
+}
+
+.cookie-banner a {
+    color: var(--text-color--cookie);
+    text-decoration: underline;
+}
+
+.cookie-btn {
+    background-color: var(--bg-color--cookie);
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.cookie-btn:hover {
+    background-color: var(--bg-color--cookie--btn);
+}
+
+.cookie-banner.show {
+    display: block;
+}
