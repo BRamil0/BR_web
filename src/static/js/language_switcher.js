@@ -1,17 +1,9 @@
-// Функція для отримання куки
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-// Функція для встановлення куки
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = `expires=${date.toUTCString()}`;
-    document.cookie = `${name}=${value}; ${expires}; path=/;SameSite=None;Secure`;
-}
+// Список мов (додайте свої мови тут)
+const languages = [
+    { code: 'ukr', name: 'Українська', emoji: '🇺🇦' },
+    { code: 'en', name: 'English', emoji: '🇬🇧' },
+    // Додайте інші мови за потреби
+];
 
 // Функція для завантаження мови
 async function loadLanguage(language) {
@@ -32,24 +24,47 @@ async function loadLanguage(language) {
     }
 }
 
+// Функція для ініціалізації меню мов
+function initLanguageMenu() {
+    const languageMenu = document.getElementById('language-menu');
+    languages.forEach(lang => {
+        const button = document.createElement('button');
+        button.textContent = `${lang.emoji} ${lang.name}`;
+        button.dataset.lang = lang.code;
+        button.addEventListener('click', () => {
+            switchLanguage(lang.code);
+            toggleLanguageMenu(); // закриваємо меню після вибору
+        });
+        languageMenu.appendChild(button);
+    });
+}
+
 // Функція для перемикання мови
 function switchLanguage(language) {
     setCookie('language_code', language, 7); // Зберігайте мову на 7 днів
     loadLanguage(language);
 }
 
+// Функція для показу/сховання меню
+function toggleLanguageMenu() {
+    const languageMenu = document.getElementById('language-menu');
+    languageMenu.style.display = languageMenu.style.display === 'block' ? 'none' : 'block';
+}
+
 // Вибір мови при завантаженні сторінки
 window.onload = () => {
     const language = getCookie('language_code') || 'ukr'; // За замовчуванням українська
     loadLanguage(language);
+    initLanguageMenu(); // Ініціалізація меню мов
 };
 
-// Додавання обробника для кнопок перемикання
-document.addEventListener('DOMContentLoaded', () => {
-    const languageButtons = document.querySelectorAll('.language-switcher');
-    languageButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            switchLanguage(button.dataset.lang);
-        });
-    });
+// Додавання обробника для кнопки перемикання меню
+document.getElementById('language-toggle').addEventListener('click', toggleLanguageMenu);
+
+// Додавання обробника для натискань поза меню
+window.addEventListener('click', (event) => {
+    const languageMenu = document.getElementById('language-menu');
+    if (!event.target.matches('#language-toggle') && !languageMenu.contains(event.target)) {
+        languageMenu.style.display = 'none'; // Закриваємо меню
+    }
 });

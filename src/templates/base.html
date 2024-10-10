@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="/static/css/main_style.css">
     <link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/cookie_banner.css">
+    <link rel="stylesheet" href="/static/css/language_switcher.css">
     <link rel="stylesheet" href="/static/css/theme.css">
 </head>
-<body theme="light" language_type="ukr">
+<body theme="light">
 <nav class="nav">
     <div class="nav-left">
         <img src="/static/image/favicon.ico" alt="Logo">
@@ -27,8 +28,12 @@
     </div>
     <div class="nav-right">
         <button id="theme-toggle">Перемкнути Тему</button>
-        <button class="language-switcher" data-lang="ukr">Українська</button>
-        <button class="language-switcher" data-lang="eng">Англійська</button>
+        <div class="language-dropdown">
+            <button id="language-toggle">Мова</button>
+            <div id="language-menu" class="language-menu">
+                <!-- Кнопки мов будуть додані тут -->
+            </div>
+        </div>
     </div>
 </nav>
 <main class="main">
