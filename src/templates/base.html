@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="/static/css/cookie_banner.css">
     <link rel="stylesheet" href="/static/css/language_switcher.css">
     <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/copy_text.css">
 </head>
 <body theme="light">
 <nav class="nav">
     <div class="nav-left">
-        <img src="/static/image/favicon.ico" alt="Logo">
+        <img src="/static/image/logo.png" alt="Logo">
         <text>Radomyr Web</text>
     </div>
     <div class="nav-center">
@@ -27,13 +28,15 @@
         </ul>
     </div>
     <div class="nav-right">
-        <button id="theme-toggle"><text id="theme-emoji">🔃</text></button>
+        <button id="language-menu" class="emoji-button"><text id="language-emoji">🇺🇦</text> <text id="language-name">Українська</text></button>
+        <button id="theme-toggle" class="emoji-button"><text id="theme-emoji">🔃</text></button>
     </div>
 </nav>
 <main class="main">
     {% block content %}
     {% endblock %}
 </main>
+<div id="copy-alert" class="copy-alert">Текст скопійовано!</div>
 <footer class="footer">
     <div class="footer-left">
         <text>Автор фотографії:</text> <a href="" id="author-photo-name">None</a>
@@ -60,5 +63,6 @@
 <script src="/static/js/theme_switcher.js"></script>
 <script src="/static/js/language_switcher.js"></script>
 <script src="/static/js/cookie_banner.js"></script>
+<script src="/static/js/copy_text.js"></script>
 </body>
 </html>

@@ -6,11 +6,15 @@
     --bg-color--cookie: #e3b300;
     --bg-color--cookie--btn: #e6b800;;
 
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
     --bg-color--alpha: 0.85;
     --text-color--alpha: 0.85;
 
     --bg-color--rgb: 255, 255, 255;
     --text-color--rgb: 0, 0, 0;
+
+    --invert: 0; /* if prefers-color-scheme: light */
 }
 
 [theme=dark] {
@@ -21,9 +25,13 @@
     --bg-color--cookie: #ffcc00;
     --bg-color--cookie--btn: #e6b800;;
 
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
     --bg-color--alpha: 0.75;
     --text-color--alpha: 0.75;
 
     --bg-color--rgb: 0, 0, 0;
     --text-color--rgb: 255, 255, 255;
+
+    --invert: 1; /* if prefers-color-scheme: dark */
 }

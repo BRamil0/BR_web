@@ -12,18 +12,46 @@
     position: relative;
     margin: calc(25px + 5px) auto;
 
-    width: auto;
-    min-height: 70vh;
-    min-width: 30px;
-    max-width: 75vw;
+    width: auto; /* Ширина автоматично підлаштовується */
+    height: auto; /* Висота автоматично підлаштовується */
+
+    min-height: 70vh; /* Мінімальна висота */
+    min-width: 30px; /* Мінімальна ширина */
+
+    max-width: 75vw; /* Максимальна ширина на основі розміру вікна */
+
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .terms_of_use {
     display: block;
 }
 
+.terms_of_use a {
+    color: var(--text-color);
+    border-radius: 3px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.terms_of_use a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
 .privacy_policy {
     display: block;
+}
+
+.privacy_policy a {
+    color: var(--text-color);
+    border-radius: 3px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.privacy_policy a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 
 .cookie_policy {
@@ -42,44 +70,62 @@
 }
 
 .contact-block {
-    display: block;
+    text-align: center;
+}
+
+.contact-container {
+    display: flex;
+    flex-wrap: wrap; /* Додає перенесення блоків на новий ряд, якщо вони не вміщаються */
+    justify-content: center; /* Вирівнювання блоків по центру */
+    gap: 20px; /* Відстань між блоками по горизонталі і вертикалі */
 }
 
 .contact-item {
-    margin: 1vw 1vb;
-    width: 300px; /* Ширина прямокутника */
-    height: auto; /* Автовисота, щоб підлаштуватися під контент */
-
-    display: flex; /* Вирівнювання в один рядок */
-    justify-content: space-between; /* Лого ліворуч, посилання праворуч */
-    align-items: center; /* Вирівнювання елементів по вертикалі */
+    box-shadow: var(--box-shadow);
+    margin: 0; /* Видалено вертикальні відступи, використовуйте gap замість цього */
+    display: flex;
+    align-items: center; /* Вирівнювання по вертикалі */
+    justify-content: center; /* Вирівнювання по горизонталі */
+    gap: 10px; /* Відстань між логотипом і текстом */
 
     color: var(--text-color);
-    background-color: var(--bg-color);
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     border-radius: 10px;
     padding: 10px;
+
+    width: fit-content; /* Розмір блоку відповідно до контенту */
+    max-width: 300px; /* Максимальна ширина блоку */
 }
 
 .contact-item img {
-    width: 40px; /* Розмір лого */
+    width: 40px;
     height: 40px;
-    border-radius: 50%; /* Заокруглення логотипу */
+    filter: invert(var(--invert));
 }
 
 .contact-item a {
     background-color: var(--bg-color);
-    color: var(--text-color); /* Колір тексту кнопки */
+    color: var(--text-color);
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Тінь для ефекту */
-    transition: background-color 0.3s ease;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .contact-item a:hover {
-    background-color: var(--text-color); /* Міняє колір при наведенні */
+    background-color: var(--text-color);
     color: var(--bg-color);
+}
+
+.contact-item text {
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
 }

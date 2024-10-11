@@ -13,6 +13,9 @@
     justify-content: space-between;
     align-items: center;
     color: var(--text-color);
+    box-shadow: var(--box-shadow);
+
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-left {
@@ -53,6 +56,13 @@ nav a {
     text-decoration: none;
     padding: 10px;
     border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+nav a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 
 nav img {
@@ -67,6 +77,14 @@ nav img {
     font-size: 18px;
     cursor: pointer;
     padding: 0;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
     display: inline;
     visibility: visible;
+}
+
+.emoji-button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
