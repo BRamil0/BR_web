@@ -17,3 +17,69 @@
     min-width: 30px;
     max-width: 75vw;
 }
+
+.terms_of_use {
+    display: block;
+}
+
+.privacy_policy {
+    display: block;
+}
+
+.cookie_policy {
+    display: block;
+}
+
+
+.centered-list {
+    list-style-type: none;
+    padding: 2px;
+    text-align: center;
+}
+
+.centered-list li {
+    margin: 5px 10px;
+}
+
+.contact-block {
+    display: block;
+}
+
+.contact-item {
+    margin: 1vw 1vb;
+    width: 300px; /* Ширина прямокутника */
+    height: auto; /* Автовисота, щоб підлаштуватися під контент */
+
+    display: flex; /* Вирівнювання в один рядок */
+    justify-content: space-between; /* Лого ліворуч, посилання праворуч */
+    align-items: center; /* Вирівнювання елементів по вертикалі */
+
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.contact-item img {
+    width: 40px; /* Розмір лого */
+    height: 40px;
+    border-radius: 50%; /* Заокруглення логотипу */
+}
+
+.contact-item a {
+    background-color: var(--bg-color);
+    color: var(--text-color); /* Колір тексту кнопки */
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Тінь для ефекту */
+    transition: background-color 0.3s ease;
+}
+
+.contact-item a:hover {
+    background-color: var(--text-color); /* Міняє колір при наведенні */
+    color: var(--bg-color);
+}

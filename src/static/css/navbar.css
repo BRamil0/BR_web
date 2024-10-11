@@ -56,17 +56,17 @@ nav a {
 }
 
 nav img {
-    width: 25px;
-    height: 18px;
+    width: 4vb;
+    height: 1vw;
 }
 
-#theme-toggle {
-    background: none; /* Без фону */
-    border: none; /* Без обводки */
-    color: var(--text-color); /* Колір тексту */
-    font-size: 18px; /* Розмір шрифту */
-    cursor: pointer; /* Залишає курсор для натискання */
+.emoji-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 18px;
+    cursor: pointer;
     padding: 0;
-    display: inline; /* Зберігає лише текст, без іконки чи кнопки */
-    visibility: visible; /* Текст залишаємо видимим */
+    display: inline;
+    visibility: visible;
 }

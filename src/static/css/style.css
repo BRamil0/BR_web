@@ -7,25 +7,3 @@ body {
     justify-content: center;
 }
 
-.terms_of_use {
-    display: block;
-}
-
-.privacy_policy {
-    display: block;
-}
-
-.cookie_policy {
-    display: block;
-}
-
-
-.centered-list {
-    list-style-type: none;
-    padding: 2px;
-    text-align: center;
-}
-
-.centered-list li {
-    margin: 5px 10px;
-}

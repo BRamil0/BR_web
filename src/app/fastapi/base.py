@@ -16,12 +16,17 @@ async def index(request: Request):
 
 @router.get("/terms_of_use", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse("terms_of_use.html", {"request": request, "title": "Головна"})
+    return templates.TemplateResponse("terms_of_use.html", {"request": request, "title": "Умови використання"})
 
 @router.get("/privacy_policy", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse("privacy_policy.html", {"request": request, "title": "Головна"})
+    return templates.TemplateResponse("privacy_policy.html", {"request": request, "title": "Політика конфіденційності"})
 
 @router.get("/cookie_policy", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse("cookie_policy.html", {"request": request, "title": "Головна"})
+    return templates.TemplateResponse("cookie_policy.html", {"request": request, "title": "Політика використання cookie"})
+
+
+@router.get("/contact", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("contact.html", {"request": request, "title": "Контакти"})
