@@ -23,8 +23,9 @@ app.mount("/static", StaticFiles(directory="src/static"), name="static")
 import_routers(app)
 
 
-@app.exception_handler(fastapi.HTTPException)
-async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException):
-    if exc.status_code == 404:
-        return templates.TemplateResponse("codes/code.html", {"request": request})
-    return await request.app.default_exception_handler(request, exc)
+@app.exception_handler(404)
+async def custom_404_handler(request, __):
+    return templates.TemplateResponse("code.html", {"request": request,
+                                                    "title": "code 404",
+                                                    "code": 404,
+                                                    "message": "page not found"})
