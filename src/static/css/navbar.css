@@ -70,21 +70,31 @@ nav img {
     height: 1vw;
 }
 
-.emoji-button {
+.lang-button, .emoji-button {
     background: none;
     border: none;
     color: var(--text-color);
     font-size: 18px;
     cursor: pointer;
     padding: 0;
-    border-radius: 10px;
+    border-radius: 8px;
     transition: background-color 0.3s ease, color 0.3s ease;
-
     display: inline;
     visibility: visible;
 }
 
-.emoji-button:hover {
+.lang-button:hover, .emoji-button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
+    transform: scale(1.2);
+}
+
+/* зменшуємо текст */
+.lang-button span, .emoji-button span {
+    display: inline-block;
+    transform: scale(0.83);
+}
+
+.lang-button:hover span, .emoji-button:hover span {
+    transform: scale(0.83); /* залишає текст того ж розміру при hover */
 }
