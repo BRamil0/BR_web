@@ -8,7 +8,10 @@ from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from src.config.config import settings
 
+from fastapi.templating import Jinja2Templates
+
 from src.app.fastapi import base
+
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -17,6 +20,24 @@ def import_routers(app: fastapi.FastAPI) -> None:
     :return: None
     """
     app.include_router(base.router)
+
+
+def init_codes(app: fastapi.FastAPI) -> None:
+    """
+    init codes
+    :param app: fastapi.FastAPI
+    :return: None
+    """
+
+    templates = Jinja2Templates(directory="src/templates")
+
+    @app.exception_handler(404)
+    async def custom_404_handler(request, __):
+        return templates.TemplateResponse("code.html", {"request": request,
+                                                        "title": "code 404",
+                                                        "code": 404,
+                                                        "message": "page not found"})
+
 
 async def start() -> None:
     """
@@ -37,6 +58,7 @@ async def start() -> None:
     app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
     import_routers(app)
+    init_codes(app)
 
     config = uvicorn.Config(app=app,
                             host=settings.HOST,
@@ -51,3 +73,5 @@ if "__main__" == __name__:
         asyncio.run(start())
     except KeyboardInterrupt:
         pass
+
+

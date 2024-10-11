@@ -26,6 +26,10 @@ async def index(request: Request):
 async def index(request: Request):
     return templates.TemplateResponse("cookie_policy.html", {"request": request, "title": "Політика використання cookie"})
 
+@router.get("/content_used", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("content_used.html", {"request": request, "title": "Використаний контент"})
+
 
 @router.get("/contact", response_class=HTMLResponse)
 async def index(request: Request):

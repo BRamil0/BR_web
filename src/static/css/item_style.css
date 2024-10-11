@@ -1,0 +1,60 @@
+.contact-block {
+    text-align: center;
+}
+
+.item-container {
+    display: flex;
+    flex-wrap: wrap; /* Додає перенесення блоків на новий ряд, якщо вони не вміщаються */
+    justify-content: center; /* Вирівнювання блоків по центру */
+    gap: 20px; /* Відстань між блоками по горизонталі і вертикалі */
+}
+
+.item-base {
+    box-shadow: var(--box-shadow);
+    margin: 0; /* Видалено вертикальні відступи, використовуйте gap замість цього */
+    display: flex;
+    align-items: center; /* Вирівнювання по вертикалі */
+    justify-content: center; /* Вирівнювання по горизонталі */
+    gap: 10px; /* Відстань між логотипом і текстом */
+
+    color: var(--text-color);
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    border-radius: 10px;
+    padding: 10px;
+
+    width: fit-content; /* Розмір блоку відповідно до контенту */
+    max-width: 300px; /* Максимальна ширина блоку */
+}
+
+.item-base img {
+    width: 40px;
+    height: 40px;
+    filter: invert(var(--invert));
+}
+
+.item-base a {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.item-base a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.item-base text {
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
