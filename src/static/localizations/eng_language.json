@@ -5,10 +5,30 @@
     "code_2": "en",
     "code_3": "eng",
     "original_code": "eng",
-    "emoji": "\uD83C\uDDEC\uD83C\uDDF7"
+    "emoji": "\uD83C\uDDEC\uD83C\uDDE7"
   },
-  "home": "Головна",
-  "projects": "Мої проєкти",
-  "about": "Про мене",
-  "contact": "Контакти"
+  "nav_home": "Home",
+  "nav_projects": "My Projects",
+  "nav_about": "About Me",
+  "nav_contact": "Contact",
+
+  "footer_author_photo": "Author of the Photo: ",
+  "footer_content_used": "Used Content",
+  "footer_rights_reserved": "All Rights Reserved",
+  "footer_home": "Home",
+  "footer_contact": "Contact",
+  "footer_email": "Send Email",
+  "footer_terms_of_use": "Terms of Use",
+  "footer_privacy_policy": "Privacy Policy",
+  "footer_cookie_policy": "Cookie Policy",
+
+  "cookie_text": "This site uses cookies to enhance your user experience. By continuing to use our site, you agree to the use of cookies in accordance with our",
+  "cookie_link": "Cookie Policy.",
+  "cookie_accept": "Accept All Cookies",
+
+  "copy_alert": "Text copied!",
+
+  "theme_light": "☀️ Light",
+  "theme_dark": "🌙 Dark",
+  "theme_system": "🖥️ System"
 }

@@ -7,3 +7,7 @@ body {
     justify-content: center;
 }
 
+.disabled {
+    pointer-events: none; /* Забороняє взаємодію з елементом */
+    opacity: 0.5; /* Зменшує непрозорість, щоб показати, що кнопка неактивна */
+}

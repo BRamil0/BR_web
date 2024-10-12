@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from starlette.responses import HTMLResponse
+from starlette.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 router = APIRouter()
@@ -9,10 +9,9 @@ templates = Jinja2Templates(directory="src/templates")
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "title": "Головна"})
 
-
-@router.get("/index", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "title": "Головна"})
+@router.get("/index")
+async def not_found():
+    return RedirectResponse(url="/")
 
 @router.get("/terms_of_use", response_class=HTMLResponse)
 async def index(request: Request):

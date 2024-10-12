@@ -1,0 +1,41 @@
+.language-menu {
+    position: absolute; /* Розташовуємо відносно батьківського елемента */
+    top: 55px; /* Відстань від кнопки */
+    right: 55px; /* Вирівнюємо по правій стороні біля кнопки */
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Відстань між елементами списку */
+}
+
+.language-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.language-menu button {
+    transform: scale(1);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: left;
+}
+
+.language-menu button:hover {
+    transform: scale(1);
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
