@@ -64,7 +64,9 @@ function loadLocalization(lang) {
 languageButton.addEventListener('click', () => {
     if (languageMenu.classList.contains('show')) {
         languageMenu.classList.remove('show');
-        delLanguageMenu();
+        setTimeout(() => {
+            delLanguageMenu();
+        }, 300);
     } else {
         setLanguageMenu();
         languageMenu.classList.add('show');
@@ -75,7 +77,9 @@ languageButton.addEventListener('click', () => {
 document.addEventListener('click', function(event) {
     if (!languageMenu.contains(event.target) && !languageButton.contains(event.target)) {
         languageMenu.classList.remove('show');
-        delLanguageMenu();
+        setTimeout(() => {
+            delLanguageMenu();
+        }, 300);
     }
 });
 
@@ -85,6 +89,8 @@ languageMenu.addEventListener('click', function(event) {
     if (selectedLang) {
         loadLocalization(selectedLang);
         languageMenu.classList.remove('show'); // Закриваємо меню після вибору мови
-        delLanguageMenu();
+        setTimeout(() => {
+            delLanguageMenu();
+        }, 300);
     }
 });

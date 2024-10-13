@@ -49,8 +49,10 @@ themeMenu.addEventListener('click', function(event) {
     const theme = event.target.getAttribute('data-theme');
     if (theme) {
         applyTheme(theme);
-        languageMenu.classList.remove('show'); // Закриваємо меню після вибору мови
-        delThemeMenu()
+        themeMenu.classList.remove('show');
+        setTimeout(() => {
+            delThemeMenu();
+        }, 300);
     }
 });
 
@@ -58,7 +60,9 @@ themeMenu.addEventListener('click', function(event) {
 toggleButtonMenu.addEventListener('click', () => {
     if (themeMenu.classList.contains('show')) {
         themeMenu.classList.remove('show');
-        delThemeMenu();
+        setTimeout(() => {
+            delThemeMenu();
+        }, 300);
     } else {
         setThemeMenu();
         themeMenu.classList.add('show');
@@ -70,6 +74,8 @@ document.addEventListener('click', function(event) {
     const themeMenu = document.getElementById('theme-menu');
     if (!themeMenu.contains(event.target) && !toggleButtonMenu.contains(event.target)) {
         themeMenu.classList.remove('show');
-        delThemeMenu();
+        setTimeout(() => {
+            delThemeMenu();
+        }, 300);
     }
 });

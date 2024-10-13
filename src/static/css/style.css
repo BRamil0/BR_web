@@ -14,19 +14,27 @@ body, html {
 }
 
 .loading-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  z-index: 9999; /* Забезпечує, що банер поверх всього */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--bg-color--rgb), 0.9); /* Напівпрозорий фон */
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    z-index: 9999; /* Щоб перекривати всі інші елементи */
+    visibility: visible; /* Видимий за замовчуванням */
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 
 .disabled {
     pointer-events: none; /* Забороняє взаємодію з елементом */

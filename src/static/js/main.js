@@ -3,13 +3,14 @@ const themeList = ["light", "dark", "system"];
 
 // Завантажуємо тему з куків при завантаженні сторінки
 window.onload = () => {
+    showLoadingBanner();
     updateBackground();
     const theme = getCookie('theme') || 'system';
     const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
     applyTheme(theme);
     loadLocalization(savedLanguage);
     setTimeout(() => {
-        document.getElementById('loading-banner').style.display = 'none'; // Прибираємо банер
+        hideLoadingBanner()
     }, 250);
 };
 
@@ -24,4 +25,16 @@ function getCookie(name) {
 function setCookie(name, value, days) {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
+}
+
+// Показуємо банер при завантаженні сторінки
+function showLoadingBanner() {
+    const loadingBanner = document.getElementById('loading-banner');
+    loadingBanner.classList.remove('hidden'); // Робимо банер видимим
+}
+
+// Приховуємо банер після завершення завантаження
+function hideLoadingBanner() {
+    const loadingBanner = document.getElementById('loading-banner');
+    loadingBanner.classList.add('hidden'); // Прибираємо банер після завантаження
 }
