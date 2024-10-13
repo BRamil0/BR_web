@@ -67,7 +67,7 @@ toggleButtonMenu.addEventListener('click', () => {
         setThemeMenu();
         setTimeout(() => {
             themeMenu.classList.add('show');
-        }, 100);
+        }, 10);
     }
 });
 
