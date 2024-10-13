@@ -1,7 +1,7 @@
 .language-menu {
     position: absolute; /* Розташовуємо відносно батьківського елемента */
     top: 55px; /* Відстань від кнопки */
-    right: 55px; /* Вирівнюємо по правій стороні біля кнопки */
+    right: 35px; /* Вирівнюємо по правій стороні біля кнопки */
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     color: var(--text-color);
     padding: 10px;

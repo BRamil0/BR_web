@@ -3,9 +3,6 @@ const languageMenu = document.getElementById('language-menu');
 const languageName = document.getElementById('language-name');
 const languageEmoji = document.getElementById('language-emoji');
 
-const languageList = ["eng", "ukr"]
-
-
 function setLanguageMenu() {
     for (const lang of languageList) {
         fetch(`/static/localizations/${lang}_language.json`).then(response => {
@@ -20,6 +17,14 @@ function setLanguageMenu() {
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
             });
+    }
+}
+
+function delLanguageMenu() {
+    for (const lang of languageList) {
+        document.querySelectorAll(`[data-lang="${lang}"]`).forEach(element => {
+            element.remove();
+        })
     }
 }
 
@@ -45,7 +50,6 @@ function loadLocalization(lang) {
                     element.textContent = data[key];
                 }
             });
-            // Зберігаємо вибір користувача в куках
             setCookie('language', lang, 7);
             setLanguageName(data)
 
@@ -58,13 +62,20 @@ function loadLocalization(lang) {
 
 // Обробник для відкриття/закриття меню мов
 languageButton.addEventListener('click', () => {
-    languageMenu.classList.toggle('show'); // Тепер меню буде перемикатися при натисканні
+    if (languageMenu.classList.contains('show')) {
+        languageMenu.classList.remove('show');
+        delLanguageMenu();
+    } else {
+        setLanguageMenu();
+        languageMenu.classList.add('show');
+    }
 });
 
 // Закриття меню при натисканні поза ним
 document.addEventListener('click', function(event) {
     if (!languageMenu.contains(event.target) && !languageButton.contains(event.target)) {
         languageMenu.classList.remove('show');
+        delLanguageMenu();
     }
 });
 
@@ -74,17 +85,6 @@ languageMenu.addEventListener('click', function(event) {
     if (selectedLang) {
         loadLocalization(selectedLang);
         languageMenu.classList.remove('show'); // Закриваємо меню після вибору мови
+        delLanguageMenu();
     }
 });
-
-// Функції для роботи з куками
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-function setCookie(name, value, days) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
-}

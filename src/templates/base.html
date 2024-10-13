@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/theme-menu.css">
 </head>
 <body theme="light">
+<div id="loading-banner" class="loading-banner"></div>
 <nav class="nav">
     <div class="nav-left">
         <img src="/static/image/logo.png" alt="Logo">
@@ -46,7 +47,7 @@
 <div id="copy-alert" class="copy-alert" data-translate="copy_alert">Текст скопійовано!</div>
 <footer class="footer">
     <div class="footer-left">
-        <text data-translate="footer_author_photo">Автор фотографії:</text> <a href="" id="author-photo-name">None</a>
+        <text data-translate="footer_author_photo">Автор фотографії:</text> <a href="" id="author-photo-name">BRanil</a>
         <p></p>
         <a href="/content_used" data-translate="footer_content_used">Використаний контент</a>
     </div>
@@ -62,21 +63,19 @@
     </div>
 </footer>
 <div id="cookie-banner" class="cookie-banner">
-    <p data-translate="cookie_text">Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої
-        <a href="/cookie_policy" data-translate="cookie_link">Політики використання cookie.</a></p>
+    <p>
+        <text data-translate="cookie_text">Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,</text>
+        <a href="/cookie_policy" data-translate="cookie_link">Політики використання cookie.</a>
+    </p>
     <button id="accept-cookies" class="cookie-btn" data-translate="cookie_accept">Прийняти всі cookie</button>
 </div>
-<div id="language-menu" class="language-menu">
-</div>
-<div class="theme-menu" id="theme-menu">
-    <button id="light-theme" class="emoji-button" data-translate="theme_light">☀️ Світла</button>
-    <button id="dark-theme" class="emoji-button" data-translate="theme_dark">🌒 Темна</button>
-    <button id="system-theme" class="emoji-button" data-translate="theme_system">🖥️ Система</button>
-</div>
+<div id="language-menu" class="language-menu"></div>
+<div class="theme-menu" id="theme-menu"></div>
+<script src="/static/js/main.js"></script>
+<script src="/static/js/background.js"></script>
 <script src="/static/js/theme_menu.js"></script>
 <script src="/static/js/language_menu.js"></script>
 <script src="/static/js/cookie_banner.js"></script>
 <script src="/static/js/copy_text.js"></script>
-<script src="/static/js/main.js"></script>
 </body>
 </html>

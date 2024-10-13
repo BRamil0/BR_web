@@ -32,7 +32,9 @@ function setCookie(name, value, days) {
 // Прийняти всі cookie
 document.getElementById("accept-cookies").addEventListener("click", function() {
     setCookie("cookies_accepted", "true", 365);
-    document.getElementById("cookie-banner").classList.remove("show");
+    setTimeout(() => {
+        document.getElementById("cookie-banner").classList.remove("show"); // Приховуємо елемент після анімації
+    }, 100);
 });
 
 // Налаштування cookie (можна реалізувати більш детально)

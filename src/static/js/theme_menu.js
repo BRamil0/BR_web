@@ -2,21 +2,22 @@ const toggleButtonMenu = document.getElementById('theme-button-menu');
 const themeEmoji = document.getElementById('theme-emoji');
 const body = document.body;
 
-const lightThemeButton = document.getElementById('light-theme');
-const darkThemeButton = document.getElementById('dark-theme');
-const systemThemeButton = document.getElementById('system-theme');
+const themeMenu = document.getElementById('theme-menu');
 
-// Функція для отримання значення куків
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+function setThemeMenu() {
+    for (let theme of themeList) {
+        themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme ="${theme}" class="emoji-button">${themeList[theme]}</button>`
+    }
+    const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
+    loadLocalization(savedLanguage);
 }
 
-// Функція для встановлення куків
-function setCookie(name, value, days) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
+
+function delThemeMenu() {
+    for (let theme of themeList) {
+        document.querySelectorAll(`[data-theme="${theme}"]`).forEach(element => {element.remove();
+        })
+    }
 }
 
 // Функція для встановлення емодзі теми
@@ -29,6 +30,7 @@ function setThemeEmoji(value) {
 // Функція для встановлення теми
 function applyTheme(theme) {
     let system = false;
+    setCookie('theme', theme, 7);
     if (theme === 'system') {
         // Застосовуємо системну тему
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -43,25 +45,24 @@ function applyTheme(theme) {
     }
 }
 
-// Обробник подій для кожної кнопки теми
-lightThemeButton.addEventListener('click', () => {
-    applyTheme('light');
-    setCookie('theme', 'light', 7);
-});
-
-darkThemeButton.addEventListener('click', () => {
-    applyTheme('dark');
-    setCookie('theme', 'dark', 7);
-});
-
-systemThemeButton.addEventListener('click', () => {
-    applyTheme('system');
-    setCookie('theme', 'system', 7);
+themeMenu.addEventListener('click', function(event) {
+    const theme = event.target.getAttribute('data-theme');
+    if (theme) {
+        applyTheme(theme);
+        languageMenu.classList.remove('show'); // Закриваємо меню після вибору мови
+        delThemeMenu()
+    }
 });
 
 // Показуємо меню тем
 toggleButtonMenu.addEventListener('click', () => {
-    document.getElementById('theme-menu').classList.add('show');
+    if (themeMenu.classList.contains('show')) {
+        themeMenu.classList.remove('show');
+        delThemeMenu();
+    } else {
+        setThemeMenu();
+        themeMenu.classList.add('show');
+    }
 });
 
 // Закриття меню при натисканні поза ним
@@ -69,5 +70,6 @@ document.addEventListener('click', function(event) {
     const themeMenu = document.getElementById('theme-menu');
     if (!themeMenu.contains(event.target) && !toggleButtonMenu.contains(event.target)) {
         themeMenu.classList.remove('show');
+        delThemeMenu();
     }
 });

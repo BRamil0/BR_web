@@ -4,15 +4,7 @@ import fastapi
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from src.app.fastapi import base
-
-def import_routers(app: fastapi.FastAPI) -> None:
-    """
-    import routers
-    :param app: fastapi.FastAPI
-    :return: None
-    """
-    app.include_router(base.router)
+from main import import_routers
 
 templates = Jinja2Templates(directory="src/templates")
 
