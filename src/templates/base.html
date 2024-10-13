@@ -14,13 +14,20 @@
     <link rel="stylesheet" href="/static/css/copy_text.css">
     <link rel="stylesheet" href="/static/css/item_style.css">
     <link rel="stylesheet" href="/static/css/theme-menu.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body theme="light">
 <div id="loading-banner" class="loading-banner"></div>
-<nav class="nav">
+<nav class="nav jetbrains-mono-br">
     <div class="nav-left">
         <img src="/static/image/logo.png" alt="Logo">
-        <text>Radomyr Web</text>
+        <a class="link" id="a-home" href="/">Radomyr Web</a>
     </div>
     <div class="nav-center">
         <ul>
@@ -33,23 +40,22 @@
     <div class="nav-right">
         <button id="language-button-menu" class="lang-button">
             <span id="language-emoji">🇺🇦</span>
-            <span id="language-name">Українська</span>
+            <span id="language-name" class="jetbrains-mono-br">Українська</span>
         </button>
         <button id="theme-button-menu" class="emoji-button">
             <span id="theme-emoji">🔃</span>
         </button>
     </div>
 </nav>
-<main class="main" id="content">
+<main class="main roboto-medium-br" id="content">
     {% block content %}
     {% endblock %}
 </main>
-<div id="copy-alert" class="copy-alert" data-translate="copy_alert">Текст скопійовано!</div>
-<footer class="footer">
+<footer class="footer jetbrains-mono-br">
     <div class="footer-left">
-        <text data-translate="footer_author_photo">Автор фотографії:</text> <a href="" id="author-photo-name">BRanil</a>
+        <text data-translate="footer_author_photo">Автор фотографії:</text> <a href="" id="author-photo-name" class="link">BRanil</a>
         <p></p>
-        <a href="/content_used" data-translate="footer_content_used">Використаний контент</a>
+        <a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a> <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie </a>
     </div>
     <div class="footer-center">
         <text>© 2024 BRamil</text>
@@ -59,18 +65,19 @@
     <div class="footer-right">
         <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
         <p></p>
-        <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a> <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie </a>
+        <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
     </div>
 </footer>
-<div id="cookie-banner" class="cookie-banner">
+<div id="cookie-banner" class="cookie-banner roboto-medium-br">
     <p>
         <text data-translate="cookie_text">Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,</text>
         <a href="/cookie_policy" data-translate="cookie_link" class="link">Політики використання cookie.</a>
     </p>
-    <button id="accept-cookies" class="cookie-btn" data-translate="cookie_accept">Прийняти всі cookie</button>
+    <button id="accept-cookies" class="cookie-btn" data-translate="cookie_accept jetbrains-mono-br">Прийняти всі cookie</button>
 </div>
 <div id="language-menu" class="language-menu"></div>
 <div class="theme-menu" id="theme-menu"></div>
+<div id="copy-alert" class="copy-alert" data-translate="copy_alert jetbrains-mono-br">Текст скопійовано!</div>
 <script src="/static/js/main.js"></script>
 <script src="/static/js/background.js"></script>
 <script src="/static/js/theme_menu.js"></script>

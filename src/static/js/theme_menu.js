@@ -6,7 +6,7 @@ const themeMenu = document.getElementById('theme-menu');
 
 function setThemeMenu() {
     for (let theme of themeList) {
-        themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme ="${theme}" class="emoji-button">${themeList[theme]}</button>`
+        themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme ="${theme}" class="emoji-button jetbrains-mono-br">${themeList[theme]}</button>`
     }
     const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
     loadLocalization(savedLanguage);
@@ -65,7 +65,9 @@ toggleButtonMenu.addEventListener('click', () => {
         }, 300);
     } else {
         setThemeMenu();
-        themeMenu.classList.add('show');
+        setTimeout(() => {
+            themeMenu.classList.add('show');
+        }, 50);
     }
 });
 

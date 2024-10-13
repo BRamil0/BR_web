@@ -12,7 +12,7 @@ function setLanguageMenu() {
             return response.json();
         })
             .then(data => {
-                languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
+                languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
