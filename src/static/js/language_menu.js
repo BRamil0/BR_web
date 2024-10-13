@@ -69,7 +69,9 @@ languageButton.addEventListener('click', () => {
         }, 300);
     } else {
         setLanguageMenu();
-        languageMenu.classList.add('show');
+        setTimeout(() => {
+            languageMenu.classList.add('show');
+        }, 100);
     }
 });
 
