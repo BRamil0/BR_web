@@ -61,7 +61,11 @@ function loadLocalization(lang) {
 }
 
 // Обробник для відкриття/закриття меню мов
+let canClickLanguageButton = true;
 languageButton.addEventListener('click', () => {
+    if (!canClickLanguageButton) return;
+    canClickLanguageButton = false;
+
     if (languageMenu.classList.contains('show')) {
         languageMenu.classList.remove('show');
         setTimeout(() => {
@@ -73,6 +77,10 @@ languageButton.addEventListener('click', () => {
             languageMenu.classList.add('show');
         }, 10);
     }
+
+    setTimeout(() => {
+        canClickLanguageButton = true;
+    }, 325);
 });
 
 // Закриття меню при натисканні поза ним

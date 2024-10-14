@@ -5,11 +5,21 @@ const body = document.body;
 const themeMenu = document.getElementById('theme-menu');
 
 function setThemeMenu() {
-    for (let theme of themeList) {
-        themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme ="${theme}" class="emoji-button jetbrains-mono-br">${themeList[theme]}</button>`
-    }
-    const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
-    loadLocalization(savedLanguage);
+    const savedLanguage = getCookie('language') || 'ukr';
+    fetch(`/static/localizations/${savedLanguage}_language.json`).then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+                for (let theme of themeList) {
+                    themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme ="${theme}" class="emoji-button jetbrains-mono-br">${data["theme_" + theme]}</button>`
+                }
+            })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 }
 
 
@@ -45,7 +55,10 @@ function applyTheme(theme) {
     }
 }
 
+let canClickThemeMenu = true;
 themeMenu.addEventListener('click', function(event) {
+    if (!canClickThemeMenu) return;
+    canClickThemeMenu = false;
     const theme = event.target.getAttribute('data-theme');
     if (theme) {
         applyTheme(theme);
@@ -54,10 +67,17 @@ themeMenu.addEventListener('click', function(event) {
             delThemeMenu();
         }, 300);
     }
+    setTimeout(() => {
+        canClickThemeMenu = true;
+    }, 200);
 });
 
 // Показуємо меню тем
+let canClickButtonMenu = true;
 toggleButtonMenu.addEventListener('click', () => {
+    if (!canClickButtonMenu) return;
+    canClickButtonMenu = false;
+
     if (themeMenu.classList.contains('show')) {
         themeMenu.classList.remove('show');
         setTimeout(() => {
@@ -69,6 +89,10 @@ toggleButtonMenu.addEventListener('click', () => {
             themeMenu.classList.add('show');
         }, 10);
     }
+
+    setTimeout(() => {
+        canClickButtonMenu = true;
+    }, 325);
 });
 
 // Закриття меню при натисканні поза ним
