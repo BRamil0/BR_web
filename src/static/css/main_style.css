@@ -2,7 +2,7 @@
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     color: var(--text-color);
     padding: 1vmin;
-    font-size: 2.5vmin;
+    font-size: 1.2rem;
     text-align: center;
     border-radius: 2vmin;
     display: flex;

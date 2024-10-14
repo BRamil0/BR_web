@@ -2,7 +2,7 @@
     position: relative;
     margin: calc(1vw + 1vh);
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
-    font-size: calc(0.6vw + 0.6vh); /* Масштабування тексту для футера */
+    font-size: 0.8rem; /* Масштабування тексту для футера */
     font-weight: bold;
     text-decoration: none;
     padding: calc(0.5vw + 0.5vh);

@@ -2,7 +2,7 @@
     position: static;
     margin: calc(1vw + 1vh);
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
-    font-size: calc(0.7vw + 0.7vh); /* Масштабування тексту */
+    font-size: 0.9rem; /* Масштабування тексту */
     font-weight: bold;
     padding: calc(0.5vw + 0.5vh);
     border-radius: 2vmin;
@@ -71,7 +71,7 @@ nav img {
     background: none;
     border: none;
     color: var(--text-color);
-    font-size: calc(0.8vw + 0.8vh); /* Масштабування кнопки */
+    font-size: 0.9rem; /* Масштабування кнопки */
     cursor: pointer;
     padding: 0;
     border-radius: 1vmin;

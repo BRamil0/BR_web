@@ -26,7 +26,7 @@
     background: none; /* Без фону */
     border: none; /* Без обводки */
     color: var(--text-color);
-    font-size: 1vmax; /* Розмір шрифту */
+    font-size: 1rem; /* Розмір шрифту */
     cursor: pointer; /* Курсор вказівник */
     padding: 0.5vh 1vw; /* Внутрішній відступ */
     border-radius: 1.8vmin; /* Заокруглення */
