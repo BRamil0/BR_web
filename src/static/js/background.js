@@ -4,8 +4,23 @@ async function updateBackground() {
         const response = await fetch('/background');
         const data = await response.json();
 
-        // Оновлюємо background-image для body
-        document.body.style.backgroundImage = `url(${data.image})`;
+        // Створюємо новий об'єкт Image для попереднього завантаження
+        let img = new Image();
+        img.src = data.image1k;
+
+        // Коли зображення завантажено повністю, змінюємо фон
+        img.onload = () => {
+            document.body.style.backgroundImage = `url(${data.image1k})`;
+        };
+        img.src = data.image2k;
+        img.onload = () => {
+            document.body.style.backgroundImage = `url(${data.image2k})`;
+        };
+        img.src = data.image4k;
+        img.onload = () => {
+            document.body.style.backgroundImage = `url(${data.image4k})`;
+        };
+
     } catch (error) {
         console.error("Помилка при оновленні фону:", error);
     }

@@ -11,4 +11,7 @@ templates = Jinja2Templates(directory="src/templates")
 
 @router.get("/background")
 async def background(request: Request):
-    return {"image": f"/static/image/background/{random.randint(1, 10)}.jpg"}
+    ran = random.randint(1, 10)
+    return {"image4k": f"/static/image/background/4k/{ran}.webp",
+            "image2k": f"/static/image/background/2k/{ran}.webp",
+            "image1k": f"/static/image/background/1k/{ran}.webp",}

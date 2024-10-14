@@ -1,17 +1,20 @@
 const languageList = ["eng", "ukr"]
 const themeList = ["light", "dark", "system"];
+const theme = getCookie('theme') || 'system';
+const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
 
-// Завантажуємо тему з куків при завантаженні сторінки
-window.onload = () => {
-    showLoadingBanner();
-    updateBackground();
-    const theme = getCookie('theme') || 'system';
-    const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
-    applyTheme(theme);
-    loadLocalization(savedLanguage);
+document.addEventListener("DOMContentLoaded", async () => {
+    await updateBackground();
+    await applyTheme(theme);
+    await loadLocalization(savedLanguage);
+    console.log("DOM fully loaded and parsed");
+});
+
+window.onload = async () => {
     setTimeout(() => {
         hideLoadingBanner()
-    }, 250);
+    }, 350);
+    console.log("Page loaded");
 };
 
 // Функція для отримання значення куків

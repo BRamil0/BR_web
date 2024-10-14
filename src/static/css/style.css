@@ -1,5 +1,6 @@
 body {
-    background-image: none;
+    background-image: None;
+    background-color: var(--text-color);
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -19,7 +20,7 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(var(--bg-color--rgb), 0.9); /* Напівпрозорий фон */
+    background-color: var(--bg-color); /* Напівпрозорий фон */
     color: var(--text-color);
     display: flex;
     justify-content: center;
