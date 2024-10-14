@@ -1,6 +1,6 @@
 .copy-alert {
     position: fixed;
-    font-size: 2vmin;
+    font-size: 1rem;
     bottom: 2vmin;
     left: 50%;
     transform: translateX(-50%);
@@ -24,4 +24,14 @@
 .copy-alert.show {
     opacity: 1;
     visibility: visible;
+}
+
+@media (max-width: 1000px) {
+    .copy-alert {
+        font-size: 2.2rem;
+    }
+    .copy-alert:active {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
 }

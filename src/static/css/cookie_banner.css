@@ -15,7 +15,7 @@
     visibility: hidden;
     box-shadow: var(--box-shadow);
     border: var(--text-color) 0.1vmin solid;
-    font-size: 3vmin;
+    font-size: 0.8rem;
 }
 
 .cookie-banner a {
@@ -31,7 +31,7 @@
 }
 
 .cookie-btn {
-    font-size: 2vmin;
+    font-size: 1rem;
     background-color: var(--bg-color--cookie);
     border: none;
     color: black;
@@ -52,4 +52,17 @@
     display: block;
     opacity: 1;
     visibility: visible;
+}
+
+@media (max-width: 1000px) {
+    .cookie-banner {
+        font-size: 2rem;
+    }
+    .cookie-btn {
+        font-size: 2.2rem;
+    }
+    .cookie-btn:active {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
 }

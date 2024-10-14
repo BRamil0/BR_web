@@ -47,3 +47,13 @@ footer a:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
+
+@media (max-width: 1000px) {
+    .footer {
+        font-size: 2rem;
+    }
+    footer a:active {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
+}

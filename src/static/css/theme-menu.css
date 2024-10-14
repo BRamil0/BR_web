@@ -1,6 +1,6 @@
 .theme-menu {
     position: absolute; /* Відносне позиціювання */
-    top: 12vb; /* Відстань від кнопки */
+    top: 14vb; /* Відстань від кнопки */
     right: 1.5vw; /* Вирівнювання по правій стороні */
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     color: var(--text-color);
@@ -38,4 +38,20 @@
     transform: scale(1);
     background-color: var(--text-color); /* Фон при наведенні */
     color: var(--bg-color); /* Колір тексту при наведенні */
+}
+
+@media (max-width: 1000px) {
+    .theme-menu {
+        top: 10rem; /* Відстань від кнопки */
+        right: 2vw; /* Вирівнювання по правій стороні */
+    }
+    .theme-menu button {
+        font-size: 2.5rem;
+        padding: 2vh 4vw;
+    }
+    .theme-menu button:active {
+    transform: scale(1);
+        background-color: var(--text-color); /* Фон при наведенні */
+        color: var(--bg-color); /* Колір тексту при наведенні */
+    }
 }

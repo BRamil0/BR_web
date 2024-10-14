@@ -1,7 +1,7 @@
 .language-menu {
     position: absolute; /* Розташовуємо відносно батьківського елемента */
-    top: 12vb; /* Відстань від кнопки */
-    right: 2.75vw; /* Вирівнювання по правій стороні */
+    top: 14vb; /* Відстань від кнопки */
+    right: 1.75vw; /* Вирівнювання по правій стороні */
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     color: var(--text-color);
     padding: 1vw;
@@ -38,4 +38,20 @@
     transform: scale(1);
     background-color: var(--text-color);
     color: var(--bg-color);
+}
+
+@media (max-width: 1000px) {
+    .language-menu {
+        top: 10rem; /* Відстань від кнопки */
+        right: 7vw; /* Вирівнювання по правій стороні */
+    }
+    .language-menu button {
+        font-size: 2.5rem;
+        padding: 2vh 4vw;
+    }
+    .language-menu button:active {
+        transform: scale(1);
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
 }
