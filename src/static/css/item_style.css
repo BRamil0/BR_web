@@ -6,7 +6,8 @@
     display: flex;
     flex-wrap: wrap; /* Додає перенесення блоків на новий ряд, якщо вони не вміщаються */
     justify-content: center; /* Вирівнювання блоків по центру */
-    gap: 20px; /* Відстань між блоками по горизонталі і вертикалі */
+    gap: 3vmin; /* Відстань між блоками по горизонталі і вертикалі */
+    border-radius: 2vmin;
 }
 
 .item-base {
@@ -15,20 +16,20 @@
     display: flex;
     align-items: center; /* Вирівнювання по вертикалі */
     justify-content: center; /* Вирівнювання по горизонталі */
-    gap: 10px; /* Відстань між логотипом і текстом */
+    gap: 2vw; /* Відстань між логотипом і текстом */
 
     color: var(--text-color);
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 2vmin;
+    padding: 2vmin;
 
     width: fit-content; /* Розмір блоку відповідно до контенту */
-    max-width: 300px; /* Максимальна ширина блоку */
+    max-width: 20vw; /* Максимальна ширина блоку */
 }
 
 .item-base img {
-    width: 40px;
-    height: 40px;
+    width: 5vmin;
+    height: 5vmin;
     filter: invert(var(--invert));
 }
 
@@ -36,9 +37,9 @@
     background-color: var(--bg-color);
     color: var(--text-color);
     text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
+    padding: 0.5vb 1vw;
+    border-radius: 0.5vmin;
+    font-size: 2vmin;
     font-weight: bold;
     text-align: center;
 
@@ -51,8 +52,8 @@
 }
 
 .item-base text {
-    border-radius: 5px;
-    font-size: 14px;
+    border-radius: 0.5vmin;
+    font-size: 2vmin;
     font-weight: bold;
     text-align: center;
 

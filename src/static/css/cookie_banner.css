@@ -1,12 +1,12 @@
 .cookie-banner {
     position: fixed;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
+    bottom: 2vmin;
+    left: 1vw;
+    right: 1vw;
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding: 15px;
-    border-radius: 10px;
+    padding: 2vb;
+    border-radius: 2vmin;
     text-align: center;
     z-index: 20;
     display: none;
@@ -14,13 +14,14 @@
     opacity: 0;
     visibility: hidden;
     box-shadow: var(--box-shadow);
+    border: var(--text-color) 0.1vmin solid;
+    font-size: 3vmin;
 }
 
 .cookie-banner a {
-
     color: var(--text-color--cookie);
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 0.5vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -30,13 +31,14 @@
 }
 
 .cookie-btn {
+    font-size: 2vmin;
     background-color: var(--bg-color--cookie);
     border: none;
     color: black;
-    padding: 10px 20px;
-    margin-left: 10px;
+    padding: 1.5vb 2vw;
+    margin-left: 3vb;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0.5vmin;
     font-weight: bold;
     transition: background-color 0.3s ease, color 0.3s ease;
 }

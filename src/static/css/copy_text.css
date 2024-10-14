@@ -1,29 +1,26 @@
-/* Стиль для спливаючого вікна */
 .copy-alert {
     position: fixed;
-    bottom: 20px;
+    font-size: 2vmin;
+    bottom: 2vmin;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 1vb 2vw;
+    border-radius: 2vmin;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease, color 0.3s ease;
-    border: var(--text-color) 1px solid;
+    border: var(--text-color) 0.1vmin solid;
     z-index: 1000;
-
     box-shadow: var(--box-shadow);
 }
-
 
 .copy-alert:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
 
-/* Коли активне (показується) */
 .copy-alert.show {
     opacity: 1;
     visibility: visible;

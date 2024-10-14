@@ -1,42 +1,41 @@
 .theme-menu {
-    position: absolute; /* Розташовуємо відносно батьківського елемента */
-    top: 55px; /* Відстань від кнопки */
-    right: 10px; /* Вирівнюємо по правій стороні біля кнопки */
+    position: absolute; /* Відносне позиціювання */
+    top: 12vb; /* Відстань від кнопки */
+    right: 1.5vw; /* Вирівнювання по правій стороні */
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     color: var(--text-color);
-    padding: 10px;
-    border-radius: 15px;
+    padding: 1vw;
+    border-radius: 2vmin;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Анімація показу */
     z-index: 1000;
     box-shadow: var(--box-shadow);
     display: flex;
-    flex-direction: column;
-    gap: 10px; /* Відстань між елементами списку */
+    flex-direction: column; /* Вертикальне вирівнювання */
+    gap: 1vb; /* Відстань між кнопками */
 }
 
 .theme-menu.show {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1; /* Видимість */
+    visibility: visible; /* Показати меню */
 }
 
 .theme-menu button {
     transform: scale(1);
-    background: none;
-    border: none;
+    background: none; /* Без фону */
+    border: none; /* Без обводки */
     color: var(--text-color);
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    text-align: left;
+    font-size: 1vmax; /* Розмір шрифту */
+    cursor: pointer; /* Курсор вказівник */
+    padding: 0.5vh 1vw; /* Внутрішній відступ */
+    border-radius: 1.8vmin; /* Заокруглення */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Анімація кольору */
+    text-align: left; /* Ліве вирівнювання тексту */
 }
 
 .theme-menu button:hover {
     transform: scale(1);
-    background-color: var(--text-color);
-    color: var(--bg-color);
+    background-color: var(--text-color); /* Фон при наведенні */
+    color: var(--bg-color); /* Колір тексту при наведенні */
 }
-
