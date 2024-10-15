@@ -109,7 +109,7 @@ nav img {
         font-size: 2.5rem;
     }
     .lang-button, .emoji-button, .menu-toggle {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     /* Приховуємо навбар, окрім аватарки, імені та перемикачів */
@@ -161,7 +161,7 @@ nav img {
 
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
     #a-home {
         display: none;
     }

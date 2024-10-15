@@ -27,6 +27,7 @@
     flex: 1;
     text-align: center;
     vertical-align: center;
+    display: block;
 }
 
 .footer-right {
@@ -50,10 +51,16 @@ footer a:hover {
 
 @media (max-width: 1000px) {
     .footer {
-        font-size: 2rem;
+        font-size: 1.2rem;
     }
+
     footer a:active {
         background-color: var(--text-color);
         color: var(--bg-color);
+    }
+}
+@media (max-width: 700px) {
+    .footer-center {
+        display: none;
     }
 }
