@@ -5,19 +5,18 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-    height: 100vh;
+    height: auto;
+    margin: 0;
+    padding: 0;
     align-items: center;
     justify-content: center;
     display: block;
     font-size: 1rem; /* Масштабування тексту */
 }
+html {
 
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
 }
+
 
 .loading-banner {
     position: fixed;
