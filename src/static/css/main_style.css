@@ -22,7 +22,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.terms_of_use, .privacy_policy, .cookie_policy {
+.terms_of_use, .privacy_policy, .cookie_policy, .project, .about, .home {
     display: block;
 }
 

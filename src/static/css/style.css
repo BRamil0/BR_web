@@ -56,6 +56,16 @@ button.button-active {
 }
 
 
+::selection {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+::-moz-selection {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
 
 @media (max-width: 1000px) {
     body {
