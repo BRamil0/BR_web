@@ -15,7 +15,7 @@
     width: 80vw; /* Адаптується до ширини вікна */
     max-width: 100vw;
     height: auto;
-    min-height: calc(100vh - 18.5em); /* Мінімальна висота на основі вікна 48vh */
+    min-height: calc(100vh - 18.75em); /* Мінімальна висота на основі вікна 48vh */
     /* max-height: 100vh; */
 
     box-shadow: var(--box-shadow);
