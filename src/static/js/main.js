@@ -2,8 +2,6 @@ const languageList = ["eng", "ukr"]
 const themeList = ["light", "dark", "system"];
 const theme = getCookie('theme') || 'system';
 const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
-const navMenu =  document.querySelector('.nav')
-const menuToggle = document.getElementById('menu-toggle')
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -45,6 +43,14 @@ function hideLoadingBanner() {
     loadingBanner.classList.add('hidden'); // Прибираємо банер після завантаження
 }
 
-document.getElementById('menu-toggle').addEventListener('click', function() {
-    document.querySelector('.nav').classList.toggle('open');
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Додаємо клас активного стану
+        this.classList.add('button-active');
+
+        // Знімаємо клас через 1 секунду
+        setTimeout(() => {
+            this.classList.remove('button-active');
+        }, 1000); // 1000 мілісекунд = 1 секунда
+    });
 });

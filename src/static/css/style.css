@@ -47,6 +47,17 @@ body, html {
     opacity: 0.5; /* Зменшує непрозорість, щоб показати, що кнопка неактивна */
 }
 
+button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button.button-active {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+
+
 @media (max-width: 1000px) {
     body {
         font-size: 2.2rem;

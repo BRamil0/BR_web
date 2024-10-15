@@ -50,7 +50,7 @@
         padding: 2vh 4vw;
     }
     .theme-menu button:active {
-    transform: scale(1);
+        transform: scale(1);
         background-color: var(--text-color); /* Фон при наведенні */
         color: var(--bg-color); /* Колір тексту при наведенні */
     }

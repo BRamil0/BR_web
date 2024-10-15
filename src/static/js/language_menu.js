@@ -52,6 +52,7 @@ function loadLocalization(lang) {
             });
             setCookie('language', lang, 7);
             setLanguageName(data)
+            document.getElementsByTagName('html')[0].setAttribute('lang', lang);
 
 
         })
