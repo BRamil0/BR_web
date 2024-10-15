@@ -53,11 +53,6 @@ footer a:hover {
     .footer {
         font-size: 1.4rem;
     }
-
-    footer a:active {
-        background-color: var(--text-color);
-        color: var(--bg-color);
-    }
     footer a {
         font-size: 1.4rem;
     }

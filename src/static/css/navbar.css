@@ -153,17 +153,6 @@ nav img {
         flex-direction: column; /* Робимо меню вертикальним */
         gap: 1vmin;
     }
-
-    nav a:active, #a-home:active {
-        background-color: var(--text-color);
-        color: var(--bg-color);
-
-    }
-    .lang-button:active, .emoji-button:active, .menu-toggle:active {
-        background-color: var(--text-color);
-        color: var(--bg-color);
-    }
-
 }
 
 @media (max-width: 700px) {

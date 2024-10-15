@@ -75,8 +75,4 @@
         width: 4rem;
         height: 4rem;
     }
-    .item-base a:active {
-        background-color: var(--text-color);
-        color: var(--bg-color);
-    }
 }
