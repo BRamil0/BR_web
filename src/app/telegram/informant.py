@@ -14,15 +14,13 @@ class TelegramSender:
         self.session = aiohttp.ClientSession()
 
     async def send(self, request: Request, form: TelegramMessage) -> Dict[str, Any]:
-        print("ok")
-        ip_main = IP(request)
-        ip = await ip_main.get_client_ip()
-
+        ip = IP(request)
         chat_id = settings.TELEGRAM_CHAT_ID
         params = {
             "chat_id": chat_id,
-            "text": f"{form.message}\n`{await ip_main.summarize_location()}`"
+            "text": f"{form.message}\n`{await ip.summarize_location()}\n`"
         }
-        async with self.session.post(self.url, json=params) as response:
-            print("ok 2")
-            return await response.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.url, json=params) as response:
+                result = await response.json()
+                return await response.json()
