@@ -7,6 +7,8 @@ from starlette.requests import Request
 router = APIRouter()
 templates = Jinja2Templates(directory="src/templates")
 
+
+
 @router.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "title": "Головна"})

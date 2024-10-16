@@ -1,13 +1,30 @@
 const languageList = ["eng", "ukr"]
 const themeList = ["light", "dark", "system"];
 const theme = getCookie('theme') || 'system';
-const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
+const savedLanguage = getCookie('language') || 'eng'; // Встановити мову за замовчуванням
 
 
 document.addEventListener("DOMContentLoaded", async () => {
     await updateBackground();
     await applyTheme(theme);
     await loadLocalization(savedLanguage);
+    fetch("/info/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: "OK" })
+    })
+    .then((response) => {
+        if (response.ok) {
+            console.log("Message sent successfully");
+        } else {
+            console.log("Server error: " + response.status);
+        }
+    })
+    .catch((error) => {
+        console.error("Fetch error: ", error);
+    });
     console.log("DOM fully loaded and parsed");
 });
 

@@ -6,6 +6,8 @@ class Settings(pydantic_settings.BaseSettings):
     HOST: str = "localhost"
     PORT: int = 8080
     DEBUG: bool = False
+    BOT_TOKEN: str
+    TELEGRAM_CHAT_ID: int
 
     model_config = pydantic_settings.SettingsConfigDict(env_file=".config.env")
 
