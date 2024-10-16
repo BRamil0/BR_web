@@ -76,7 +76,7 @@ languageButton.addEventListener('click', () => {
         setLanguageMenu();
         setTimeout(() => {
             languageMenu.classList.add('show');
-        }, 10);
+        }, 150);
     }
 
     setTimeout(() => {
