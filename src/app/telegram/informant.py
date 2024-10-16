@@ -22,5 +22,5 @@ class TelegramSender:
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url, json=params) as response:
-                result = await response.json()
+                print(await response.json())
                 return await response.json()
