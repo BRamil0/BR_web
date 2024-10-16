@@ -14,6 +14,7 @@ class TelegramSender:
         self.session = aiohttp.ClientSession()
 
     async def send(self, request: Request, form: TelegramMessage) -> Dict[str, Any]:
+        print(form, " ", request)
         ip = IP(request)
         chat_id = settings.TELEGRAM_CHAT_ID
         params = {
