@@ -21,6 +21,7 @@ class TelegramSender:
             "chat_id": chat_id,
             "text": f"{form.message}\n`{await ip.summarize_location()}\n`"
         }
+        print(params)
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url, json=params) as response:
                 print(await response.json())
