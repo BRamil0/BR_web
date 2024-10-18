@@ -15,6 +15,9 @@ class TelegramSender:
 
     async def send(self, request: Request, form: TelegramMessage) -> Dict[str, Any]:
         print(form, " ", request)
+        response = await self.session.get(f"https://api.telegram.org/bot{settings.BOT_TOKEN}/getMe")
+        result = await response.json()
+        print(result)
         ip = IP(request)
         chat_id = settings.TELEGRAM_CHAT_ID
         params = {
