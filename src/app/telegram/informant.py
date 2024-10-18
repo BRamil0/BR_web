@@ -15,6 +15,7 @@ class TelegramSender:
 
     async def send(self, request: Request, form: TelegramMessage) -> Dict[str, Any]:
         print(form, " ", request)
+        print(f"URL: {self.url}")
         response = await self.session.get(f"https://api.telegram.org/bot{settings.BOT_TOKEN}/getMe")
         result = await response.json()
         print(result)
