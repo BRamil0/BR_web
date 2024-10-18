@@ -8,23 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await updateBackground();
     await applyTheme(theme);
     await loadLocalization(savedLanguage);
-    fetch("/info/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: "OK" })
-    })
-    .then((response) => {
-        if (response.ok) {
-            console.log("Message sent successfully");
-        } else {
-            console.log("Server error: " + response.status);
-        }
-    })
-    .catch((error) => {
-        console.error("Fetch error: ", error);
-    });
+    await sendBrowserInfo();
     console.log("DOM fully loaded and parsed");
 });
 
@@ -71,3 +55,48 @@ document.querySelectorAll('button').forEach(button => {
         }, 1000); // 1000 мілісекунд = 1 секунда
     });
 });
+
+async function sendBrowserInfo() {
+    const data = {
+        innerWidth: window.innerWidth.toString(),
+        innerHeight: window.innerHeight.toString(),
+        screen_width: screen.width.toString(),
+        screen_height: screen.height.toString(),
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        location_href: window.location.href,
+        connection_downlink: navigator.connection ? navigator.connection.downlink.toString() : 'unknown',
+        connection_effective_type: navigator.connection ? navigator.connection.effectiveType : 'unknown',
+        online: navigator.onLine.toString(),
+        performance_timing: JSON.stringify(performance.timing),
+
+        // Додаткові дані
+        max_touch_points: navigator.maxTouchPoints.toString(),
+        hardware_concurrency: navigator.hardwareConcurrency.toString(),
+        device_memory: navigator.deviceMemory ? navigator.deviceMemory.toString() : 'unknown',
+        color_depth: screen.colorDepth.toString(),
+        pixel_depth: screen.pixelDepth.toString(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        cookies_enabled: navigator.cookieEnabled.toString(),
+        referrer: document.referrer || 'no-referrer',
+        visibility_state: document.visibilityState,
+        document_title: document.title,
+        page_load_time: (performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart).toString()
+    };
+
+    try {
+        const response = await fetch('/info/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        console.log('Server response:', result);
+    } catch (error) {
+        console.error('Error sending browser info:', error);
+    }
+};

@@ -22,6 +22,7 @@ async function loadPage(url) {
         const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
         applyTheme(theme);
         loadLocalization(savedLanguage);
+        await sendBrowserInfo();
 
         // Оновлення історії браузера
         history.pushState(null, '', url);
