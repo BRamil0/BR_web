@@ -13,6 +13,7 @@ from fastapi.templating import Jinja2Templates
 from src.app.fastapi import base
 from src.app.fastapi import background
 from src.app.fastapi import telegram
+from src.app.fastapi import indexing
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -23,6 +24,7 @@ def import_routers(app: fastapi.FastAPI) -> None:
     app.include_router(base.router)
     app.include_router(background.router)
     app.include_router(telegram.router)
+    app.include_router(indexing.router)
 
 
 def init_codes(app: fastapi.FastAPI) -> None:
