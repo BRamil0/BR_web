@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/static/css/item_style.css">
     <link rel="stylesheet" href="/static/css/theme-menu.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/message_form.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
@@ -64,7 +65,7 @@
         <text>©2024 BRamil</text>, <text data-translate="footer_rights_reserved">Всі права захищено</text>
     </div>
     <div class="footer-right">
-        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="jetbrains-mono-br" data-translate="footer_form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
         <p></p>
         <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
     </div>
@@ -76,9 +77,27 @@
     </p>
     <button id="accept-cookies" class="cookie-btn" data-translate="cookie_accept jetbrains-mono-br">Прийняти всі cookie</button>
 </div>
+<!-- Модальне вікно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2>Написати повідомлення</h2>
+        <label for="name-input"></label><input id="name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)">
+        <div class="author-mail">
+            <label for="message-author-input"></label><input id="message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)">
+            <label for="message-email-input"></label><input id="message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)">
+        </div>
+        <label for="message-input"></label><textarea id="message-input" class="jetbrains-mono-br"  placeholder="Введіть ваше повідомлення (обов'язково)"></textarea>
+        <p id="error-message"></p>
+        <div class="message-button">
+            <button id="send-message-button">Надіслати</button>
+            <button class="close-button" id="close-modal">Закрити</button>
+        </div>
+    </div>
+</div>
 <div id="language-menu" class="language-menu"></div>
 <div class="theme-menu" id="theme-menu"></div>
-<div id="copy-alert" class="copy-alert" data-translate="copy_alert jetbrains-mono-br">Текст скопійовано!</div>
+<div id="message-alert" class="copy-alert jetbrains-mono-br" data-translate="message_alert">Повідомлення надіслано успішно!</div>
+<div id="copy-alert" class="copy-alert jetbrains-mono-br" data-translate="copy_alert">Текст скопійовано!</div>
 <script src="/static/js/main.js"></script>
 <script src="/static/js/background.js"></script>
 <script src="/static/js/theme_menu.js"></script>
@@ -87,5 +106,6 @@
 <script src="/static/js/copy_text.js"></script>
 <script src="/static/js/load_page.js"></script>
 <script src="/static/js/nav_menu.js"></script>
+<script src="/static/js/message_form.js"></script>
 </body>
 </html>

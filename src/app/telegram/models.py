@@ -1,7 +1,11 @@
 from pydantic import BaseModel
 
 class TelegramMessage(BaseModel):
+    name: str
     message: str
+    author: str = ""
+    email: str = ""
+
 
 class TelegramInformant(BaseModel):
     innerWidth: str

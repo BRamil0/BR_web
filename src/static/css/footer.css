@@ -44,6 +44,22 @@ footer a {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+footer button {
+    background: none;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    color: var(--text-color);
+    border-radius: 1vmin;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+footer button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
 footer a:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
@@ -53,7 +69,7 @@ footer a:hover {
     .footer {
         font-size: 1.4rem;
     }
-    footer a {
+    footer a, footer button {
         font-size: 1.4rem;
     }
     .footer-center {

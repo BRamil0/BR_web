@@ -16,11 +16,33 @@ class TelegramSender:
     async def send(self, request: Request, form: TelegramMessage) -> Dict[str, Any]:
         ip = IP(request)
         chat_id = settings.TELEGRAM_CHAT_ID
+
+        comma = ","
+        if form.author == "" and form.email == "":
+            comma = ""
+
         params = {
             "chat_id": chat_id,
-            "text": f"{form.message}\n`{await ip.summarize_location()}\n`",
+            "text": fr"""
+Нове повідомлення:
+
+*{form.name}*
+
+{form.message}
+
+{form.author}{comma} {form.email}
+_Додаткова інформація:_
+IP: `{request.client.host}`
+Location: `{await ip.get_location()}`
+User agent: `{request.headers.get("User-Agent")}` 
+Language: `{request.headers.get("Accept-Language")}`
+
+\#нове\_повідомлення
+""",
             "parse_mode": "MarkdownV2",
         }
+        print(params)
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url, json=params) as response:
+                print(await response.json())
                 return await response.json()

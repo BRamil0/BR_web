@@ -76,3 +76,22 @@ class IPAddressHandler:
         loc = location.get("loc", "")
 
         return f"IP: {user_ip}, Location: {country}, {city}, {region}, {loc}"
+
+    async def get_location(self) -> str:
+        """
+        Summarize the location information in a human-readable format.
+
+        :return: A string summarizing the IP address and its location.
+        """
+        client_info = await self.get_client_ip()
+        location = client_info["location"]
+
+        if (not isinstance(location, dict)) and ("error" in location):
+            return f"None"
+
+        country = location.get("country", "")
+        city = location.get("city", "")
+        region = location.get("region", "")
+        loc = location.get("loc", "")
+
+        return f"{country}, {city}, {region}, {loc}"

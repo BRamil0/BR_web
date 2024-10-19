@@ -21,11 +21,8 @@ class TelegramSender:
             "text": fr"""
 **Новий запит:**
 
-Локація: `{await ip.summarize_location()}`
-IP: `{ip.ip}`
-
 ```
-Location: {await ip.summarize_location()}
+Location: {await ip.get_location()}
 IP: {ip.ip}
 
 Request:
@@ -61,8 +58,6 @@ page_load_time: {form.page_load_time}
 """,
             "parse_mode": "MarkdownV2",
         }
-        print(params)
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url, json=params) as response:
-                print(await response.json())
                 return await response.json()
