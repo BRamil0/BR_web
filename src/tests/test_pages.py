@@ -1,75 +1,61 @@
+import pytest
 from fastapi.testclient import TestClient
-from src.config.config import settings
+from main import fast_app_start
 
-settings.DEBUG = True
+@pytest.fixture
+def client():
+    app = fast_app_start()
+    return TestClient(app)
 
-class TestPages:
+def test_index(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def __init__(self, app):
-        self.client = TestClient(app)
+def test_home(client):
+    response = client.get("/index")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def run_tests(self):
-        self.test_index()
-        self.test_home()
-        self.test_about()
-        self.test_contact()
-        self.test_project()
-        self.test_tou()
-        self.test_privacy()
-        self.test_cookie_policy()
-        self.test_content_used()
-        self.test_robots()
-        self.test_sitemap()
+def test_about(client):
+    response = client.get("/about")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_index(self):
-        response = self.client.get("/")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_contact(client):
+    response = client.get("/contact")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_home(self):
-        response = self.client.get("/index")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_project(client):
+    response = client.get("/project")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_about(self):
-        response = self.client.get("/about")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_tou(client):
+    response = client.get("/terms_of_use")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_contact(self):
-        response = self.client.get("/contact")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_privacy(client):
+    response = client.get("/privacy_policy")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_project(self):
-        response = self.client.get("/project")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_cookie_policy(client):
+    response = client.get("/cookie_policy")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_tou(self):
-        response = self.client.get("/terms_of_use")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_content_used(client):
+    response = client.get("/content_used")
+    assert response.status_code == 200
+    assert "<!DOCTYPE html>" in response.text
 
-    def test_privacy(self):
-        response = self.client.get("/privacy_policy")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
+def test_robots(client):
+    response = client.get("/robots.txt")
+    assert response.status_code == 200
 
-    def test_cookie_policy(self):
-        response = self.client.get("/cookie_policy")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
-
-    def test_content_used(self):
-        response = self.client.get("/content_used")
-        assert response.status_code == 200
-        assert "<!DOCTYPE html>" in response.text
-
-    def test_robots(self):
-        response = self.client.get("/robots.txt")
-        assert response.status_code == 200
-
-    def test_sitemap(self):
-        response = self.client.get("/sitemap.xml")
-        assert response.status_code == 200
+def test_sitemap(client):
+    response = client.get("/sitemap.xml")
+    assert response.status_code == 200
