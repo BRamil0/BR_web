@@ -1,7 +1,23 @@
-## Radomyr Web
-це вебсайт про мене
+## BR Web
+My personal website
 
+### List of tasks
+- [ ] Refactor the js code
+- [ ] Finalize sending messages via telegram
+- [ ] Add more localizations
 
-## Використання
-Поставте пайтон, всі бібліотеки з requirements.txt, та запустіть команду `main.py`
-файл "app.py" треба чисто для vercel, тому краще не запускати через це
+### Install
+1. Install Python 3.12.x if it is not already installed
+2. Clone the repository from github
+3. Install all dependencies from `requirements.txt`
+```
+pip install -r requirements.txt
+```
+
+###  Use
+1. Write your configurations in `.config.env` (if not, create it in the project root)
+2. Run `main.py`
+3. Go to the IP and port you wrote in the configuration
+
+### License
+The project is licensed under the MIT license, see more details in the License file
