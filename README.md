@@ -3,7 +3,7 @@ My personal website
 
 ### List of tasks
 - [ ] Refactor the js code
-- [ ] Finalize sending messages via telegram
+- [x] Finalize sending messages via telegram
 - [ ] Add more localizations
 
 ### Install
