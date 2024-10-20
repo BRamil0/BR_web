@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     display: block;
-    font-size: 1rem; /* Масштабування тексту */
+    font-size: 1rem;
 }
 html {
 
@@ -24,14 +24,14 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-color); /* Напівпрозорий фон */
+    background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    z-index: 9999; /* Щоб перекривати всі інші елементи */
-    visibility: visible; /* Видимий за замовчуванням */
+    z-index: 9999;
+    visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease;
 }
@@ -42,8 +42,8 @@ html {
 }
 
 .disabled {
-    pointer-events: none; /* Забороняє взаємодію з елементом */
-    opacity: 0.5; /* Зменшує непрозорість, щоб показати, що кнопка неактивна */
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 button {

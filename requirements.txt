@@ -6,3 +6,5 @@ pydantic_settings
 jinja2
 requests
 aiohttp
+pytest
+httpx

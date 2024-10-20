@@ -61,7 +61,7 @@
 .modal-content textarea {
     background-color: var(--bg-color);
     color: var(--text-color);
-    border: #ffffff 0.05vmin solid;
+    border: var(--bg-color) 0.05vmin solid;
     border-radius: 1vmin;
     padding: 0.5vmin 1vmin;
     margin: 1vmin;
@@ -73,10 +73,15 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.modal-content textarea:focus, .modal-content input:focus {
+    border-color: var(--text-color) 1vmin solid;
+    outline: none; /* Видаляє стандартне підсвічування браузера */
+}
+
 .modal-content input {
     background-color: var(--bg-color);
     color: var(--text-color);
-    border: #ffffff 0.05vmin solid;
+    border: var(--bg-color) 0.05vmin solid;
     border-radius: 1vmin;
     padding: 0.5vmin 1vmin;
     margin: 1vmin;
@@ -107,4 +112,26 @@
     flex: 0 1 auto; /* Дозволяє кнопкам займати мінімальну ширину */
     margin: 0 0.5vmin; /* Відступи між кнопками */
     padding: 0.5vmin 2vmin; /* Зробіть padding однаковим для більшої симетрії */
+}
+
+@media (max-width: 1000px) {
+    .modal-content {
+        max-width: 80%;
+    }
+
+    .modal-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .modal-content button {
+        font-size: 1.5rem;
+    }
+
+    .modal-content textarea {
+        font-size: 1.5rem;
+    }
+
+    .modal-content input {
+        font-size: 1.5rem;
+    }
 }

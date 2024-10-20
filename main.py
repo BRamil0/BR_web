@@ -1,19 +1,20 @@
 """the main application startup file"""
-
 import asyncio
+import sys
 
 import uvicorn
 import fastapi
 from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from src.config.config import settings
 
+from src.config.config import settings
 from fastapi.templating import Jinja2Templates
 
 from src.app.fastapi import base
 from src.app.fastapi import background
 from src.app.fastapi import telegram
 from src.app.fastapi import indexing
+
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -94,13 +95,13 @@ def init_codes(app: fastapi.FastAPI) -> None:
                                                         "message": "http version not supported"})
 
 
-async def start() -> None:
-    """
-    start of all processes
-    :return: None
+def fast_app_start() -> fastapi.FastAPI:
+    """"
+    start of fastapp
+    :return: fastapi.FastAPI
     """
 
-    app = fastapi.FastAPI()
+    app: fastapi.FastAPI = fastapi.FastAPI()
 
     app.add_middleware(
         CORSMiddleware,
@@ -115,7 +116,17 @@ async def start() -> None:
     import_routers(app)
     init_codes(app)
 
-    config = uvicorn.Config(app=app,
+    return app
+
+
+async def start() -> None:
+    """
+    start of all processes
+    :return: None
+    """
+
+    app: fastapi.FastAPI = fast_app_start()
+    config: uvicorn.Config = uvicorn.Config(app=app,
                             host=settings.HOST,
                             port=settings.PORT,
                             loop="asyncio",)
@@ -128,5 +139,3 @@ if "__main__" == __name__:
         asyncio.run(start())
     except KeyboardInterrupt:
         pass
-
-
