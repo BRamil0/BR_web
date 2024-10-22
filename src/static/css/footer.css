@@ -69,11 +69,11 @@ footer a:hover {
 
 @media (max-width: 1000px) {
     .footer {
-        font-size: 1.3rem; /* Зменшує масштаб для мобільних */
+        font-size: 1.15rem; /* Зменшує масштаб для мобільних */
     }
 
     footer a, footer button {
-        font-size: 1.3rem; /* Зменшити розмір шрифта для кнопок */
+        font-size: 1.15rem; /* Зменшити розмір шрифта для кнопок */
         margin: 0.5rem 0; /* Відступи для вертикального відображення */
     }
 
