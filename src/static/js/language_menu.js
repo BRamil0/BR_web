@@ -47,7 +47,12 @@ function loadLocalization(lang) {
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
                 if (data[key]) {
-                    element.textContent = data[key];
+                    const placeholder = "placeholder_"
+                    if (key.includes(placeholder)) {
+                        element.setAttribute('placeholder', data[key]);
+                    }
+                    else
+                        element.textContent = data[key];
                 }
             });
             setCookie('language', lang, 7);

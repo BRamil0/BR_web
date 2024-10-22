@@ -65,7 +65,7 @@
         <text>©2024 BRamil</text>, <text data-translate="footer_rights_reserved">Всі права захищено</text>
     </div>
     <div class="footer-right">
-        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="jetbrains-mono-br" data-translate="footer_form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
         <p></p>
         <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
     </div>
@@ -77,20 +77,19 @@
     </p>
     <button id="accept-cookies" class="cookie-btn" data-translate="cookie_accept jetbrains-mono-br">Прийняти всі cookie</button>
 </div>
-<!-- Модальне вікно -->
 <div id="modal" class="modal">
     <div class="modal-content roboto-medium-br">
-        <h2 class="roboto-medium-br">Написати повідомлення</h2>
-        <label for="name-input"></label><input id="name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)">
+        <h2 class="roboto-medium-br" data-translate="message_text">Написати повідомлення</h2>
+        <label for="name-input"></label><input id="name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)" data-translate="placeholder_message_name">
         <div class="author-mail">
-            <label for="message-author-input"></label><input id="message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)">
-            <label for="message-email-input"></label><input id="message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)">
+            <label for="message-author-input"></label><input id="message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)" data-translate="placeholder_message_author">
+            <label for="message-email-input"></label><input id="message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)" data-translate="placeholder_message_email">
         </div>
-        <label for="message-input"></label><textarea id="message-input" class="jetbrains-mono-br"  placeholder="Введіть ваше повідомлення (обов'язково)"></textarea>
+        <label for="message-input"></label><textarea id="message-input" class="jetbrains-mono-br" placeholder="Введіть ваше повідомлення (обов'язково)" data-translate="placeholder_message_input_text"></textarea>
         <p id="error-message"></p>
         <div class="message-button">
-            <button id="send-message-button" class="jetbrains-mono-br">Надіслати</button>
-            <button class="close-button jetbrains-mono-br" id="close-modal">Закрити</button>
+            <button id="send-message-button" class="jetbrains-mono-br" data-translate="message_send">Надіслати</button>
+            <button class="close-button jetbrains-mono-br" id="close-modal" data-translate="message_close">Закрити</button>
         </div>
     </div>
 </div>

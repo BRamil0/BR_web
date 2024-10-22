@@ -14,7 +14,7 @@ async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "title": "Головна"})
 
 @router.get("/index")
-async def index2():
+async def home():
     return RedirectResponse(url="/")
 
 @router.get("/terms_of_use", response_class=HTMLResponse)
