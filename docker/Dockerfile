@@ -1,4 +1,4 @@
-FROM python:3.12.4-alpine
+FROM python:3.12.7-alpine
 
 WORKDIR /usr/app
 
@@ -6,6 +6,7 @@ WORKDIR /usr/app
 COPY requirements.txt ./
 COPY src ./src
 COPY main.py ./
+COPY app.py ./
 COPY LICENSE ./
 
 RUN pip install --no-cache-dir --upgrade pip
