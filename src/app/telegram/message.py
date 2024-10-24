@@ -6,12 +6,11 @@ from typing import Dict, Any
 from .models import TelegramMessage
 from .ip_handler import IPAddressHandler as IP
 from src.config.config import settings
-
+from src.app.shielding import shielding_markdown_v2
 
 class TelegramSender:
     def __init__(self) -> None:
         self.url = f"https://api.telegram.org/bot{settings.BOT_TOKEN}/sendMessage"
-        self.session = aiohttp.ClientSession()
 
     async def send(self, request: Request, form: TelegramMessage) -> Dict[str, Any]:
         ip = IP(request)
@@ -26,11 +25,11 @@ class TelegramSender:
             "text": fr"""
 Нове повідомлення:
 
-*{form.name}*
+*{await shielding_markdown_v2(form.name)}*
 
-{form.message}
+{await shielding_markdown_v2(form.message)}
 
-{form.author}{comma} {form.email}
+{await shielding_markdown_v2(form.author)}{comma} {await shielding_markdown_v2(form.email)}
 _Додаткова інформація:_
 IP: `{request.client.host}`
 Location: `{await ip.get_location()}`

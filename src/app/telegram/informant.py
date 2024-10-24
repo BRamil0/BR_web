@@ -6,12 +6,11 @@ from typing import Dict, Any
 from .models import TelegramInformant
 from .ip_handler import IPAddressHandler as IP
 from src.config.config import settings
-
+from src.app.shielding import shielding_markdown_v2
 
 class TelegramSender:
     def __init__(self) -> None:
         self.url = f"https://api.telegram.org/bot{settings.BOT_TOKEN}/sendMessage"
-        self.session = aiohttp.ClientSession()
 
     async def send(self, request: Request, form: TelegramInformant) -> Dict[str, Any]:
         ip = IP(request)
@@ -22,42 +21,40 @@ class TelegramSender:
 **Новий запит:**
 
 ```
-Location: {await ip.get_location()}
-IP: {ip.ip}
-
-Request:
-{await request.json()}
+Location: {await shielding_markdown_v2(await ip.get_location())}
+IP: {await shielding_markdown_v2(ip.ip)}
 
 JS:
-innerWidth: {form.innerWidth}
-innerHeight: {form.innerHeight}
-screen_width: {form.screen_width}
-screen_height: {form.screen_height}
-userAgent: {form.userAgent}
-platform: {form.platform}
-language: {form.language}
-location_href: {form.location_href}
-connection_downlink: {form.connection_downlink}
-connection_effective_type: {form.connection_effective_type}
-online: {form.online}
-performance_timing: {form.performance_timing}
-max_touch_points: {form.max_touch_points}
-hardware_concurrency: {form.hardware_concurrency}
-device_memory: {form.device_memory}
-color_depth: {form.color_depth}
-pixel_depth: {form.pixel_depth}
-timezone: {form.timezone}
-cookies_enabled: {form.cookies_enabled}
-referrer: {form.referrer}
-visibility_state: {form.visibility_state}
-document_title: {form.document_title}
-page_load_time: {form.page_load_time}
+innerWidth: {await shielding_markdown_v2(form.innerWidth)}
+innerHeight: {await shielding_markdown_v2(form.innerHeight)}
+screen_width: {await shielding_markdown_v2(form.screen_width)}
+screen_height: {await shielding_markdown_v2(form.screen_height)}
+userAgent: {await shielding_markdown_v2(form.userAgent)}
+platform: {await shielding_markdown_v2(form.platform)}
+language: {await shielding_markdown_v2(form.language)}
+location_href: {await shielding_markdown_v2(form.location_href)}
+connection_downlink: {await shielding_markdown_v2(form.connection_downlink)}
+connection_effective_type: {await shielding_markdown_v2(form.connection_effective_type)}
+online: {await shielding_markdown_v2(form.online)}
+performance_timing: {await shielding_markdown_v2(form.performance_timing)}
+max_touch_points: {await shielding_markdown_v2(form.max_touch_points)}
+hardware_concurrency: {await shielding_markdown_v2(form.hardware_concurrency)}
+device_memory: {await shielding_markdown_v2(form.device_memory)}
+color_depth: {await shielding_markdown_v2(form.color_depth)}
+pixel_depth: {await shielding_markdown_v2(form.pixel_depth)}
+timezone: {await shielding_markdown_v2(form.timezone)}
+cookies_enabled: {await shielding_markdown_v2(form.cookies_enabled)}
+referrer: {await shielding_markdown_v2(form.referrer)}
+visibility_state: {await shielding_markdown_v2(form.visibility_state)}
+document_title: {await shielding_markdown_v2(form.document_title)}
+page_load_time: {await shielding_markdown_v2(form.page_load_time)}
 ```
 
 \#новий\_запит
 """,
             "parse_mode": "MarkdownV2",
         }
+
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url, json=params) as response:
                 return await response.json()
