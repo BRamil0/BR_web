@@ -11,7 +11,7 @@ not_use: list[int] = [2, 10, 12, 15]
 @router.get("/background")
 async def background():
     while True:
-        ran: list[int] = random.randint(1, 20)
+        ran: int = random.randint(1, 20)
         if int(ran) not in not_use:
             break
 

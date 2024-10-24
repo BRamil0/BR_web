@@ -20,7 +20,7 @@ async def info(request: Request, tt: TelegramInformant):
 
 
 @router.post("/message")
-async def info(request: Request, tms: TelegramMessage):
+async def send_message(request: Request, tms: TelegramMessage):
     ts = message.TelegramSender()
     shipment_status = await ts.send(request, tms)
 

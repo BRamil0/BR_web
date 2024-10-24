@@ -1,6 +1,5 @@
 """the main application startup file"""
 import asyncio
-import sys
 
 import uvicorn
 import fastapi
@@ -22,6 +21,7 @@ def import_routers(app: fastapi.FastAPI) -> None:
     :param app: fastapi.FastAPI
     :return: None
     """
+
     app.include_router(base.router)
     app.include_router(background.router)
     app.include_router(telegram.router)

@@ -4,7 +4,7 @@ import aiohttp
 from fastapi import Request
 from typing import Dict, Any
 from .models import TelegramInformant
-from .ip_handler import IPAddressHandler as IP
+from .ip_handler import IPAddressHandler
 from src.config.config import settings
 from src.app.shielding import shielding_markdown_v2
 
@@ -13,7 +13,7 @@ class TelegramSender:
         self.url = f"https://api.telegram.org/bot{settings.BOT_TOKEN}/sendMessage"
 
     async def send(self, request: Request, form: TelegramInformant) -> Dict[str, Any]:
-        ip = IP(request)
+        ip = IPAddressHandler(request)
         chat_id = settings.TELEGRAM_CHAT_ID
         params = {
             "chat_id": chat_id,
