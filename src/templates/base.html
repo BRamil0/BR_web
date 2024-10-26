@@ -2,7 +2,16 @@
 <html lang="ukr" id="html">
 <head class="header">
     <meta charset="UTF-8">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}{{ link }}"> <!-- Replace with your URL -->
+    <meta property="og:title" content="BR Web"> <!-- The title that will appear in the preview -->
+    <meta property="og:description" content="Особистий сайт BRamil"> <!-- Brief description -->
+    <meta property="og:image" content="/static/image/logo.png"> <!-- Link to an image on your site -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
     <title>{{ title }} | BR Web</title>
+
     <link rel="icon" href="/static/image/favicon.ico">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/navbar.css">
@@ -16,6 +25,7 @@
     <link rel="stylesheet" href="/static/css/theme-menu.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/message_form.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
