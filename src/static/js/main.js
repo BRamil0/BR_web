@@ -86,7 +86,7 @@ async function sendBrowserInfo() {
     };
 
     try {
-        const response = await fetch('/info/', {
+        const response = await fetch('/api/telegram/info/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,7 +1,7 @@
 async function updateBackground() {
     try {
         // Отримуємо URL з бекенду FastAPI
-        const response = await fetch('/background');
+        const response = await fetch('/api/background');
         const data = await response.json();
 
         // Створюємо новий об'єкт Image для попереднього завантаження

@@ -69,7 +69,7 @@ sendMessageButton.addEventListener("click", async function() {
     };
 
     try {
-        const response = await fetch('/message', {
+        const response = await fetch('/api/telegram/message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

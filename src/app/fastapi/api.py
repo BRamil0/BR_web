@@ -3,10 +3,25 @@ import random
 from fastapi import APIRouter
 from fastapi.templating import Jinja2Templates
 
-router: APIRouter = APIRouter()
-templates: Jinja2Templates = Jinja2Templates(directory="src/templates")
+from src.app.database import models
+from src.app.database.database import DataBase
 
+router = APIRouter(
+    prefix="/api",
+)
+templates = Jinja2Templates(directory="src/templates")
 not_use: list[int] = [2, 10, 12, 15]
+
+@router.get("/get_post/{post_id}")
+async def db(post_id: int):
+    db = DataBase("blogs")
+    return await db.get_post_id(post_id)
+
+@router.post("/create_post")
+async def db(post: models.PostModel):
+    db = DataBase("blogs")
+    is_created = await db.create_post(post)
+    return {"ok": is_created}
 
 @router.get("/background")
 async def background():

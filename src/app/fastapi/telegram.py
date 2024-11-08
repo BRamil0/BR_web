@@ -7,7 +7,9 @@ from src.app.telegram.models import TelegramInformant, TelegramMessage
 from src.app.telegram import informant
 from src.app.telegram import message
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/api/telegram",
+)
 
 @router.post("/info")
 async def info(request: Request, tt: TelegramInformant):

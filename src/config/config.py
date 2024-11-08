@@ -8,6 +8,7 @@ class Settings(pydantic_settings.BaseSettings):
     DEBUG: bool = False
     BOT_TOKEN: str = ""
     TELEGRAM_CHAT_ID: int = 0
+    MONGODB_URI: str = "localhost:27017"
 
     model_config = pydantic_settings.SettingsConfigDict(env_file=".config.env")
 
