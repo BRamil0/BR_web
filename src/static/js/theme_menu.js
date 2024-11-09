@@ -42,7 +42,6 @@ function applyTheme(theme) {
     let system = false;
     setCookie('theme', theme, 7);
     if (theme === 'system') {
-        // Застосовуємо системну тему
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         theme = systemPrefersDark ? 'dark' : 'light';
         system = true
@@ -63,45 +62,31 @@ themeMenu.addEventListener('click', function(event) {
     if (theme) {
         applyTheme(theme);
         themeMenu.classList.remove('show');
-        setTimeout(() => {
-            delThemeMenu();
-        }, 300);
     }
     setTimeout(() => {
         canClickThemeMenu = true;
     }, 200);
 });
 
-// Показуємо меню тем
-let canClickButtonMenu = true;
+let canClickThemeButtonMenu = true;
 toggleButtonMenu.addEventListener('click', () => {
-    if (!canClickButtonMenu) return;
-    canClickButtonMenu = false;
+    if (!canClickThemeButtonMenu) return;
+    canClickThemeButtonMenu = false;
 
     if (themeMenu.classList.contains('show')) {
         themeMenu.classList.remove('show');
-        setTimeout(() => {
-            delThemeMenu();
-        }, 300);
     } else {
-        setThemeMenu();
-        setTimeout(() => {
-            themeMenu.classList.add('show');
-        }, 150);
+        themeMenu.classList.add('show');
     }
 
     setTimeout(() => {
-        canClickButtonMenu = true;
-    }, 325);
+        canClickThemeButtonMenu = true;
+    }, 150);
 });
 
-// Закриття меню при натисканні поза ним
 document.addEventListener('click', function(event) {
     const themeMenu = document.getElementById('theme-menu');
     if (!themeMenu.contains(event.target) && !toggleButtonMenu.contains(event.target)) {
         themeMenu.classList.remove('show');
-        setTimeout(() => {
-            delThemeMenu();
-        }, 300);
     }
 });

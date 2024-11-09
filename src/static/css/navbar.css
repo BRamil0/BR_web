@@ -29,6 +29,8 @@
     flex: 1;
     text-align: center;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
 }
 
 .nav-right {
@@ -56,6 +58,7 @@ nav a, #a-home {
     transition: background-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
+    z-index: 30;
 }
 
 nav a:hover, #a-home:hover {
@@ -69,31 +72,47 @@ nav img {
     align-items: center;
 }
 
-.lang-button, .emoji-button, .menu-toggle {
+.lang-button, .emoji-button, .mobile-menu-toggle {
     background: none;
     border: none;
     color: var(--text-color);
-    font-size: 0.9rem; /* Масштабування кнопки */
+    font-size: 1rem;
     cursor: pointer;
-    padding: 0;
+    padding: calc(0.5vw + 0.5vh);
     border-radius: 1.8vmin;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     display: inline;
+    z-index: 30;
 }
 
-.lang-button:hover, .emoji-button:hover, .menu-toggle:hover {
+.lang-button:hover, .emoji-button:hover, .mobile-menu-toggle:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
-    transform: scale(1.2);
 }
 
-.menu-toggle {
+.more-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: calc(0.5vw + 0.5vh);
+    border-radius: 1.8vmin;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+}
+.more-button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.mobile-menu-toggle {
     display: none;
 }
 
-
-
-/* Адаптивні стилі для мобільних пристроїв */
 @media (max-width: 1000px) {
     .nav {
         font-size: 2.5rem;
@@ -103,18 +122,21 @@ nav img {
         width: 9vw;
     }
 
-    /* Кнопка меню буде відображатися */
-    .menu-toggle {
+    .mobile-menu-toggle {
         display: inline-block;
         font-size: 2.5rem;
     }
+
+    .more-button {
+        font-size: 2.5rem;
+    }
+
     .lang-button, .emoji-button, .menu-toggle {
         font-size: 2.2rem;
     }
 
-    /* Приховуємо навбар, окрім аватарки, імені та перемикачів */
     .nav-center {
-        display: none; /* Ховаємо меню по замовчуванню */
+        display: none;
     }
 
     .nav-right {
@@ -136,22 +158,17 @@ nav img {
         background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
         text-align: center;
         justify-content: center;
-        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; /* Плавний перехід */
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
         box-shadow: var(--box-shadow);
         z-index: 50;
-        display: flex; /* Flex-позиціонування */
+        display: flex;
     }
 
     /* Коли меню відкрите */
     .nav.open .nav-center {
         visibility: visible;
         opacity: 1;
-    }
-
-    .nav.open .nav-center ul {
-        display: flex;
-        flex-direction: column; /* Робимо меню вертикальним */
-        gap: 1vmin;
+        flex-direction: column;
     }
 }
 

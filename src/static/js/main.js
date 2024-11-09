@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     await applyTheme(theme);
     await loadLocalization(savedLanguage);
     await sendBrowserInfo();
+    await setThemeMenu();
+    await setLanguageMenu();
     console.log("DOM fully loaded and parsed");
 });
 

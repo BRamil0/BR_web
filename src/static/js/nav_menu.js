@@ -1,27 +1,56 @@
-const navMenu =  document.querySelector('.nav')
-const menuNavToggle = document.getElementById('menu-toggle')
-const navLinks = navMenu.querySelectorAll('.nav-link') // Select all nav link
+const mobileNavMenu = document.querySelector('.nav-center')
+const menuMobileNavToggle = document.getElementById('mobile-menu-toggle')
+const navLinks = mobileNavMenu.querySelectorAll('.mobile-nav-link') // Select all nav link
+const menuNavToggle = document.getElementById('more-button')
+const navMenu = document.getElementById('nav-menu')
 
 
-let canClickMenuNavToggle = true;
-menuNavToggle.addEventListener('click', function() {
+let canClickButtonMenu = true;
+menuNavToggle.addEventListener('click', () => {
     if (!canClickButtonMenu) return;
-    canClickMenuNavToggle = false;
-    navMenu.classList.toggle('open');
+    canClickButtonMenu = false;
+
+    if (navMenu.classList.contains('show')) {
+        navMenu.classList.remove('show');
+        console.log("Клас .show видалений");
+    } else {
+        navMenu.classList.add('show');
+        console.log("Клас .show доданий");
+    }
+
+    setTimeout(() => {
+        canClickButtonMenu = true;
+    }, 150);
+});
+
+
+
+document.addEventListener('click', function(event) {
+    if (!navMenu.contains(event.target) && event.target !== menuNavToggle) {
+        navMenu.classList.remove('show');
+    }
+});
+
+
+let canClickMobileMenuNavToggle = true;
+menuMobileNavToggle.addEventListener('click', function() {
+    if (!canClickMobileMenuNavToggle) return;
+    canClickMobileMenuNavToggle = false;
+    mobileNavMenu.classList.toggle('open');
 
     setTimeout(function() {
-        canClickMenuNavToggle = true;
-    }, 300);
+        canClickMobileMenuNavToggle = true;
+    }, 150);
 });
 
 document.addEventListener('click', function(event) {
-    if (navMenu.classList.contains('open') && !event.target.closest('.nav')) {
-        navMenu.classList.remove('open');
+    if (mobileNavMenu.classList.contains('open') && !event.target.closest('.nav')) {
+        mobileNavMenu.classList.remove('open');
     }
 })
 
 navLinks.forEach(link => {
     link.addEventListener('click', function() {
-        navMenu.classList.remove('open');
+        mobileNavMenu.classList.remove('open');
     })
 })

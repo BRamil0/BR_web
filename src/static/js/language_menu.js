@@ -74,39 +74,25 @@ languageButton.addEventListener('click', () => {
 
     if (languageMenu.classList.contains('show')) {
         languageMenu.classList.remove('show');
-        setTimeout(() => {
-            delLanguageMenu();
-        }, 300);
     } else {
-        setLanguageMenu();
-        setTimeout(() => {
-            languageMenu.classList.add('show');
-        }, 150);
+        languageMenu.classList.add('show');
     }
 
     setTimeout(() => {
         canClickLanguageButton = true;
-    }, 325);
+    }, 150);
 });
 
-// Закриття меню при натисканні поза ним
 document.addEventListener('click', function(event) {
     if (!languageMenu.contains(event.target) && !languageButton.contains(event.target)) {
         languageMenu.classList.remove('show');
-        setTimeout(() => {
-            delLanguageMenu();
-        }, 300);
     }
 });
 
-// Обробник для вибору мови з меню
 languageMenu.addEventListener('click', function(event) {
     const selectedLang = event.target.getAttribute('data-lang');
     if (selectedLang) {
         loadLocalization(selectedLang);
         languageMenu.classList.remove('show'); // Закриваємо меню після вибору мови
-        setTimeout(() => {
-            delLanguageMenu();
-        }, 300);
     }
 });

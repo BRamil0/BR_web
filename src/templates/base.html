@@ -15,14 +15,15 @@
     <link rel="icon" href="/static/image/favicon.ico">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/navbar.css">
+    <link rel="stylesheet" href="/static/css/nav_menu.css">
     <link rel="stylesheet" href="/static/css/main_style.css">
     <link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/cookie_banner.css">
     <link rel="stylesheet" href="/static/css/language_menu.css">
+    <link rel="stylesheet" href="/static/css/theme_menu.css">
     <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/copy_text.css">
     <link rel="stylesheet" href="/static/css/item_style.css">
-    <link rel="stylesheet" href="/static/css/theme-menu.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/message_form.css">
 
@@ -37,17 +38,17 @@
 <div id="loading-banner" class="loading-banner"></div>
 <nav class="nav jetbrains-mono-br">
     <div class="nav-left">
-        <button class="menu-toggle" id="menu-toggle">☰</button> <!-- Кнопка меню -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
         <img src="/static/image/logo.png" alt="Logo">
         <a class="link" id="a-home" href="/">BR Web</a>
     </div>
-    <div class="nav-center" id="nav-menu"> <!-- Додано id для мобільного меню -->
-        <ul>
-            <li><a href="/index" data-translate="nav_home" class="link nav-link">Головна</a></li>
-            <li><a href="/project" data-translate="nav_projects" class="link nav-link">Мої проєкти</a></li>
-            <li><a href="/about" data-translate="nav_about" class="link nav-link">Про мене</a></li>
-            <li><a href="/contact" data-translate="nav_contact" class="link nav-link">Контакти</a></li>
-        </ul>
+    <div class="nav-center" id="mobile-nav-menu">
+        <a href="/index" data-translate="nav_home" class="link mobile-nav-link">Головна</a>
+        <a href="/project" data-translate="nav_projects" class="link mobile-nav-link">Мої проєкти</a>
+        <a href="/about" data-translate="nav_about" class="link mobile-nav-link">Про мене</a>
+        <a href="/contact" data-translate="nav_contact" class="link mobile-nav-link">Контакти</a>
+        <a href="/blogs" data-translate="nav_blogs" class="link mobile-nav-link">Блоги</a>
+        <button id="more-button" class="more-button jetbrains-mono-br" data-translate="mobile-nav_more">Більше</button>
     </div>
     <div class="nav-right">
         <button id="language-button-menu" class="lang-button">
@@ -102,6 +103,13 @@
             <button class="close-button jetbrains-mono-br" id="close-modal" data-translate="message_close">Закрити</button>
         </div>
     </div>
+</div>
+<div id="nav-menu" class="nav-menu">
+    <a href="/index" data-translate="footer_home" class="link">Головна</a>
+    <a href="/contact" data-translate="footer_contact" class="link">Контакти</a>
+    <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+    <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a>
+    <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
 </div>
 <div id="language-menu" class="language-menu"></div>
 <div class="theme-menu" id="theme-menu"></div>

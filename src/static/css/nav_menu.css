@@ -1,0 +1,23 @@
+.nav-menu {
+    position: absolute;
+    left: 50%;
+    top: calc(1vw + 1vh);
+    transform: translateX(-50%);
+    padding: 1vw;
+    border-radius: 2vmin;
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    color: var(--text-color);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    z-index: 20;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1vb; /* Відстань між елементами списку */
+}
+
+.nav-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
