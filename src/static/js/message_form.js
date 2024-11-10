@@ -1,4 +1,4 @@
-const formButton = document.getElementById("form-button");
+const formButton = document.getElementsByClassName("form-button");
 const modal = document.getElementById("modal");
 const closeModalButton = document.getElementById("close-modal");
 const sendMessageButton = document.getElementById("send-message-button");
@@ -9,16 +9,16 @@ const messageAuthor = document.getElementById("message-author-input");
 const messageEmail = document.getElementById("message-email-input");
 
 
-// Показуємо модаль при натисканні на кнопку
-formButton.addEventListener("click", function() {
-    modal.style.display = "block";
-    setTimeout(() => {
-            modal.style.visibility = "visible";
-            modal.style.opacity = "1";
-        }, 100);
-});
+for (let i = 0; i < formButton.length; i++) {
+    formButton[i].addEventListener("click", function() {
+        modal.style.display = "block";
+        setTimeout(() => {
+                modal.style.visibility = "visible";
+                modal.style.opacity = "1";
+            }, 100);
+    });
+}
 
-// Закриваємо модаль при натисканні на "x"
 closeModalButton.addEventListener("click", function() {
     modal.style.visibility = "hidden";
     modal.style.opacity = "0";
@@ -28,7 +28,6 @@ closeModalButton.addEventListener("click", function() {
         }, 325);
 });
 
-// Закриваємо модаль при кліку поза його межами
 window.addEventListener("click", function(event) {
     if (event.target === modal) {
         modal.style.visibility = "hidden";
@@ -49,7 +48,6 @@ function showMessageAlert() {
     }, 3000);
 }
 
-// Відправка повідомлення через POST-запит
 sendMessageButton.addEventListener("click", async function() {
     const message = messageInput.value;
     const name = nameInput.value;

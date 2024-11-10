@@ -21,6 +21,16 @@ window.onload = async () => {
     console.log("Page loaded");
 };
 
+function isCheckingButton(className, event) {
+    for (let i = 0; i < className.length; i++) {
+        if (event.target === className[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 // Функція для отримання значення куків
 function getCookie(name) {
     const value = `; ${document.cookie}`;

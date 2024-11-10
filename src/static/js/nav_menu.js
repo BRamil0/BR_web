@@ -1,32 +1,24 @@
 const mobileNavMenu = document.querySelector('.nav-center')
 const menuMobileNavToggle = document.getElementById('mobile-menu-toggle')
 const navLinks = mobileNavMenu.querySelectorAll('.mobile-nav-link') // Select all nav link
-const menuNavToggle = document.getElementById('more-button')
+const menuNavToggle = document.getElementsByClassName('more-button')
 const navMenu = document.getElementById('nav-menu')
 
 
 let canClickButtonMenu = true;
-menuNavToggle.addEventListener('click', () => {
-    if (!canClickButtonMenu) return;
-    canClickButtonMenu = false;
-
-    if (navMenu.classList.contains('show')) {
-        navMenu.classList.remove('show');
-        console.log("Клас .show видалений");
-    } else {
-        navMenu.classList.add('show');
-        console.log("Клас .show доданий");
-    }
-
-    setTimeout(() => {
-        canClickButtonMenu = true;
-    }, 150);
-});
-
-
+for (let i = 0; i < menuNavToggle.length; i++) {
+    menuNavToggle[i].addEventListener('click', function() {
+        if (!canClickButtonMenu) return;
+        canClickButtonMenu = false;
+        navMenu.classList.toggle('show');
+        setTimeout(function() {
+            canClickButtonMenu = true;
+        }, 150);
+    })
+}
 
 document.addEventListener('click', function(event) {
-    if (!navMenu.contains(event.target) && event.target !== menuNavToggle) {
+    if (!navMenu.contains(event.target) && !isCheckingButton(menuNavToggle, event)) {
         navMenu.classList.remove('show');
     }
 });

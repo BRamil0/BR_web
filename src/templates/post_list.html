@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="">
+    <h1 data-translate="">Список постів</h1>
+    <div class="item-container">
+        {% for post in posts %}
+            <div class="item-base">
+                <a href="/blog/post/{{ post._id }}" class="link" data-translate="">{{ post.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

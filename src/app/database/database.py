@@ -13,6 +13,9 @@ class DataBase:
     async def close_connection(self) -> None:
         self.client.close()
 
+    async def get_all_posts(self) -> list:
+        cursor = self.db["posts"].find()
+        return await cursor.to_list(length=None)
 
     async def get_post_id(self, post_id: str) -> list:
         cursor = self.db["posts"].find({"_id": post_id})

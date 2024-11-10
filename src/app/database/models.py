@@ -16,3 +16,8 @@ class PostModel(BaseModel):
     def validate_id(cls, value):
         return value
 
+
+class CreatePostModel(BaseModel):
+    title: str
+    content: str
+    author: str

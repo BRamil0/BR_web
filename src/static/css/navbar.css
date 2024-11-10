@@ -58,7 +58,6 @@ nav a, #a-home {
     transition: background-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
-    z-index: 30;
 }
 
 nav a:hover, #a-home:hover {
@@ -102,7 +101,6 @@ nav img {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 30;
 }
 .more-button:hover {
     background-color: var(--text-color);

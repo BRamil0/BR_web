@@ -38,7 +38,7 @@
 <div id="loading-banner" class="loading-banner"></div>
 <nav class="nav jetbrains-mono-br">
     <div class="nav-left">
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        <button class="mobile-menu-toggle more-button" id="mobile-more-button">☰</button>
         <img src="/static/image/logo.png" alt="Logo">
         <a class="link" id="a-home" href="/">BR Web</a>
     </div>
@@ -47,7 +47,7 @@
         <a href="/project" data-translate="nav_projects" class="link mobile-nav-link">Мої проєкти</a>
         <a href="/about" data-translate="nav_about" class="link mobile-nav-link">Про мене</a>
         <a href="/contact" data-translate="nav_contact" class="link mobile-nav-link">Контакти</a>
-        <a href="/blogs" data-translate="nav_blogs" class="link mobile-nav-link">Блоги</a>
+        <a href="/blog/post_list" data-translate="nav_blogs" class="link nav-base">Блоги</a>
         <button id="more-button" class="more-button jetbrains-mono-br" data-translate="mobile-nav_more">Більше</button>
     </div>
     <div class="nav-right">
@@ -76,7 +76,7 @@
         <text>©2024 BRamil</text>, <text data-translate="footer_rights_reserved">Всі права захищено</text>
     </div>
     <div class="footer-right">
-        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="form-button jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
         <p></p>
         <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
     </div>
@@ -104,12 +104,28 @@
         </div>
     </div>
 </div>
-<div id="nav-menu" class="nav-menu">
-    <a href="/index" data-translate="footer_home" class="link">Головна</a>
-    <a href="/contact" data-translate="footer_contact" class="link">Контакти</a>
-    <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
-    <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a>
-    <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
+<div id="nav-menu" class="nav-menu jetbrains-mono-br">
+    <div class="nav-container">
+        <a href="/index" data-translate="nav_home" class="link nav-base">Головна</a>
+        <a href="/project" data-translate="nav_projects" class="link nav-base">Мої проєкти</a>
+        <a href="/about" data-translate="nav_about" class="link nav-base">Про мене</a>
+        <a href="/contact" data-translate="nav_contact" class="link nav-base">Контакти</a>
+        <a href="/blog/post_list" data-translate="nav_blogs" class="link nav-base">Блоги</a>
+    </div>
+    <p></p>
+    <div class="nav-container size-0-9">
+        <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link nav-base">Умови використання</a>
+        <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link nav-base">Політика конфіденційності</a>
+    </div>
+    <div class="nav-container size-0-9">
+        <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link nav-base">Політика використання cookie</a>
+        <a href="/content_used" data-translate="footer_content_used" class="link nav-base">Використаний контент</a>
+    </div>
+    <p></p>
+    <div class="nav-container">
+        <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+        <button id="form-button-2" class="form-button jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button>
+    </div>
 </div>
 <div id="language-menu" class="language-menu"></div>
 <div class="theme-menu" id="theme-menu"></div>
