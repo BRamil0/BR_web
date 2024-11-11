@@ -1,4 +1,3 @@
-import motor.motor_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from src.app.database import models, blog

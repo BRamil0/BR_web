@@ -1,5 +1,7 @@
+import datetime
+
 from fastapi import APIRouter
-from starlette.responses import RedirectResponse, HTMLResponse
+from starlette.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 
@@ -12,10 +14,21 @@ router = APIRouter(
 templates = Jinja2Templates(directory="src/templates")
 
 
+def format_date(value: datetime.datetime) -> str:
+    return value.strftime("%Y-%m-%d")
+templates.env.filters["format_date"] = format_date
+
+
 @router.get("/post_list", response_class=HTMLResponse)
 async def post_list(request: Request):
     db = DataBase("blogs")
-    return templates.TemplateResponse("post_list.html", {"request": request, "posts": await db.get_all_posts()})
+    posts = await db.get_all_posts()
+    return templates.TemplateResponse("post_list.html", {"request": request, "posts": posts})
+
+
+@router.get("/post")
+async def post():
+    return RedirectResponse(url="/post_list")
 
 
 @router.get("/post/{post_id}", response_class=HTMLResponse)

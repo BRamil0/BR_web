@@ -92,7 +92,6 @@ def init_codes(app: fastapi.FastAPI) -> None:
                                                         "code": 505,
                                                         "message": "http version not supported"})
 
-
 def fast_app_start() -> fastapi.FastAPI:
     """"
     start of fastapp
