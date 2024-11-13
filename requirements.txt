@@ -9,3 +9,7 @@ aiohttp
 pytest
 httpx
 motor
+pyjwt
+pydantic[email]
+bcrypt
+argon2-cffi

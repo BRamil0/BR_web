@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from src.config.config import settings
 from fastapi.templating import Jinja2Templates
 
-from src.app.fastapi import base, telegram, indexing, api, blog
+from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth
 
 
 def import_routers(app: fastapi.FastAPI) -> None:
@@ -24,6 +24,8 @@ def import_routers(app: fastapi.FastAPI) -> None:
     app.include_router(indexing.router)
     app.include_router(api.router)
     app.include_router(blog.router)
+    app.include_router(blog_api.router)
+    app.include_router(auth.router)
 
 
 def init_codes(app: fastapi.FastAPI) -> None:

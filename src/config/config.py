@@ -9,6 +9,10 @@ class Settings(pydantic_settings.BaseSettings):
     BOT_TOKEN: str = ""
     TELEGRAM_CHAT_ID: int = 0
     MONGODB_URI: str = "localhost:27017"
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    SECURE_COOKIES: bool = True
 
     model_config = pydantic_settings.SettingsConfigDict(env_file=".config.env")
 
