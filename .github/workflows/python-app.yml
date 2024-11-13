@@ -6,7 +6,8 @@ name: Python application
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-  MONGO_URI: ${{ secrets.MONGO_URI }}
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
 on:
   push:
     branches: [ "master" ]
