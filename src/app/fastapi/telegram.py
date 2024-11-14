@@ -9,6 +9,7 @@ from src.app.telegram import message
 
 router = APIRouter(
     prefix="/api/telegram",
+    tags=["telegram_api"],
 )
 
 @router.post("/info")

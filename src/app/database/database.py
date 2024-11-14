@@ -1,9 +1,32 @@
+import enum
+from typing import Optional
+
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from src.app.database import models, blog
 from src.config.config import settings
 from bson import ObjectId
 
+class SearchTypeForUser(enum.Enum):
+    email: str = "email"
+    username: str = "username"
+    id: ObjectId = "id"
+
+class SearchAttributeForUser(enum.Enum):
+    id: ObjectId = "id"
+    username: str = "username"
+    is_active: str = "is_active"
+    created_at: str = "created_at"
+    updated_at: str = "updated_at"
+    about_me: str = "about_me"
+    language: str = "language"
+    theme: str = "theme"
+
+    email: str = "email"
+    phone_number: str = "phone_number"
+    roles: str = "roles"
+    login_sessions: str = "login_sessions"
+    oauth_links: str = "oauth_links"
 
 class DataBase:
     def __init__(self, db_name: str) -> None:
@@ -13,67 +36,127 @@ class DataBase:
     async def close_connection(self) -> None:
         self.client.close()
 
-    async def get_user_by_email(self, email: str) -> models.UserModel:
-        user_data = await self.db["users"].find_one({"email": {"$elemMatch": {"email": email}}})
-        if user_data:
-            return  models.UserModel(**user_data)
-        return None
+    async def create_user(self, user: models.UserModel) -> int:
+        user_data = user.model_dump(by_alias=True, exclude={"id"})
+        result = await self.db["users"].insert_one(user_data)
+        return result.inserted_id
 
     async def get_all_users(self) -> list:
         cursor = self.db["users"].find()
         return await cursor.to_list(length=None)
 
-    async def create_user(self, user: models.UserModel) -> int:
-        user_data = user.dict(by_alias=True, exclude={"id"})
-        result = await self.db["users"].insert_one(user_data)
-        return result.inserted_id
+    async def get_user(self, type: SearchTypeForUser, data: str) -> Optional[models.UserModel]:
+        try:
+            if type == SearchTypeForUser.email:
+                user_data = await self.db["users"].find_one({"email": {"$elemMatch": {"email": data}}})
+            elif type == SearchTypeForUser.username:
+                user_data = await self.db["users"].find_one({"username": data})
+            elif type == SearchTypeForUser.id:
+                user_data = await self.db["users"].find_one({"_id": ObjectId(data)})
+            else:
+                return None
+        except (TypeError, ValueError):
+            return None
 
-    async def get_jwt_tokens(self, user_id: ObjectId) -> list:
-        if not ObjectId.is_valid(user_id):
-            raise ValueError("Invalid user ID")
+        if user_data:
+            return  models.UserModel(**user_data)
+        return None
 
-        user = await self.db["users"].find_one({"_id": ObjectId(user_id)})
-
-        if user and "jwt_tokens" in user:
-            return user["jwt_tokens"]
-        return []
-
-    async def add_jwt_token(self, user_id: ObjectId, token: str, is_active: bool) -> bool:
+    async def set_user_data(self, user_id: ObjectId, data: dict) -> bool:
         if not ObjectId.is_valid(user_id):
             raise ValueError("Invalid user ID")
 
         filter = {"_id": ObjectId(user_id)}
-        update = {"$push": {"jwt_tokens": {"jwt_token": token, "is_active": is_active}}}
+        update = {"$set": data}
 
         result = await self.db["users"].update_one(filter, update)
-        return result.acknowledged
+        return result.modified_count > 0
 
-    async def update_jwt_token(self, user_id: ObjectId, token: str, is_active: bool) -> bool:
+    async def add_user_data(self, user_id: ObjectId, data: dict) -> bool:
+        if not ObjectId.is_valid(user_id):
+            raise ValueError("Invalid user ID")
+
+        filter = {"_id": ObjectId(user_id)}
+        update = {"$push": data}
+
+        result = await self.db["users"].update_one(filter, update)
+        return result.modified_count > 0
+
+    async def search_by_users_attribute(self, attribute: SearchAttributeForUser, data: dict | str) -> list:
+        if isinstance(data, dict):
+            query = {attribute.value: {"$elemMatch": data}}
+        else:
+            query = {attribute.value: data}
+
+        cursor = self.db["users"].find(query)
+        return await cursor.to_list(length=None)
+
+    async def search_for_attribute_uniqueness(self, attribute: SearchAttributeForUser, data: dict | str) -> bool:
+        if isinstance(data, dict):
+            query = {attribute.value: {"$elemMatch": data}}
+        else:
+            query = {attribute.value: data}
+
+        cursor = self.db["users"].find(query)
+        return bool(await cursor.to_list(length=1))
+
+    async def get_login_sessions(self, user_id: ObjectId) -> list:
+        if not ObjectId.is_valid(user_id):
+            raise ValueError("Invalid user ID")
+        user = await self.db["users"].find_one({"_id": ObjectId(user_id)})
+        return user.get("login_sessions", [])
+
+    async def add_login_session(self, user_id: ObjectId, session_data: dict) -> bool:
+        if not ObjectId.is_valid(user_id):
+            raise ValueError("Invalid user ID")
+        data = {"login_sessions": session_data}
+        return await self.add_user_data(user_id, data)
+
+    async def update_login_session_token(self, user_id: ObjectId, token: str, is_active: bool) -> bool:
         if not ObjectId.is_valid(user_id):
             raise ValueError("Invalid user ID")
 
         filter = {
             "_id": ObjectId(user_id),
-            "jwt_tokens.jwt_token": token
+            "login_sessions.token": token
         }
         update = {
             "$set": {
-                "jwt_tokens.$.is_active": is_active
+                "login_sessions.$.is_active": is_active
             }
         }
 
         result = await self.db["users"].update_one(filter, update)
         return result.modified_count > 0
 
-    async def remove_jwt_token(self, user_id: ObjectId, token: str) -> bool:
+    async def remove_login_session(self, user_id: ObjectId, token: str) -> bool:
         if not ObjectId.is_valid(user_id):
             raise ValueError("Invalid user ID")
 
         filter = {"_id": ObjectId(user_id)}
-        update = {"$pull": {"jwt_tokens": {"jwt_token": token}}}
+        update = {"$pull": {"login_sessions": {"token": token}}}
 
         result = await self.db["users"].update_one(filter, update)
         return result.acknowledged
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     async def get_all_posts(self) -> list:
         cursor = self.db["posts"].find()
@@ -88,3 +171,4 @@ class DataBase:
         if is_new_post:
             return True
         return False
+

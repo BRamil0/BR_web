@@ -37,21 +37,6 @@ def init_codes(app: fastapi.FastAPI) -> None:
 
     templates = Jinja2Templates(directory="src/templates")
 
-
-    @app.exception_handler(400)
-    async def custom_400_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 400",
-                                                        "code": 400,
-                                                        "message": "bad request"})
-
-    @app.exception_handler(401)
-    async def custom_401_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 401",
-                                                        "code": 401,
-                                                        "message": "unauthorized"})
-
     @app.exception_handler(403)
     async def custom_403_handler(request, __):
         return templates.TemplateResponse("code.html", {"request": request,

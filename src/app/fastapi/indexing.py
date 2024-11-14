@@ -2,7 +2,9 @@ from fastapi import APIRouter
 from starlette.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 
-router = APIRouter()
+router = APIRouter(
+    tags=["indexing"],
+)
 templates = Jinja2Templates(directory="src/templates")
 
 

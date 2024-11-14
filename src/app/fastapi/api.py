@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 router = APIRouter(
     prefix="/api",
+    tags=["api"],
 )
 templates = Jinja2Templates(directory="src/templates")
 not_use: list[int] = [2, 10, 12, 15]

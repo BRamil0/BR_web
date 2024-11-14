@@ -2,7 +2,6 @@ fastapi
 starlette
 uvicorn
 pydantic
-pydantic_settings
 jinja2
 requests
 aiohttp
@@ -13,3 +12,6 @@ pyjwt
 pydantic[email]
 bcrypt
 argon2-cffi
+pymongo
+pydantic-settings
+bleach
