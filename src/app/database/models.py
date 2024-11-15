@@ -16,8 +16,8 @@ class UserModel(BaseModel):
     roles: List[Optional[str]] = [] # it's like what the user can do, for example, if the word admin is there, then the user has access to the admin panel
     is_active: bool = False
     oauth_links: List[Dict[str, str]] = [] # is a list of links to other accounts via OAuth services
-    created_at: datetime.datetime = Field(default_factory=datetime.datetime.now, alias="created_at")
-    updated_at: datetime.datetime = Field(default_factory=datetime.datetime.now, alias="updated_at")
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
     about_me: str | None = None
     language: str | None = None
     theme: str | None = None

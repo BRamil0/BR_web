@@ -1,6 +1,6 @@
 import re
 from datetime import datetime, timedelta, timezone
-from typing import AsyncGenerator
+from typing import AsyncGenerator, List, Dict, Union, Optional
 
 import bleach
 import jwt
@@ -11,6 +11,8 @@ from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from fastapi.security import OAuth2PasswordBearer
 from jwt import ExpiredSignatureError
 from pydantic import BaseModel, EmailStr
+from starlette.responses import JSONResponse
+
 from src.config.config import settings
 from src.app.database.database import DataBase, SearchTypeForUser, SearchAttributeForUser
 from src.app.database.models import UserModel
@@ -39,6 +41,27 @@ class LoginForm(BaseModel):
 class PasswordChangeForm(BaseModel):
     old_password: str
     new_password: str
+
+class ResponseModelForGetCurrentUser(BaseModel):
+    class ModelUserForGetCurrentUser(BaseModel):
+        id: str
+        username: str
+        email: List[Dict[str, Union[EmailStr, bool]]]
+        phone_number: List[Dict[str, Union[str, bool]]]
+        login_sessions: List[Dict[str, Union[str, bool]]]
+        is_password_active: bool = True
+        roles: List[Optional[str]]
+        is_active: bool = False
+        created_at: str
+        updated_at: str
+        about_me: str | None = None
+        language: str | None = None
+        theme: str | None = None
+
+    user: list[ModelUserForGetCurrentUser]
+    message: str
+    status: str
+
 
 async def get_database() -> AsyncGenerator[DataBase, None]:
     db = DataBase("account_info")
@@ -173,7 +196,10 @@ async def register_user(user: UserCreate, response: Response, request: Request, 
         username=user.username,
         email=[{"email": user.email, "is_verified": False}],
         password=hashed_password,
-        is_active=True
+        is_active=True,
+        roles=["user"],
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc),
     )
     user_created = await db.create_user(new_user)
 
@@ -208,6 +234,27 @@ async def logout_user(response: Response, db: DataBase = Depends(get_database), 
     response.delete_cookie(key="access_token")
     await checking_tokens_relevance(ObjectId(token_date["id"]), db)
     return {"message": "Logged out successfully"}
+
+@router.get("/current_user", response_model=ResponseModelForGetCurrentUser)
+async def get_current_user(db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(token_verification)):
+    user = await db.get_user(SearchTypeForUser.id, token_date["id"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    for i in range(len(user.login_sessions)):
+        user.login_sessions[i]["token"] = None
+        user.login_sessions[i]["temporary_ID"] = i
+        user.login_sessions[i]["login_time"] = str(user.login_sessions[i]["login_time"].isoformat())
+
+    user_data = user.model_dump(exclude={"password", "oauth_links"})
+    user_data["id"] = str(user_data["id"])
+    user_data["created_at"] = str(user_data["created_at"].isoformat())
+    user_data["updated_at"] = str(user_data["updated_at"].isoformat())
+
+    date = {"message": "tokens and password were hidden for safety",
+            "status": "ok",
+            "user": user_data}
+    return JSONResponse(content=date)
 
 @router.post("/change_password")
 async def change_password(password_change: PasswordChangeForm, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(token_verification)):
