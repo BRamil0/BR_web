@@ -30,7 +30,7 @@ templates.env.filters["format_date"] = format_date
 @router.get("/post_list", response_class=HTMLResponse)
 async def post_list(request: Request, db: DataBase = Depends(get_database)):
     posts = await db.get_all_posts()
-    return templates.TemplateResponse("post_list.html", {"request": request, "posts": posts})
+    return templates.TemplateResponse("post_list.html", {"request": request, "posts": posts, "title": "Список постів"})
 
 
 @router.get("/post")

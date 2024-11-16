@@ -1,49 +1,53 @@
 async function loadPage(url) {
     try {
-        showLoadingBanner(); // Показуємо банер
-        const response = await fetch(url); // Отримуємо новий контент
+        await showLoadingBanner();
+
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error("Не вдалося завантажити сторінку");
+            console.error(`Failed to load page: ${url}`);
+            return false;
         }
+
         const html = await response.text(); // Отримуємо весь HTML контент
-
-        // Створюємо тимчасовий DOM-елемент для видобутку вмісту з <main>
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html; // Поміщаємо весь HTML в тимчасовий елемент
+        tempDiv.innerHTML = html;
 
-        // Витягуємо вміст з <main class="main" id="content">
-        const newContent = tempDiv.querySelector('main#content').innerHTML;
+        const content = tempDiv.querySelector('main#content');
+        if (content) {
+            document.getElementById('content').innerHTML = content.innerHTML;
+        } else {
+            console.error('No main content found in the response.');
+            return false;
+        }
 
-        // Заміна вмісту
-        document.getElementById('content').innerHTML = newContent;
-
-        // Продовжуємо з іншими функціями, такими як applyTheme, loadLocalization, etc.
-        const theme = getCookie('theme') || 'system';
-        const savedLanguage = getCookie('language') || 'ukr'; // Встановити мову за замовчуванням
-        applyTheme(theme);
-        loadLocalization(savedLanguage);
+        const theme = await getCookie('theme') || 'system';
+        const Language = await getCookie('language') || savedLanguage;
+        await updateCopyTextElements();
+        await applyTheme(theme);
+        await loadLocalization(Language);
         await sendBrowserInfo();
 
-        // Оновлення історії браузера
+        document.title = tempDiv.querySelector('title')?.textContent || 'Default Title';
+        
         history.pushState(null, '', url);
-        console.log("Сторінка завантажена!")
+        return true;
     } catch (error) {
-        console.error("Помилка:", error);
+        console.error('Error loading page:', error);
+        return false;
     } finally {
-        hideLoadingBanner(); // Прибираємо банер
+        await hideLoadingBanner();
     }
 }
 
 document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', function (e) {
+    link.addEventListener('click', async function (e) {
         e.preventDefault(); // Запобігаємо стандартному переходу
 
         const url = this.getAttribute('href'); // Отримуємо URL посилання
-        loadPage(url); // Викликаємо функцію для завантаження контенту
+        await loadPage(url); // Викликаємо функцію для завантаження контенту
     });
 });
 
-// Для підтримки кнопки "Назад" або "Вперед"
-window.addEventListener('popstate', function () {
-    loadPage(location.pathname); // Завантажуємо сторінку при зміні історії
+window.addEventListener('popstate', async function () {
+    await loadPage(location.pathname);
 });

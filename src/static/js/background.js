@@ -1,30 +1,31 @@
 async function updateBackground() {
     try {
-        // Отримуємо URL з бекенду FastAPI
         const response = await fetch('/api/background');
+        if (!response.ok) {
+            console.error("Error fetching background URL");
+            return false;
+        }
         const data = await response.json();
 
-        // Створюємо новий об'єкт Image для попереднього завантаження
-        let img = new Image();
-        img.src = data.image1k;
+        const imageUrls = [data["image1k"], data["image2k"], data["image4k"]];
 
-        // Коли зображення завантажено повністю, змінюємо фон
-        img.onload = () => {
-            document.body.style.backgroundImage = `url(${data.image1k})`;
-        };
-        img.src = data.image2k;
-        img.onload = () => {
-            document.body.style.backgroundImage = `url(${data.image2k})`;
-        };
-        img.src = data.image4k;
-        img.onload = () => {
-            document.body.style.backgroundImage = `url(${data.image4k})`;
-        };
+        for (const url of imageUrls) {
+            const img = new Image();
+            img.src = url;
 
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+            });
+
+            document.body.style.backgroundImage = `url(${url})`;
+        }
+        return true;
     } catch (error) {
-        console.error("Помилка при оновленні фону:", error);
+        console.error("Error updating background:", error);
+        return false;
     }
 }
 
 // Оновлюємо фон кожні 2 хвилини
-setInterval(updateBackground, 2 * 60 * 1000); // 2 хвилини = 120000 мс
+setInterval(updateBackground, 2 * 60 * 1000);

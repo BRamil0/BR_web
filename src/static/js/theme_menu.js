@@ -2,66 +2,68 @@ const themeButtonMenu = document.getElementById('theme-button-menu');
 const themeMenu = document.getElementById('theme-menu');
 const themeEmoji = document.getElementById('theme-emoji');
 const body = document.body;
-const themeList = setThemeList()
 
-function setThemeList() {
-    fetch('/api/theme_list').then(response => {
+async function setThemeList() {
+    try {
+        const response = await fetch('/api/theme_list');
         if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
+            console.error(`Failed to load language file for "theme_list"`);
+            return ["light", "dark", "system"];
         }
-        return response.json();
-    })
-        .then(data => {
-            return data['theme_list'];
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
-    return ["light", "dark", "system"];
-}
-
-function setThemeMenu() {
-    const savedLanguage = getCookie('language') || 'ukr';
-    fetch(`/static/localizations/${savedLanguage}_language.json`).then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-                for (let theme of themeList) {
-                    themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme ="${theme}" class="emoji-button-menu jetbrains-mono-br">${data["theme_" + theme]}</button>`
-                }
-            })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
-}
-
-function delThemeMenu() {
-    for (let theme of themeList) {
-        document.querySelectorAll(`[data-theme="${theme}"]`).forEach(element => {element.remove();
-        })
+        const data = await response.json();
+        return data['theme_list'];
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        return ["light", "dark", "system"];
     }
 }
 
-function setThemeEmoji(value) {
+async function setThemeMenu() {
+    const themeList = await setThemeList();
+    const Language = await getCookie('language') || savedLanguage;
+    try {
+        const response = await fetch(`/static/localizations/${Language}_language.json`);
+        if (!response.ok) {
+            console.error(`Failed to load language file for ${Language}`);
+            return false;
+        }
+        const data = await response.json();
+        themeList.forEach(theme => {
+            themeMenu.innerHTML += `<button data-translate="theme_${theme}" data-theme="${theme}" class="emoji-button-menu jetbrains-mono-br">${data["theme_" + theme]}</button>`;
+        });
+        return true;
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        return false;
+    }
+}
+
+async function delThemeMenu() {
+    const themeList = await setThemeList(); // Wait for theme list
+    themeList.forEach(theme => {
+        document.querySelectorAll(`[data-theme="${theme}"]`).forEach(element => {
+            element.remove();
+        });
+    });
+}
+
+async function setThemeEmoji(value) {
     if (value === "light") themeEmoji.textContent = "☀️";
     else if (value === "dark") themeEmoji.textContent = "🌒";
     else themeEmoji.textContent = "🔃";
 }
 
-function applyTheme(theme) {
+async function applyTheme(theme) {
     let system = false;
-    setCookie('theme', theme, 7);
+    await setCookie('theme', theme, 7);
     if (theme === 'system') {
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         theme = systemPrefersDark ? 'dark' : 'light';
-        system = true
+        system = true;
     }
     body.setAttribute('theme', theme);
-    if (system === false) {
-        setThemeEmoji(theme);
+    if (!system) {
+        await setThemeEmoji(theme);
     } else {
         themeEmoji.textContent = "🖥️";
     }
@@ -75,17 +77,16 @@ themeButtonMenu.addEventListener('click', () => {
     }
 });
 
-document.addEventListener('click', function(event) {
-    const themeMenu = document.getElementById('theme-menu');
+document.addEventListener('click', async function(event) {
     if (!themeMenu.contains(event.target) && !themeButtonMenu.contains(event.target)) {
         themeMenu.classList.remove('show');
     }
 });
 
-themeMenu.addEventListener('click', function(event) {
+themeMenu.addEventListener('click', async function(event) {
     const theme = event.target.getAttribute('data-theme');
     if (theme) {
-        applyTheme(theme);
+        await applyTheme(theme);
         themeMenu.classList.remove('show');
     }
 });

@@ -2,84 +2,105 @@ const languageButton = document.getElementById('language-button-menu');
 const languageMenu = document.getElementById('language-menu');
 const languageName = document.getElementById('language-name');
 const languageEmoji = document.getElementById('language-emoji');
-const languageList = setLanguageList();
 
-function setLanguageList() {
-    fetch('/api/language_list').then(response => {
+async function setLanguageList() {
+    try {
+        const response = await fetch('/api/language_list');
         if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
+            console.error(`Failed to load language file for "language_list"`);
+            return ["ukr", "eng"];
         }
-        return response.json();
-    })
-        .then(data => {
-            return data['language_list'];
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
-    return ["eng", "ukr"];
-}
-
-function setLanguageMenu() {
-    for (const lang of languageList) {
-        fetch(`/static/localizations/${lang}_language.json`).then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
-            }
-            return response.json();
-        })
-            .then(data => {
-                languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button-menu jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
+        const data = await response.json();
+        return data['language_list'];
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        return ["ukr", "eng"];
     }
 }
 
-function delLanguageMenu() {
+async function setLanguageMenu() {
+    const languageList = await setLanguageList();
+
     for (const lang of languageList) {
+        try {
+            const response = await fetch(`/static/localizations/${lang}_language.json`);
+            if (!response.ok) {
+                console.error(`Failed to load language file for ${lang}`);
+                return false;
+            }
+            const data = await response.json();
+            languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button-menu jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+            return false;
+        }
+    }
+}
+
+async function delLanguageMenu() {
+    const languageList = await setLanguageList();
+    languageList.forEach(lang => {
         document.querySelectorAll(`[data-lang="${lang}"]`).forEach(element => {
             element.remove();
-        })
-    }
+        });
+    });
 }
 
-function setLanguageName(lang) {
+async function setLanguageName(lang) {
     languageName.textContent = lang["info"]["original_name"];
     languageEmoji.textContent = lang["info"]["emoji"];
 }
 
+async function getTextForKeyInLanguage(lang, key) {
+    const text = await getTextInLanguage(lang);
+    if (!text || !text[key]) {
+        return key;
+    }
+    return text[key];
+}
 
-function loadLocalization(lang) {
-    fetch(`/static/localizations/${lang}_language.json`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (data[key]) {
-                    const placeholder = "placeholder_"
-                    if (key.includes(placeholder)) {
-                        element.setAttribute('placeholder', data[key]);
-                    }
-                    else
-                        element.textContent = data[key];
+async function getTextInLanguage(lang) {
+    try {
+        const response = await fetch(`/static/localizations/${lang}_language.json`);
+        if (!response.ok) {
+            console.error(`Failed to load language file for ${lang}`);
+            return false;
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        return false;
+    }
+}
+
+async function loadLocalization(lang) {
+    try {
+        const response = await fetch(`/static/localizations/${lang}_language.json`);
+        if (!response.ok) {
+            return false;
+        }
+        const data = await response.json();
+
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (data[key]) {
+                const placeholder = "placeholder_";
+                if (key.includes(placeholder)) {
+                    element.setAttribute('placeholder', data[key]);
+                } else {
+                    element.textContent = data[key];
                 }
-            });
-            setCookie('language', lang, 7);
-            setLanguageName(data)
-            document.getElementsByTagName('html')[0].setAttribute('lang', lang);
-
-
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            }
         });
+
+        await setCookie('language', lang, 7);
+        await setLanguageName(data);
+        document.getElementsByTagName('html')[0].setAttribute('lang', lang);
+        return true;
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        return false;
+    }
 }
 
 languageButton.addEventListener('click', function() {
@@ -96,10 +117,10 @@ document.addEventListener('click', function(event) {
     }
 });
 
-languageMenu.addEventListener('click', function(event) {
+languageMenu.addEventListener('click',  async function(event) {
     const selectedLang = event.target.getAttribute('data-lang');
     if (selectedLang) {
-        loadLocalization(selectedLang);
+        await loadLocalization(selectedLang);
         languageMenu.classList.remove('show');
     }
 });

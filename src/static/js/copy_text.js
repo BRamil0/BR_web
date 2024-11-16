@@ -1,35 +1,35 @@
-// Отримуємо всі елементи з класом copy-text
-const copyTextElements = document.querySelectorAll('.copy-text');
-const copyAlert = document.getElementById('copy-alert');
+let copyTextElements = document.querySelectorAll('.copy-text');
 
-// Функція для копіювання тексту
-function copyToClipboard(text) {
+async function updateCopyTextElements() {
+    copyTextElements = document.querySelectorAll('.copy-text');
+    for (const element of copyTextElements) {
+        element.addEventListener('click', async () => {
+            const text = element.textContent;
+            await copyToClipboard(text);
+            await showCopyAlert();
+        });
+    }
+}
+
+async function copyToClipboard(text) {
     const tempInput = document.createElement('input');
     tempInput.value = text;
     document.body.appendChild(tempInput);
     tempInput.select();
-    document.execCommand('copy');
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (error) {
+        console.error('Copying text failed', error);
+    }
     document.body.removeChild(tempInput);
 }
 
-// Показуємо вікно з повідомленням
-function showCopyAlert() {
-    const alertBox = document.getElementById('copy-alert');
-    alertBox.classList.add('show');
-
-    // Прибираємо спливаюче вікно через 3 секунди
+async function showCopyAlert() {
+    const infoAlert = document.getElementById('info-alert');
+    const Language = await getCookie("language") || savedLanguage;
+    infoAlert.textContent = await getTextForKeyInLanguage(Language, "copy_alert");
+    infoAlert.classList.add('show');
     setTimeout(function() {
-        alertBox.classList.remove('show');
+        infoAlert.classList.remove('show');
     }, 3000);
 }
-
-// Додаємо обробник події на кожен елемент
-copyTextElements.forEach(element => {
-    element.addEventListener('click', () => {
-        const text = element.textContent; // Отримуємо текст для копіювання з конкретного елемента
-        // Копіюємо текст
-        copyToClipboard(text); // Копіюємо текст
-        showCopyAlert(); // Показуємо вікно
-    });
-});
-
