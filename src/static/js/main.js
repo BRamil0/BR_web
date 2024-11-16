@@ -1,8 +1,5 @@
-const languageList = ["eng", "ukr"]
-const themeList = ["light", "dark", "system"];
 const theme = getCookie('theme') || 'system';
 const savedLanguage = getCookie('language') || 'eng'; // Встановити мову за замовчуванням
-
 
 document.addEventListener("DOMContentLoaded", async () => {
     await updateBackground();

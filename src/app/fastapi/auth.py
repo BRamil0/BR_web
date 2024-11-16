@@ -57,6 +57,8 @@ class ResponseModelForGetCurrentUser(BaseModel):
         about_me: str | None = None
         language: str | None = None
         theme: str | None = None
+        avatar: str | None = None
+        background_image: str | None = None
 
     user: list[ModelUserForGetCurrentUser]
     message: str

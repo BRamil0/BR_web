@@ -1,0 +1,72 @@
+.nav-menu {
+    position: absolute;
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    color: var(--text-color);
+    padding: 1vw;
+    border-radius: 2vmin;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1vb;
+}
+
+.nav-menu.center {
+    background-color: var(--bg-color);
+    left: 50%;
+    top: calc(1vw + 1vh);
+    transform: translateX(-50%);
+}
+
+.nav-menu.near {
+    top: 14vb;
+    right: 1.5vw;
+}
+
+.nav-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-menu button {
+    transform: scale(1);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5vh 1vw;
+    border-radius: 1.6vmin;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: left;
+}
+
+.nav-menu button:hover {
+    transform: scale(1);
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+.nav-menu a, .nav-menu a {
+    color: var(--text-color);
+    padding: calc(0.5vw + 0.5vh);
+    border-radius: 1.8vmin;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-menu a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.nav-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1vmin;
+    border-radius: 2vmin;
+}

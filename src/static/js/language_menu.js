@@ -2,6 +2,23 @@ const languageButton = document.getElementById('language-button-menu');
 const languageMenu = document.getElementById('language-menu');
 const languageName = document.getElementById('language-name');
 const languageEmoji = document.getElementById('language-emoji');
+const languageList = setLanguageList();
+
+function setLanguageList() {
+    fetch('/api/language_list').then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    })
+        .then(data => {
+            return data['language_list'];
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    return ["eng", "ukr"];
+}
 
 function setLanguageMenu() {
     for (const lang of languageList) {
@@ -12,7 +29,7 @@ function setLanguageMenu() {
             return response.json();
         })
             .then(data => {
-                languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
+                languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button-menu jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -34,7 +51,6 @@ function setLanguageName(lang) {
 }
 
 
-// Функція для завантаження файлу локалізації
 function loadLocalization(lang) {
     fetch(`/static/localizations/${lang}_language.json`)
         .then(response => {
@@ -66,21 +82,12 @@ function loadLocalization(lang) {
         });
 }
 
-// Обробник для відкриття/закриття меню мов
-let canClickLanguageButton = true;
-languageButton.addEventListener('click', () => {
-    if (!canClickLanguageButton) return;
-    canClickLanguageButton = false;
-
+languageButton.addEventListener('click', function() {
     if (languageMenu.classList.contains('show')) {
         languageMenu.classList.remove('show');
     } else {
         languageMenu.classList.add('show');
     }
-
-    setTimeout(() => {
-        canClickLanguageButton = true;
-    }, 150);
 });
 
 document.addEventListener('click', function(event) {
@@ -93,6 +100,6 @@ languageMenu.addEventListener('click', function(event) {
     const selectedLang = event.target.getAttribute('data-lang');
     if (selectedLang) {
         loadLocalization(selectedLang);
-        languageMenu.classList.remove('show'); // Закриваємо меню після вибору мови
+        languageMenu.classList.remove('show');
     }
 });

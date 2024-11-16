@@ -21,6 +21,8 @@ class UserModel(BaseModel):
     about_me: str | None = None
     language: str | None = None
     theme: str | None = None
+    avatar: str | None = None
+    background_image: str | None = None
 
     class Config:
         arbitrary_types_allowed = True

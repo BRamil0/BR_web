@@ -1,21 +1,19 @@
-const menuNavToggle = document.getElementsByClassName('more-button')
+const navMenuButton = document.getElementsByClassName('nav-menu-button')
 const navMenu = document.getElementById('nav-menu')
 
 
-let canClickButtonMenu = true;
-for (let i = 0; i < menuNavToggle.length; i++) {
-    menuNavToggle[i].addEventListener('click', function() {
-        if (!canClickButtonMenu) return;
-        canClickButtonMenu = false;
-        navMenu.classList.toggle('show');
-        setTimeout(function() {
-            canClickButtonMenu = true;
-        }, 150);
-    })
+for (let i = 0; i < navMenuButton.length; i++) {
+    navMenuButton[i].addEventListener('click', function() {
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+        } else {
+            navMenu.classList.add('show');
+        }
+    });
 }
 
 document.addEventListener('click', function(event) {
-    if (!navMenu.contains(event.target) && !isCheckingButton(menuNavToggle, event)) {
+    if (!navMenu.contains(event.target) && !isCheckingButton(navMenuButton, event)) {
         navMenu.classList.remove('show');
     }
 });

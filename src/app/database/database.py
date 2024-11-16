@@ -21,6 +21,8 @@ class SearchAttributeForUser(enum.Enum):
     about_me: str = "about_me"
     language: str = "language"
     theme: str = "theme"
+    avatar: str = "avatar"
+    background_image = "background_image"
 
     email: str = "email"
     phone_number: str = "phone_number"

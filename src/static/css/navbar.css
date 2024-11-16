@@ -39,19 +39,13 @@
     text-decoration: none;
 }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 2vw;
+nav img {
+    width: 3vw;
+    height: auto;
+    align-items: center;
 }
 
-nav li {
-    display: inline-block;
-}
-
-nav a, #a-home {
+nav a {
     color: var(--text-color);
     padding: calc(0.5vw + 0.5vh);
     border-radius: 1.8vmin;
@@ -60,18 +54,12 @@ nav a, #a-home {
     white-space: nowrap;
 }
 
-nav a:hover, #a-home:hover {
+nav a:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
 
-nav img {
-    width: 3vw; /* Масштабування зображення відповідно до ширини вікна */
-    height: auto;
-    align-items: center;
-}
-
-.lang-button, .emoji-button, .mobile-menu-toggle {
+nav button {
     background: none;
     border: none;
     color: var(--text-color);
@@ -81,33 +69,15 @@ nav img {
     border-radius: 1.8vmin;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     display: inline;
-    z-index: 30;
+    z-index: 20;
 }
 
-.lang-button:hover, .emoji-button:hover, .mobile-menu-toggle:hover {
+nav button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
 
-.more-button {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 1rem;
-    cursor: pointer;
-    padding: calc(0.5vw + 0.5vh);
-    border-radius: 1.8vmin;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.more-button:hover {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-}
-
-.mobile-menu-toggle {
+.mobile-nav-menu-button {
     display: none;
 }
 
@@ -120,16 +90,16 @@ nav img {
         width: 9vw;
     }
 
-    .mobile-menu-toggle {
+    .mobile-nav-menu-button {
         display: inline-block;
         font-size: 2.5rem;
     }
 
-    .more-button {
+    .nav-menu-button {
         font-size: 2.5rem;
     }
 
-    .lang-button, .emoji-button, .menu-toggle {
+    .lang-button-menu, .emoji-button-menu, .menu-toggle {
         font-size: 2.2rem;
     }
 

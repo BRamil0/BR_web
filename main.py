@@ -111,9 +111,9 @@ async def start() -> None:
 
     app: fastapi.FastAPI = fast_app_start()
     config: uvicorn.Config = uvicorn.Config(app=app,
-                            host=settings.HOST,
-                            port=settings.PORT,
-                            loop="asyncio",)
+                                            host=settings.host,
+                                            port=settings.port,
+                                            loop="asyncio", )
     server = uvicorn.Server(config=config)
     await asyncio.gather(server.serve())
 
