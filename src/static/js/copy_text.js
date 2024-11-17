@@ -26,7 +26,7 @@ async function copyToClipboard(text) {
 
 async function showCopyAlert() {
     const infoAlert = document.getElementById('info-alert');
-    const Language = await getCookie("language") || savedLanguage;
+    const Language = await getLanguage();
     infoAlert.textContent = await getTextForKeyInLanguage(Language, "copy_alert");
     infoAlert.classList.add('show');
     setTimeout(function() {

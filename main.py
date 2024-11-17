@@ -7,7 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from src.config.config import settings
-from fastapi.templating import Jinja2Templates
+from src.app.fastapi.templates import templates
 
 from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth
 
@@ -34,8 +34,6 @@ def init_codes(app: fastapi.FastAPI) -> None:
     :param app: fastapi.FastAPI
     :return: None
     """
-
-    templates = Jinja2Templates(directory="src/templates")
 
     @app.exception_handler(403)
     async def custom_403_handler(request, __):
@@ -113,7 +111,8 @@ async def start() -> None:
     config: uvicorn.Config = uvicorn.Config(app=app,
                                             host=settings.host,
                                             port=settings.port,
-                                            loop="asyncio", )
+                                            loop="asyncio",
+                                            reload=settings.DEBUG,)
     server = uvicorn.Server(config=config)
     await asyncio.gather(server.serve())
 

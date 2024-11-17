@@ -20,15 +20,15 @@ async function loadPage(url) {
             return false;
         }
 
-        const theme = await getCookie('theme') || 'system';
-        const Language = await getCookie('language') || savedLanguage;
+        theme = await getTheme();
+        savedLanguage = await getLanguage();
         await updateCopyTextElements();
         await applyTheme(theme);
-        await loadLocalization(Language);
+        await loadLocalization(savedLanguage);
         await sendBrowserInfo();
 
         document.title = tempDiv.querySelector('title')?.textContent || 'Default Title';
-        
+
         history.pushState(null, '', url);
         return true;
     } catch (error) {

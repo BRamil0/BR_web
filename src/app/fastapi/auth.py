@@ -241,7 +241,7 @@ async def logout_user(response: Response, db: DataBase = Depends(get_database), 
 async def get_current_user(db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(token_verification)):
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=401, detail="User not found")
 
     for i in range(len(user.login_sessions)):
         user.login_sessions[i]["token"] = None

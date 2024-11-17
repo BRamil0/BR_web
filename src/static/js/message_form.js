@@ -30,10 +30,12 @@ async function handleOutsideClick(event) {
 }
 
 async function showMessageAlert() {
-    const alertBox = document.getElementById("message-alert");
-    alertBox.classList.add('show');
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    alertBox.classList.remove('show');
+    const infoAlert = document.getElementById("info-alert");
+    infoAlert.textContent = await getTextForKeyInLanguage(await getLanguage(), "message_alert");
+    infoAlert.classList.add('show');
+    setTimeout(() => {
+        infoAlert.classList.remove('show');
+    }, 3000);
 }
 
 Array.from(formButton).forEach(button => {

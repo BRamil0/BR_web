@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ukr" id="html">
+<html lang="ukr">
 <head class="header">
     <meta charset="UTF-8">
     <meta property="og:type" content="website">
@@ -81,8 +81,9 @@
             <button id="form-button-2" class="form-button jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button>
         </div>
     </div>
-    <div id="language-menu" class="nav-menu near"></div>
-    <div id="theme-menu" class="nav-menu near"></div>
+    <div id="language-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
+    <div id="theme-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
+    <div id="account-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
 </nav>
 <main class="main roboto-medium-br" id="content">
     {% block content %}
@@ -110,7 +111,7 @@
         <text data-translate="cookie_text">Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,</text>
         <a href="/cookie_policy" data-translate="cookie_link" class="link">Політики використання cookie.</a>
     </p>
-    <button id="accept-cookies" class="cookie-btn" data-translate="cookie_accept jetbrains-mono-br">Прийняти всі cookie</button>
+    <button id="accept-cookies" data-translate="cookie_accept jetbrains-mono-br">Прийняти всі cookie</button>
 </div>
 <div id="modal" class="modal">
     <div class="modal-content roboto-medium-br">
@@ -128,8 +129,6 @@
         </div>
     </div>
 </div>
-<div id="message-alert" class="info-alert jetbrains-mono-br" data-translate="message_alert">Повідомлення надіслано успішно!</div>
-<div id="copy-alert" class="info-alert jetbrains-mono-br" data-translate="copy_alert">Текст скопійовано!</div>
 <div id="info-alert" class="info-alert jetbrains-mono-br" data-translate="copy_alert">Інформація</div>
 <script src="/static/js/main.js"></script>
 <script src="/static/js/background.js"></script>
@@ -141,5 +140,23 @@
 <script src="/static/js/nav_menu.js"></script>
 <script src="/static/js/message_form.js"></script>
 <script src="/static/js/account.js"></script>
+
+{% if DEBUG_MODE %}
+<div id="debug-mode-menu">
+    <h2>Режим налагодження (Debug Mode)</h2>
+    <div class="item-container">
+        <button id="reload-page-button" class="item-base jetbrains-mono-br">Перезавантажити сторінку</button>
+        <button id="clear-cookies-button" class="item-base jetbrains-mono-br">Видалити всі cookies</button>
+        <button id="clear-cache-button" class="item-base jetbrains-mono-br">Очистити кеш</button>
+        <button id="clear-theme-button" class="item-base jetbrains-mono-br">Видалити меню тем</button>
+        <button id="clear-language-button" class="item-base jetbrains-mono-br">Видалити меню мов</button>
+        <button id="clear-account-button" class="item-base jetbrains-mono-br">Видалити меню облікового запису</button>
+    </div>
+</div>
+<button id="debug-mode-menu-button" class="jetbrains-mono-br">⚙️</button>
+<link rel="stylesheet" href="/static/css/debug_mode.css">
+<script src="/static/js/debug_mode.js"></script>
+{% endif %}
+
 </body>
 </html>

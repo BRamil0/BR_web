@@ -18,6 +18,12 @@
     font-size: 0.8rem;
 }
 
+.cookie-banner.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
 .cookie-banner a {
     color: var(--text-color--cookie);
     text-decoration: none;
@@ -30,7 +36,7 @@
     color: var(--bg-color);
 }
 
-.cookie-btn {
+.cookie-banner button {
     font-size: 1rem;
     background-color: var(--bg-color--cookie);
     border: none;
@@ -43,15 +49,9 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.cookie-btn:hover {
+.cookie-banner button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
-}
-
-.cookie-banner.show {
-    display: block;
-    opacity: 1;
-    visibility: visible;
 }
 
 @media (max-width: 1000px) {

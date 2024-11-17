@@ -15,6 +15,8 @@ class Settings(pydantic_settings.BaseSettings):
     port: int = 8080
     default_theme_list: list = ["system", "light", "dark"]
     default_list_of_languages: list = ["eng", "ukr"]
+    default_theme: str = "system"
+    default_language: str = "eng"
 
     model_config = pydantic_settings.SettingsConfigDict(env_file=".config.env", env_file_encoding="utf-8")
 

@@ -2,8 +2,8 @@ let theme = 'system';
 let savedLanguage = 'eng';
 
 document.addEventListener("DOMContentLoaded", async () => {
-    theme = await getCookie('theme') || 'system';
-    savedLanguage = await getCookie('language') || 'eng';
+    theme = await getTheme();
+    savedLanguage = await getLanguage();
     await updateBackground();
     await updateCopyTextElements();
     await applyTheme(theme);
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await sendBrowserInfo();
     await setThemeMenu();
     await setLanguageMenu();
+    await setAccountMenu();
 });
 
 window.onload = async () => {

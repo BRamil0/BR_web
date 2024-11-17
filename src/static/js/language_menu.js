@@ -2,6 +2,7 @@ const languageButton = document.getElementById('language-button-menu');
 const languageMenu = document.getElementById('language-menu');
 const languageName = document.getElementById('language-name');
 const languageEmoji = document.getElementById('language-emoji');
+let is_show_language_menu = true;
 
 async function setLanguageList() {
     try {
@@ -19,31 +20,37 @@ async function setLanguageList() {
 }
 
 async function setLanguageMenu() {
+    is_show_language_menu = false;
+    languageMenu.classList.remove("show");
+
     const languageList = await setLanguageList();
 
-    for (const lang of languageList) {
-        try {
-            const response = await fetch(`/static/localizations/${lang}_language.json`);
-            if (!response.ok) {
-                console.error(`Failed to load language file for ${lang}`);
+    setTimeout( async () => {
+        if (languageMenu.innerHTML !== "") {
+            await delLanguageMenu()
+        }
+        for (const lang of languageList) {
+            try {
+                const response = await fetch(`/static/localizations/${lang}_language.json`);
+                if (!response.ok) {
+                    console.error(`Failed to load language file for ${lang}`);
+                    return false;
+                }
+                const data = await response.json();
+                languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button-menu jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
                 return false;
             }
-            const data = await response.json();
-            languageMenu.innerHTML += `<button data-lang="${lang}" class="emoji-button-menu jetbrains-mono-br">${data["info"]["emoji"]} ${data["info"]["original_name"]}</button>`;
-        } catch (error) {
-            console.error('There has been a problem with your fetch operation:', error);
-            return false;
         }
-    }
+        is_show_language_menu = true;
+    }, 100);
+
+    return true;
 }
 
 async function delLanguageMenu() {
-    const languageList = await setLanguageList();
-    languageList.forEach(lang => {
-        document.querySelectorAll(`[data-lang="${lang}"]`).forEach(element => {
-            element.remove();
-        });
-    });
+    languageMenu.innerHTML = "";
 }
 
 async function setLanguageName(lang) {
@@ -70,6 +77,21 @@ async function getTextInLanguage(lang) {
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
         return false;
+    }
+}
+
+async function getLanguage() {
+    try {
+        const response = await fetch(`/api/default_language`);
+        if (!response.ok) {
+            console.error(`Error fetching default language`);
+            return "ukr";
+        }
+        let lang = await response.json();
+        return await getCookie('language') || lang["language_default"] || "ukr";
+    } catch (error) {
+        console.error('Error fetching default language:', error);
+        return "ukr";
     }
 }
 
@@ -104,10 +126,12 @@ async function loadLocalization(lang) {
 }
 
 languageButton.addEventListener('click', function() {
-    if (languageMenu.classList.contains('show')) {
-        languageMenu.classList.remove('show');
-    } else {
-        languageMenu.classList.add('show');
+    if (is_show_language_menu) {
+        if (languageMenu.classList.contains('show')) {
+            languageMenu.classList.remove('show');
+        } else {
+            languageMenu.classList.add('show');
+        }
     }
 });
 

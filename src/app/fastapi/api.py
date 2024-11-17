@@ -1,7 +1,6 @@
 import random
 
 from fastapi import APIRouter
-from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
 from src.config.config import settings
@@ -10,14 +9,20 @@ router = APIRouter(
     prefix="/api",
     tags=["api"],
 )
-templates = Jinja2Templates(directory="src/templates")
+
 not_use: list[int] = [2, 10, 12, 15]
 
-class ThemeModel(BaseModel):
+class ThemeDefaultListModel(BaseModel):
     theme_list: list[str]
 
-class LanguageModel(BaseModel):
+class ThemeDefaultModel(BaseModel):
+    theme_default: str
+
+class LanguageDefaultListModel(BaseModel):
     language_list: list[str]
+
+class LanguageDefaultModel(BaseModel):
+    language_default: str
 
 @router.get("/background")
 async def background():
@@ -36,10 +41,22 @@ async def background(background_id: int):
             "image2k": f"/static/image/background/2k/{background_id}.webp",
             "image1k": f"/static/image/background/1k/{background_id}.webp",}
 
-@router.get("/theme_list", response_model=ThemeModel)
+@router.get("/theme_list", response_model=ThemeDefaultListModel)
 async def theme_list():
     return {"theme_list": settings.default_theme_list}
 
-@router.get("/language_list", response_model=LanguageModel)
+@router.get("/language_list", response_model=LanguageDefaultListModel)
 async def language_list():
     return {"language_list": settings.default_list_of_languages}
+
+@router.get("/default_theme", response_model=ThemeDefaultModel)
+async def default_theme():
+    return {"theme_default": settings.default_theme}
+
+@router.get("/default_language", response_model=LanguageDefaultModel)
+async def default_language():
+    return {"language_default": settings.default_language}
+
+@router.get("/debug_mode")
+async def debug_mode():
+    return {"debug_mode": settings.DEBUG}

@@ -2,7 +2,6 @@ from typing import AsyncGenerator
 
 from fastapi import APIRouter, Depends
 from starlette.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
 
 from src.app.database import models
 from src.app.database.database import DataBase
@@ -11,7 +10,6 @@ router = APIRouter(
     prefix="/api/blog",
     tags=["blog_api"],
 )
-templates = Jinja2Templates(directory="src/templates")
 
 async def get_database() -> AsyncGenerator[DataBase, None]:
     db = DataBase("blogs")
