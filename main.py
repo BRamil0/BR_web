@@ -4,13 +4,14 @@ import asyncio
 import uvicorn
 import fastapi
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from src.config.config import settings
 from src.app.templates import templates
 
 from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth
-
+from src.logger.logger import logger, log_requests
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -77,12 +78,12 @@ def init_codes(app: fastapi.FastAPI) -> None:
                                                         "code": 505,
                                                         "message": "http version not supported"})
 
+
 def fast_app_start() -> fastapi.FastAPI:
     """"
     start of fastapp
     :return: fastapi.FastAPI
     """
-
     app: fastapi.FastAPI = fastapi.FastAPI()
 
     app.add_middleware(
@@ -92,33 +93,42 @@ def fast_app_start() -> fastapi.FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(BaseHTTPMiddleware, dispatch=log_requests)
 
     app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
     import_routers(app)
     init_codes(app)
-
     return app
+
 
 async def start() -> None:
     """
     start of all processes
     :return: None
     """
-
     app: fastapi.FastAPI = fast_app_start()
+
     config: uvicorn.Config = uvicorn.Config(app=app,
                                             host=settings.host,
                                             port=settings.port,
                                             loop="asyncio",
-                                            reload=settings.DEBUG,)
+                                            reload=settings.DEBUG,
+                                            log_config=None)
     server = uvicorn.Server(config=config)
+
+    host = server.config.host
+    if host not in "http://":
+        host = f"http://{host}"
+    logger.opt(colors=True).info(f"<g>The server is running at: <b>{host}:{server.config.port}</b></g> <y>(press ctrl+c to stop)</y>")
+
     await asyncio.gather(server.serve())
 
 
 if "__main__" == __name__:
-    print("Debug mode:", settings.DEBUG)
+    logger.opt(colors=True).info("<e><b>Starting application...</b></e>")
+    logger.opt(colors=True).info(f"<cyan>Debug mode: <b>{settings.DEBUG}</b></cyan> | <cyan>Debug database mode: <b>{settings.DEBUG_DATABASE}</b></cyan>")
     try:
         asyncio.run(start())
     except KeyboardInterrupt:
-        pass
+        logger.warning("Server shutdown by user.")

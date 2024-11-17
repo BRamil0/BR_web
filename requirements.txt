@@ -15,3 +15,4 @@ argon2-cffi
 pymongo
 pydantic-settings
 bleach
+loguru
