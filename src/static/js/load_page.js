@@ -26,6 +26,7 @@ async function loadPage(url) {
         await applyTheme(theme);
         await loadLocalization(savedLanguage);
         await sendBrowserInfo();
+        await checkScroll();
 
         document.title = tempDiv.querySelector('title')?.textContent || 'Default Title';
 

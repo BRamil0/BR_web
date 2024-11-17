@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+import typing
 
 from fastapi import APIRouter, Depends
 from starlette.responses import RedirectResponse
@@ -11,7 +11,7 @@ router = APIRouter(
     tags=["blog_api"],
 )
 
-async def get_database() -> AsyncGenerator[DataBase, None]:
+async def get_database() -> typing.AsyncGenerator[DataBase, None]:
     db = DataBase("blogs")
     try:
         yield db

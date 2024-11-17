@@ -44,4 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("clear-theme-button").addEventListener("click", delThemeMenu);
     document.getElementById("clear-language-button").addEventListener("click", delLanguageMenu);
     document.getElementById("clear-account-button").addEventListener("click", delAccountMenu);
+    document.getElementById("on-banner-button").addEventListener("click", showLoadingBanner);
+    document.getElementById("off-banner-button").addEventListener("click", hideLoadingBanner);
 });

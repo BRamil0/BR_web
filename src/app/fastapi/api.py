@@ -1,8 +1,8 @@
 import random
 
 from fastapi import APIRouter
-from pydantic import BaseModel
 
+from src.app.fastapi import models
 from src.config.config import settings
 
 router = APIRouter(
@@ -12,17 +12,7 @@ router = APIRouter(
 
 not_use: list[int] = [2, 10, 12, 15]
 
-class ThemeDefaultListModel(BaseModel):
-    theme_list: list[str]
 
-class ThemeDefaultModel(BaseModel):
-    theme_default: str
-
-class LanguageDefaultListModel(BaseModel):
-    language_list: list[str]
-
-class LanguageDefaultModel(BaseModel):
-    language_default: str
 
 @router.get("/background")
 async def background():
@@ -41,19 +31,19 @@ async def background(background_id: int):
             "image2k": f"/static/image/background/2k/{background_id}.webp",
             "image1k": f"/static/image/background/1k/{background_id}.webp",}
 
-@router.get("/theme_list", response_model=ThemeDefaultListModel)
+@router.get("/theme_list", response_model=models.ThemeDefaultListModel)
 async def theme_list():
     return {"theme_list": settings.default_theme_list}
 
-@router.get("/language_list", response_model=LanguageDefaultListModel)
+@router.get("/language_list", response_model=models.LanguageDefaultListModel)
 async def language_list():
     return {"language_list": settings.default_list_of_languages}
 
-@router.get("/default_theme", response_model=ThemeDefaultModel)
+@router.get("/default_theme", response_model=models.ThemeDefaultModel)
 async def default_theme():
     return {"theme_default": settings.default_theme}
 
-@router.get("/default_language", response_model=LanguageDefaultModel)
+@router.get("/default_language", response_model=models.LanguageDefaultModel)
 async def default_language():
     return {"language_default": settings.default_language}
 

@@ -1,19 +1,18 @@
 import datetime
-from typing import AsyncGenerator
+import typing
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from starlette.responses import HTMLResponse, RedirectResponse
-from starlette.requests import Request
 
 from src.app.database.database import DataBase
-from src.app.fastapi.templates import templates
+from src.app.templates import templates
 
 router = APIRouter(
     prefix="/blog",
     tags=["blog"],
 )
 
-async def get_database() -> AsyncGenerator[DataBase, None]:
+async def get_database() -> typing.AsyncGenerator[DataBase, None]:
     db = DataBase("blogs")
     try:
         yield db

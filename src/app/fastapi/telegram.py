@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-from fastapi import status
+from fastapi import APIRouter, status
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 

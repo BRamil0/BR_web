@@ -1,8 +1,7 @@
-from fastapi import APIRouter
-from starlette import status
+from fastapi import APIRouter, status, Request
 from starlette.responses import HTMLResponse, RedirectResponse
-from starlette.requests import Request
-from src.app.fastapi.templates import templates
+
+from src.app.templates import templates
 
 router = APIRouter(
     tags=["base"],

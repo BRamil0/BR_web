@@ -14,7 +14,7 @@ async def get_next_id(db_name: str, collection_name: str) -> int:
 
 
 async def create_post(post_data: models.CreatePostModel, posts_collection=None) -> bool:
-    post_data = models.PostModel(**post_data.dict())
+    post_data = models.PostModel(**post_data.model_dump())
     post_data.id = await get_next_id(db_name="blogs", collection_name="posts")
-    result = await posts_collection.insert_one(post_data.dict(by_alias=True))
+    result = await posts_collection.insert_one(post_data.model_dump(by_alias=True))
     return result.acknowledged

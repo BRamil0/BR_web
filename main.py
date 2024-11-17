@@ -7,7 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from src.config.config import settings
-from src.app.fastapi.templates import templates
+from src.app.templates import templates
 
 from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth
 
@@ -100,7 +100,6 @@ def fast_app_start() -> fastapi.FastAPI:
 
     return app
 
-
 async def start() -> None:
     """
     start of all processes
@@ -118,6 +117,7 @@ async def start() -> None:
 
 
 if "__main__" == __name__:
+    print("Debug mode:", settings.DEBUG)
     try:
         asyncio.run(start())
     except KeyboardInterrupt:

@@ -2,9 +2,9 @@
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    left: 1vw;
+    right: 1.5vw;
     cursor: pointer;
-    z-index: 100;
+    z-index: 10000;
     background-color: var(--bg-color);
     color: var(--text-color);
     border: none;
@@ -32,7 +32,7 @@
     color: var(--text-color);
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-    z-index: 1000;
+    z-index: 10001;
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
