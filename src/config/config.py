@@ -7,6 +7,7 @@ import toml
 import yaml
 import pathlib
 import pydantic_settings
+import dotenv
 
 from src.logger.logger import logger
 
@@ -56,9 +57,18 @@ class Settings(pydantic_settings.BaseSettings):
         env_file = self.Config.env_file
         if os.path.exists(env_file):
             logger.opt(colors=True).info(f"<blue>Settings</blue> | <c>Load config from env-file: <b>{env_file}</b></c>")
+            self.load_from_env()
         else:
-            logger.opt(colors=True).critical(f"<blue>Settings</blue> | <c>Unsupported file type: <b>{env_file}</b></c>")
-            raise FileNotFoundError(f"Unsupported file type: {env_file}.")
+            logger.opt(colors=True).info(f"<blue>Settings</blue> | <c>Env file not found, checking environment variables...</c>")
+            dotenv.load_dotenv()
+
+    def load_from_env(self):
+        for field in self.__annotations__:
+            env_value = os.getenv(field.upper())
+            if env_value is not None:
+                setattr(self, field, env_value)
+            elif not hasattr(self, field):
+                raise ValueError(f"Field '{field}' is missing in the environment variables.")
 
     def load_config_file(self):
         config_files = [
