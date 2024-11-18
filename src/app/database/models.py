@@ -23,6 +23,7 @@ class UserModel(pydantic.BaseModel):
     theme: str | None = None
     avatar: str | None = None
     background_image: str | None = None
+    model_version: int | str = 1
 
     class Config:
         arbitrary_types_allowed = True

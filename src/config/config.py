@@ -22,6 +22,7 @@ class Settings(pydantic_settings.BaseSettings):
 
     DEBUG: bool = False
     DEBUG_DATABASE: bool = False
+    server_version: str | int = 2
 
     BOT_TOKEN: str = None
     TELEGRAM_CHAT_ID: int = None
@@ -68,6 +69,7 @@ class Settings(pydantic_settings.BaseSettings):
             if env_value is not None:
                 setattr(self, field, env_value)
             elif not hasattr(self, field):
+                logger.opt(colors=True).critical(f"<blue>Settings</blue> | <c>Field '{field}' is missing in the environment variables</c>")
                 raise ValueError(f"Field '{field}' is missing in the environment variables.")
 
     def load_config_file(self):
