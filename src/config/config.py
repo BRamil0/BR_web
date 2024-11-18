@@ -36,6 +36,8 @@ class Settings(pydantic_settings.BaseSettings):
     default_list_of_languages: typing.List[str] = ["eng", "ukr"]
     default_theme: str = "system"
     default_language: str = "eng"
+    log_dir: str = "/tmp/logs/"
+    is_log_record: bool = False
 
     class Config:
         env_file = ".config.env"

@@ -4,11 +4,7 @@ from loguru import logger
 from fastapi import Request
 
 logger.remove()
-
 logger.add(sys.stdout, colorize=True, format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | {message}")
-logger.add("/tmp/logs/app.log", rotation="10 MB", enqueue=True, backtrace=True, diagnose=True)
-logger.add("/tmp/logs/errors.log", level="ERROR", rotation="10 MB", enqueue=True, backtrace=True, diagnose=True)
-
 
 async def log_requests(request: Request, call_next):
     response = await call_next(request)

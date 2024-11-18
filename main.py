@@ -127,7 +127,7 @@ async def start() -> None:
 
 if "__main__" == __name__:
     logger.opt(colors=True).info("<e><b>Starting application...</b></e>")
-    logger.opt(colors=True).info(f"<cyan>Debug mode: <b>{settings.DEBUG}</b></cyan> | <cyan>Debug database mode: <b>{settings.DEBUG_DATABASE}</b></cyan>")
+    logger.opt(colors=True).info(f"<cyan>Debug mode: <b>{settings.DEBUG}</b></cyan> | <cyan>Debug database mode: <b>{settings.DEBUG_DATABASE}</b></cyan> | <cyan>Logging: <b>{settings.is_log_record}</b></cyan>")
     try:
         asyncio.run(start())
     except KeyboardInterrupt:
