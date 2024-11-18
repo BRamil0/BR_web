@@ -2,9 +2,6 @@ import sys
 
 from loguru import logger
 from fastapi import Request
-from functools import wraps
-
-from src.config.config import settings
 
 logger.remove()
 
@@ -12,19 +9,6 @@ logger.add(sys.stdout, colorize=True, format="<green>{time:YYYY-MM-DD HH:mm:ss}<
 logger.add("logs/app.log", rotation="10 MB", enqueue=True, backtrace=True, diagnose=True)
 logger.add("logs/errors.log", level="ERROR", rotation="10 MB", enqueue=True, backtrace=True, diagnose=True)
 
-def async_decorator_info_for_database_log_func(func):
-    @wraps(func)
-    async def wrapper(self, *args, **kwargs):
-        result = await func(self, *args, **kwargs)
-
-        if settings.DEBUG_DATABASE:
-            log_message = f"Modified count: {result}, args: {args, kwargs}"
-        else:
-            log_message = f"Modified count: DEBUG_DATABASE is False"
-
-        await database_log_func(func.__name__, log_message, "INFO")
-        return result
-    return wrapper
 
 async def log_requests(request: Request, call_next):
     response = await call_next(request)

@@ -16,3 +16,5 @@ pymongo
 pydantic-settings
 bleach
 loguru
+pyyaml
+toml
