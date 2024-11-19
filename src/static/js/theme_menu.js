@@ -55,7 +55,7 @@ async function delThemeMenu() {
 
 async function setThemeEmoji(value) {
     if (value === "light") themeEmoji.textContent = "☀️";
-    else if (value === "dark") themeEmoji.textContent = "🌒";
+    else if (value === "dark") themeEmoji.textContent = "🌙";
     else themeEmoji.textContent = "🔃";
 }
 

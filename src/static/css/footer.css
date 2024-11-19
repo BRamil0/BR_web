@@ -2,7 +2,7 @@
     position: relative;
     margin: calc(1vw + 1vh);
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
-    font-size: 0.8rem; /* Масштабування тексту для футера */
+    font-size: 0.8rem;
     font-weight: bold;
     text-decoration: none;
     padding: calc(0.5vw + 0.5vh);
@@ -69,12 +69,12 @@ footer button:hover {
 
 @media (max-width: 1000px) {
     .footer {
-        font-size: 1.15rem; /* Зменшує масштаб для мобільних */
+        font-size: 1.15rem;
     }
 
     footer a, footer button {
-        font-size: 1.15rem; /* Зменшити розмір шрифта для кнопок */
-        margin: 0.5rem 0; /* Відступи для вертикального відображення */
+        font-size: 1.15rem;
+        margin: 0.5rem 0;
     }
 
     .footer-center {

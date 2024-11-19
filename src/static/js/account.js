@@ -35,8 +35,8 @@ async function setAccountMenu() {
                 console.error('dataLanguage is undefined or empty.');
                 return false;
             }
-            accountMenu.innerHTML += `<a href="/account/login" data-translate="account_login_button" class="link jetbrains-mono-br">${dataLanguage["account_login_button"] || "Авторизація"}</a>`;
-            accountMenu.innerHTML += `<a href="/account/register" data-translate="account_register_button" class="link jetbrains-mono-br">${dataLanguage["account_register_button"] || "Реєстрація"}</a>`;
+            accountMenu.innerHTML += `<a href="/account/login" data-translate="account_login_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_login_button"] || "Авторизація"}</a>`;
+            accountMenu.innerHTML += `<a href="/account/register" data-translate="account_register_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_register_button"] || "Реєстрація"}</a>`;
             is_show_account_menu = true;
             return true;
         }

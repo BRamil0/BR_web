@@ -10,29 +10,58 @@
     align-items: center;
 
     position: relative;
-    margin: calc(5vw + 1vh) auto; /* Автоматичні відступи */
+    margin: calc(5vw + 1vh) auto;
 
-    width: 80vw; /* Адаптується до ширини вікна */
+    width: 80vw;
     max-width: 100vw;
     height: auto;
-    min-height: calc(100vh - 19em); /* Мінімальна висота на основі вікна */
+    min-height: calc(100vh - 19em);
     /* max-height: 100vh; */
 
     box-shadow: var(--box-shadow);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.terms_of_use, .privacy_policy, .cookie_policy, .project, .about, .home {
-    display: block;
-}
-
-.terms_of_use a, .privacy_policy a {
+.main a {
     color: var(--text-color);
     border-radius: 1vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.terms_of_use a:hover, .privacy_policy a:hover {
+.main a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.main button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    box-shadow: var(--box-shadow);
+    border: none;
+    border-radius: 1vmin;
+    padding: 0.5vmin 1vmin;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.main button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.main .a-button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    box-shadow: var(--box-shadow);
+    border: none;
+    border-radius: 1vmin;
+    padding: 0.5vmin 1vmin;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.main .a-button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }

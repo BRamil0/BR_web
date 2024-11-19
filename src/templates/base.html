@@ -2,6 +2,7 @@
 <html lang="ukr">
 <head class="header">
     <meta charset="UTF-8">
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url }}{{ link }}">
     <meta property="og:title" content="BR Web">
@@ -13,6 +14,7 @@
     <title>{{ title }} | BR Web</title>
 
     <link rel="icon" href="/static/image/favicon.ico">
+
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/theme.css">
     <link rel="stylesheet" href="/static/css/navbar.css">
@@ -37,9 +39,9 @@
 </head>
 <body theme="light">
 <div id="loading-banner" class="loading-banner">
-    <span id="loading-banner-text-1" data-translate="loading" class="">Завантаження...</span>
-    <span id="loading-banner-text-2" class="">Сайт довго завантажується, будь ласка, зачекайте.</span>
-    <span id="loading-banner-text-3" class="">Можливо сайт завис, тому, будь ласка, перезавантажте його.</span>
+    <span id="loading-banner-text-1" data-translate="loading_banner_text_1" class="">Завантаження...</span>
+    <span id="loading-banner-text-2" data-translate="loading_banner_text_2" class="">Сайт довго завантажується, будь ласка, зачекайте.</span>
+    <span id="loading-banner-text-3" data-translate="loading_banner_text_3" class="">Можливо сайт завис, тому, будь ласка, перезавантажте його.</span>
 </div>
 <nav class="nav jetbrains-mono-br">
     <div class="nav-left">
@@ -53,7 +55,7 @@
         <a href="/about" data-translate="nav_about" class="link">Про мене</a>
         <a href="/contact" data-translate="nav_contact" class="link">Контакти</a>
         <a href="/blog/post_list" data-translate="nav_blogs" class="link">Блоги</a>
-        <button class="nav-menu-button jetbrains-mono-br" data-translate="">Більше</button>
+        <button data-translate="nav_more" class="nav-menu-button jetbrains-mono-br">Більше</button>
     </div>
     <div class="nav-right">
         <button id="language-button-menu" class="language-button-menu">
@@ -98,7 +100,7 @@
 </main>
 <footer class="footer jetbrains-mono-br">
     <div class="footer-left">
-        <text data-translate="footer_author_photo">Автор фотографії:</text> <a href="" id="author-photo-name" class="link">Radomyr</a>
+        <text data-translate-html="footer_author_photo">Автор фотографії: <a href="" id="author-photo-name" class="link">Radomyr</a></text>
         <p></p>
         <a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a> <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie </a>
     </div>
@@ -118,7 +120,7 @@
         Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,
         <a href="/cookie_policy" class="link">Політики використання cookie</a>.
     </text>
-    <button id="accept-cookies" data-translate="cookie_accept" class="jetbrains-mono-br">Прийняти всі cookie</button>
+    <p><button id="accept-cookies" class="jetbrains-mono-br"><span data-translate="cookie_accept">Прийняти всі cookie</span></button></p>
 </div>
 <div id="modal" class="modal">
     <div id="modal-message-form" class="modal-content modal-content-message-form roboto-medium-br">
@@ -136,7 +138,7 @@
     </div>
 </div>
 
-<div id="info-alert" class="info-alert jetbrains-mono-br" data-translate="copy_alert">Інформація</div>
+<div id="info-alert" class="info-alert jetbrains-mono-br" data-translate="copy_alert">info</div>
 <button id="top-button" class="navigation-buttons top" data-translate="top_button">🔼</button>
 <button id="boston-button" class="navigation-buttons boston" data-translate="boston_button">🔽</button>
 
