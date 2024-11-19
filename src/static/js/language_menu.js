@@ -99,28 +99,39 @@ async function loadLocalization(lang) {
     try {
         const response = await fetch(`/static/localizations/${lang}_language.json`);
         if (!response.ok) {
+            console.error(`Localization file for "${lang}" not found.`);
             return false;
         }
         const data = await response.json();
 
-        document.querySelectorAll('[data-translate]').forEach(element => {
-            const key = element.getAttribute('data-translate');
+        document.querySelectorAll('[data-translate], [data-translate-html]').forEach(element => {
+            const key = element.getAttribute('data-translate') || element.getAttribute('data-translate-html');
             if (data[key]) {
-                const placeholder = "placeholder_";
-                if (key.includes(placeholder)) {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     element.setAttribute('placeholder', data[key]);
-                } else {
-                    element.textContent = data[key];
+                }
+                else if (element.tagName === 'BUTTON' || element.tagName === 'INPUT' && element.type === 'button') {
+                    element.setAttribute('value', data[key]);
+                }
+                else {
+                    const isHTML = element.hasAttribute('data-translate-html');
+                    if (isHTML) {
+                        console.log(data[key]);
+                        element.innerHTML = data[key];
+                    } else {
+                        element.textContent = data[key];
+                    }
                 }
             }
         });
 
-        await setCookie('language', lang, 7);
         await setLanguageName(data);
-        document.getElementsByTagName('html')[0].setAttribute('lang', lang);
+        document.documentElement.setAttribute('lang', lang);
+
+        await setCookie('language', lang, 7);
         return true;
     } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
+        console.error('Localization loading failed:', error);
         return false;
     }
 }

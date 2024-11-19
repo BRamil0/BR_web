@@ -49,10 +49,10 @@
     background-color: var(--text-color);
     color: var(--bg-color);
 }
-.nav-menu a, .nav-menu a {
+.nav-menu a {
     color: var(--text-color);
-    padding: calc(0.5vw + 0.5vh);
-    border-radius: 1.8vmin;
+    padding: 0.5vh 1vw;
+    border-radius: 1.6vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
     white-space: nowrap;

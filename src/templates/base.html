@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="/static/css/item_style.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
     <link rel="stylesheet" href="/static/css/message_form.css">
+    <link rel="stylesheet" href="/static/css/modal.css">
+    <link rel="stylesheet" href="/static/css/account.css">
+    {% if DEBUG_MODE %}<link rel="stylesheet" href="/static/css/debug_mode.css">{% endif %}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,7 +85,7 @@
         </div>
         <div class="nav-container">
             <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
-            <button id="form-button-2" class="form-button jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button>
+            <button id="form-button-2" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати через форму</button>
         </div>
     </div>
     <div id="language-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
@@ -105,50 +108,40 @@
         <text>©2024 BRamil</text>, <text data-translate="footer_rights_reserved">Всі права захищено</text>
     </div>
     <div class="footer-right">
-        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="form-button jetbrains-mono-br" data-translate="footer_message_form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
         <p></p>
         <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
     </div>
 </footer>
 <div id="cookie-banner" class="cookie-banner roboto-medium-br">
-    <p>
-        <text data-translate="cookie_text">Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,</text>
-        <a href="/cookie_policy" data-translate="cookie_link" class="link">Політики використання cookie.</a>
-    </p>
-    <button id="accept-cookies" data-translate="cookie_accept jetbrains-mono-br">Прийняти всі cookie</button>
+    <text data-translate-html="cookie_text">
+        Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,
+        <a href="/cookie_policy" class="link">Політики використання cookie</a>.
+    </text>
+    <button id="accept-cookies" data-translate="cookie_accept" class="jetbrains-mono-br">Прийняти всі cookie</button>
 </div>
 <div id="modal" class="modal">
-    <div class="modal-content roboto-medium-br">
+    <div id="modal-message-form" class="modal-content modal-content-message-form roboto-medium-br">
         <h2 class="roboto-medium-br" data-translate="message_text">Написати повідомлення</h2>
-        <label for="name-input"></label><input id="name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)" data-translate="placeholder_message_name">
+        <label for="form-message-name-input"></label><input id="form-message-name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)" data-translate="placeholder_message_name" required>
         <div class="author-mail">
-            <label for="message-author-input"></label><input id="message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)" data-translate="placeholder_message_author">
-            <label for="message-email-input"></label><input id="message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)" data-translate="placeholder_message_email">
+            <label for="form-message-author-input"></label><input id="form-message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)" data-translate="placeholder_message_author">
+            <label for="form-message-email-input"></label><input id="form-message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)" data-translate="placeholder_message_email">
         </div>
-        <label for="message-input"></label><textarea id="message-input" class="jetbrains-mono-br" placeholder="Введіть ваше повідомлення (обов'язково)" data-translate="placeholder_message_input_text"></textarea>
-        <p id="error-message"></p>
+        <label for="form-message-input"></label><textarea id="form-message-input" class="jetbrains-mono-br" placeholder="Введіть ваше повідомлення (обов'язково)" data-translate="placeholder_message_input_text" required></textarea>
         <div class="message-button">
-            <button id="send-message-button" class="jetbrains-mono-br" data-translate="message_send">Надіслати</button>
-            <button class="close-button jetbrains-mono-br" id="close-modal" data-translate="message_close">Закрити</button>
+            <button id="send-modal-message-button" class="jetbrains-mono-br" data-translate="message_send">Надіслати</button>
+            <button class="close-modal-button jetbrains-mono-br" data-translate="message_close">Закрити</button>
         </div>
     </div>
 </div>
+
 <div id="info-alert" class="info-alert jetbrains-mono-br" data-translate="copy_alert">Інформація</div>
 <button id="top-button" class="navigation-buttons top" data-translate="top_button">🔼</button>
 <button id="boston-button" class="navigation-buttons boston" data-translate="boston_button">🔽</button>
 
-<script src="/static/js/main.js"></script>
-<script src="/static/js/background.js"></script>
-<script src="/static/js/theme_menu.js"></script>
-<script src="/static/js/language_menu.js"></script>
-<script src="/static/js/cookie_banner.js"></script>
-<script src="/static/js/copy_text.js"></script>
-<script src="/static/js/load_page.js"></script>
-<script src="/static/js/nav_menu.js"></script>
-<script src="/static/js/message_form.js"></script>
-<script src="/static/js/account.js"></script>
-
 {% if DEBUG_MODE %}
+<button id="debug-mode-menu-button" class="jetbrains-mono-br">⚙️</button>
 <div id="debug-mode-menu">
     <h2>Режим налагодження (Debug Mode)</h2>
     <div class="item-container">
@@ -162,10 +155,22 @@
         <button id="off-banner-button" class="item-base jetbrains-mono-br">Вимкнути банер завантаження</button>
     </div>
 </div>
-<button id="debug-mode-menu-button" class="jetbrains-mono-br">⚙️</button>
-<link rel="stylesheet" href="/static/css/debug_mode.css">
-<script src="/static/js/debug_mode.js"></script>
 {% endif %}
+
+<script src="/static/js/main.js"></script>
+<script src="/static/js/modal.js"></script>
+<script src="/static/js/background.js"></script>
+<script src="/static/js/theme_menu.js"></script>
+<script src="/static/js/language_menu.js"></script>
+<script src="/static/js/cookie_banner.js"></script>
+<script src="/static/js/copy_text.js"></script>
+<script src="/static/js/load_page.js"></script>
+<script src="/static/js/nav_menu.js"></script>
+<script src="/static/js/message_form.js"></script>
+<script src="/static/js/account.js"></script>
+{% if DEBUG_MODE %}<script src="/static/js/debug_mode.js"></script>{% endif %}
+
+
 
 </body>
 </html>

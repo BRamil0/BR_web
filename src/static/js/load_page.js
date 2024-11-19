@@ -8,7 +8,7 @@ async function loadPage(url) {
             return false;
         }
 
-        const html = await response.text(); // Отримуємо весь HTML контент
+        const html = await response.text();
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
 
@@ -22,11 +22,15 @@ async function loadPage(url) {
 
         theme = await getTheme();
         savedLanguage = await getLanguage();
-        await updateCopyTextElements();
+
         await applyTheme(theme);
         await loadLocalization(savedLanguage);
+        await hideLoadingBanner();
         await sendBrowserInfo();
+        await updateCopyTextElements();
         await checkScroll();
+        await updateModalButton();
+        await updateMessageButton()
 
         document.title = tempDiv.querySelector('title')?.textContent || 'Default Title';
 
@@ -41,11 +45,11 @@ async function loadPage(url) {
 }
 
 document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', async function (e) {
-        e.preventDefault(); // Запобігаємо стандартному переходу
+    link.addEventListener('click', async function (event) {
+        event.preventDefault();
 
-        const url = this.getAttribute('href'); // Отримуємо URL посилання
-        await loadPage(url); // Викликаємо функцію для завантаження контенту
+        const url = this.getAttribute('href');
+        await loadPage(url);
     });
 });
 

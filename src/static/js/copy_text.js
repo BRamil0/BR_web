@@ -6,7 +6,7 @@ async function updateCopyTextElements() {
         element.addEventListener('click', async () => {
             const text = element.textContent;
             await copyToClipboard(text);
-            await showCopyAlert();
+            await showInfoAlert("copy_alert");
         });
     }
 }
@@ -22,14 +22,4 @@ async function copyToClipboard(text) {
         console.error('Copying text failed', error);
     }
     document.body.removeChild(tempInput);
-}
-
-async function showCopyAlert() {
-    const infoAlert = document.getElementById('info-alert');
-    const Language = await getLanguage();
-    infoAlert.textContent = await getTextForKeyInLanguage(Language, "copy_alert");
-    infoAlert.classList.add('show');
-    setTimeout(function() {
-        infoAlert.classList.remove('show');
-    }, 3000);
 }

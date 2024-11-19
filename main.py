@@ -10,8 +10,9 @@ from fastapi.staticfiles import StaticFiles
 from src.config.config import settings
 from src.app.templates import templates
 
-from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth
+from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth_api, auth
 from src.logger.logger import logger, log_requests
+from src.logger.record_log import record_log
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -27,6 +28,7 @@ def import_routers(app: fastapi.FastAPI) -> None:
     app.include_router(blog.router)
     app.include_router(blog_api.router)
     app.include_router(auth.router)
+    app.include_router(auth_api.router)
 
 
 def init_codes(app: fastapi.FastAPI) -> None:
@@ -107,6 +109,7 @@ async def start() -> None:
     start of all processes
     :return: None
     """
+    record_log(logger)
     app: fastapi.FastAPI = fast_app_start()
 
     config: uvicorn.Config = uvicorn.Config(app=app,
@@ -120,15 +123,18 @@ async def start() -> None:
     host = server.config.host
     if host not in "http://":
         host = f"http://{host}"
-    logger.opt(colors=True).info(f"<g>The server is running at: <b>{host}:{server.config.port}</b></g> <y>(press ctrl+c to stop)</y>")
+    logger.opt(colors=True).info(f"<e>Server</e> | <c>The server is running at: <b>{host}:{server.config.port}</b></c> <y>(press ctrl+c to stop)</y>")
 
     await asyncio.gather(server.serve())
 
 
 if "__main__" == __name__:
-    logger.opt(colors=True).info("<e><b>Starting application...</b></e>")
-    logger.opt(colors=True).info(f"<cyan>Debug mode: <b>{settings.DEBUG}</b></cyan> | <cyan>Debug database mode: <b>{settings.DEBUG_DATABASE}</b></cyan> | <cyan>Logging: <b>{settings.is_log_record}</b></cyan>")
     try:
+        logger.opt(colors=True).info("<e>Server</e> | <e><b>Starting server...</b></e>")
+        logger.opt(colors=True).info(f"<e>Server</e> | <cyan>Debug mode: <b>{settings.DEBUG}</b></cyan> | <cyan>Debug database mode: <b>{settings.DEBUG_DATABASE}</b></cyan> | <cyan>Logging: <b>{settings.is_log_record}</b></cyan>")
         asyncio.run(start())
     except KeyboardInterrupt:
-        logger.warning("Server shutdown by user.")
+        logger.opt(colors=True).info("<e>Server</e> | <e><b>Server shutdown by user.</b></e>")
+    except Exception as e:
+        logger.opt(colors=True).critical(f"<e>Server</e> | <e><b>The server has been shut down due to a critical error or unhandled exception, for more details: {e}</b></e>")
+        raise e

@@ -8,18 +8,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     theme = await getTheme();
     savedLanguage = await getLanguage();
     await updateBackground();
-    await checkScroll();
-    await updateCopyTextElements();
     await applyTheme(theme);
     await loadLocalization(savedLanguage);
-    await sendBrowserInfo();
     await setThemeMenu();
     await setLanguageMenu();
     await setAccountMenu();
-    await checkScroll();
 });
 
 window.onload = async () => {
+    await updateModalButton();
+    await updateMessageButton()
+    await checkScroll();
+    await updateCopyTextElements();
+    await sendBrowserInfo();
     setTimeout(async () => {
         await hideLoadingBanner()
     }, 350);
@@ -31,6 +32,28 @@ window.onscroll = async function() {
     }
 };
 
+async function showInfoAlert(langKey) {
+    const infoAlert = document.getElementById("info-alert");
+    let newInfoAlert = infoAlert.cloneNode(true);
+
+    newInfoAlert.id = "info-alert-" + Date.now();
+    document.body.appendChild(newInfoAlert);
+
+    let text = await getTextForKeyInLanguage(await getLanguage(), langKey);
+    if (!text) {
+        text = langKey;
+    }
+
+    newInfoAlert.textContent = text;
+    newInfoAlert.classList.add('show');
+
+    setTimeout(() => {
+        newInfoAlert.classList.remove('show');
+        setTimeout(() => {
+            newInfoAlert.remove();
+        }, 500);
+    }, 3000);
+}
 async function checkScroll() {
     if (!is_show_navigation_buttons) {
         return;
