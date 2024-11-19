@@ -1,0 +1,23 @@
+{
+  "name": "br_web",
+  "version": "2.0.0",
+  "description": "BR web",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tailwindcss -c src/frontend/tailwind.config.js build src/frontend/css/tailwindcss.css -o src/static/css/tailwindcss.css",
+    "dev": "vite",
+    "start": "python3 -m main.py"
+  },
+  "author": "Qulow (Radomyr B.)",
+  "license": "MIT",
+  "dependencies": {
+    "tailwindcss": "^3.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8.0.0",
+    "vite": "^3.0.0",
+    "jest": "^28.0.0"
+  }
+}

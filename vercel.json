@@ -5,13 +5,22 @@
             "src": "app.py",
             "use": "@vercel/python",
             "config": { "runtime": "python3.12" }
+        },
+        {
+            "src": "src/frontend/css/tailwindcss.css",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
             "dest": "app.py"
+        },
+        {
+            "src": "/static/(.*)",
+            "dest": "/src/static/$1"
         }
     ],
-    "installCommand": "pip install -r requirements.txt"
+    "installCommand": "pip install -r requirements.txt && npm run build",
+    "buildCommand": "npm run build"
 }
