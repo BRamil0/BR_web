@@ -11,9 +11,11 @@ env:
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "*" ]
+    branches-ignore: ["beta", "version-1.0"]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "*" ]
+    branches-ignore: ["beta", "version-1.0"]
 
 permissions:
   contents: read
