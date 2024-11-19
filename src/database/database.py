@@ -4,7 +4,7 @@ import typing
 import bson
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from src.app.database import models, blog
+from src.database import blog, models
 from src.config.config import settings
 from src.logger.logger import database_log_func
 from src.logger.logger_decorator import async_decorator_info_for_database_log_func

@@ -8,7 +8,7 @@ from fastapi import HTTPException, Depends, Response, Request
 import fastapi.security
 
 from src.config.config import settings
-from src.app.database.database import DataBase, SearchTypeForUser
+from src.database.database import DataBase, SearchTypeForUser
 
 oauth2_scheme = fastapi.security.OAuth2PasswordBearer(tokenUrl="/api/auth/login", scheme_name="Bearer")
 ph = argon2.PasswordHasher()

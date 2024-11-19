@@ -4,8 +4,8 @@ import typing
 from fastapi import APIRouter, Depends, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from src.app.database.database import DataBase
-from src.app.templates import templates
+from src.database.database import DataBase
+from src.backend.templates import templates
 
 router = APIRouter(
     prefix="/blog",

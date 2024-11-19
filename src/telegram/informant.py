@@ -3,10 +3,10 @@
 import aiohttp
 from fastapi import Request
 from typing import Dict, Any
-from .models import TelegramInformant
-from .ip_handler import IPAddressHandler
+from src.telegram.models import TelegramInformant
+from src.telegram.ip_handler import IPAddressHandler
 from src.config.config import settings
-from src.app.shielding import shielding_markdown_v2
+from src.backend.shielding import shielding_markdown_v2
 
 class TelegramSender:
     def __init__(self) -> None:

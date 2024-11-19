@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from src.app.database import models
+from src.database import models
 from src.config.config import settings
 
 async def get_next_id(db_name: str, collection_name: str) -> int:

@@ -3,8 +3,8 @@ import typing
 from fastapi import APIRouter, Depends
 from starlette.responses import RedirectResponse
 
-from src.app.database import models
-from src.app.database.database import DataBase
+from src.database import models
+from src.database.database import DataBase
 
 router = APIRouter(
     prefix="/api/blog",

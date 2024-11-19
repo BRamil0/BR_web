@@ -8,9 +8,10 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from src.config.config import settings
-from src.app.templates import templates
+from src.backend.templates import templates
 
-from src.app.fastapi import base, telegram, indexing, api, blog, blog_api, auth_api, auth
+from src.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, base, blog
+
 from src.logger.logger import logger, log_requests
 from src.logger.record_log import record_log
 

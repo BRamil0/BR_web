@@ -7,10 +7,11 @@ import bson
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from starlette.responses import JSONResponse
 
-from src.app.database.database import DataBase, SearchTypeForUser, SearchAttributeForUser
-from src.app.database.models import UserModel
-from src.app import validators
-from src.app.fastapi import auth_utils, models
+from src.database.database import DataBase, SearchTypeForUser, SearchAttributeForUser
+from src.database.models import UserModel
+from src.backend import validators
+from src.fastapi_app import auth_utils
+from src.fastapi_app import models
 
 router = APIRouter(
     prefix="/api/auth",
@@ -86,14 +87,16 @@ async def login_user(login_form: models.LoginForm, response: Response, request: 
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/logout")
-async def logout_user(response: Response, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification)):
+async def logout_user(response: Response, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(
+    auth_utils.token_verification)):
     await db.remove_login_session(bson.ObjectId(token_date["id"]), token_date["token"])
     response.delete_cookie(key="access_token")
     await auth_utils.checking_tokens_relevance(bson.ObjectId(token_date["id"]), db)
     return {"message": "Logged out successfully"}
 
 @router.get("/current_user", response_model=models.ResponseModelForGetCurrentUser)
-async def get_current_user(db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification)):
+async def get_current_user(db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(
+    auth_utils.token_verification)):
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
@@ -114,7 +117,8 @@ async def get_current_user(db: DataBase = Depends(get_database), token_date: dic
     return JSONResponse(content=date)
 
 @router.post("/change_password")
-async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification)):
+async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(
+    auth_utils.token_verification)):
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not ph.verify(user.password, password_change.old_password):
         raise HTTPException(status_code=400, detail="Old password is incorrect")
