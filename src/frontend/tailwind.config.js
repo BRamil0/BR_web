@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.html",
     "./src/**/*.js",
     "./src/**/*.py",
+
   ],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {},
   },

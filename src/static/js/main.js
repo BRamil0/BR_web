@@ -2,7 +2,7 @@ const topButton = document.getElementById("top-button");
 const bostonButton = document.getElementById("boston-button");
 let theme = 'system';
 let savedLanguage = 'eng';
-let is_show_navigation_buttons = false;
+let is_show_navigation_buttons = true;
 
 document.addEventListener("DOMContentLoaded", async () => {
     theme = await getTheme();

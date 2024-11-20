@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="">
-    <h1>Вхід</h1>
+<div class="space-y-2">
+    <h1 data-translate="login-title">Авторизація</h1>
+
+    <p><label for="form-login-email-input"></label><input id="form-login-email-input" class="jetbrains-mono-br w-96"  placeholder="Електронна пошта" data-translate="form-register-email-input" type="email" required></p>
+    <p><label for="form-login-password-input"></label><input id="form-login-password-input" class="jetbrains-mono-br w-96"  placeholder="Пароль" data-translate="form-register-password-input " type="password" required></p>
+
+    <div class="space-y-2">
+        <div class="flex gap-2">
+            <button id="form-register-button" class="jetbrains-mono-br w-full" data-translate="form-register-button">Авторизуватися</button>
+            <button id="form-register-problems-button" class="jetbrains-mono-br w-full" data-translate="form-register-problems-button">Проблеми з авторизацією?</button>
+        </div>
+        <p data-translate-html="form-register-text">Немає облікового запису? <a href="/account/login" class="link">Зареєструватися</a></p>
+    </div>
 </div>
 {% endblock %}
