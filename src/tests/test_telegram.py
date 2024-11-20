@@ -33,7 +33,7 @@ def test_info(client):
          'document_title': 'test',
          'page_load_time': 'test'
     }
-    response = client.post("/info", json=params)
+    response = client.post("/api/telegram/info", json=params)
     assert response.status_code == 200
 
 def test_message(client):
@@ -43,5 +43,5 @@ def test_message(client):
         "message": "test",
         "name": "test"
     }
-    response = client.post("/message", json=params)
+    response = client.post("/api/telegram/message", json=params)
     assert response.status_code == 200

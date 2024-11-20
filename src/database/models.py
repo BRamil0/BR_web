@@ -30,6 +30,7 @@ class UserModel(pydantic.BaseModel):
         json_encoders = {
             bson.ObjectId: str
         }
+        protected_namespaces = ()
 
     @pydantic.model_validator(mode="before")
     def convert_id(cls, values):
