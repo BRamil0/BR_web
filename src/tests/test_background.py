@@ -8,5 +8,6 @@ def client():
     return TestClient(app)
 
 def test_background(client):
-    response = client.get("/background")
+    response = client.get("/api/background")
+    print(response.json())
     assert response.status_code == 200
