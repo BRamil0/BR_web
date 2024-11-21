@@ -116,7 +116,6 @@ async function loadLocalization(lang) {
                 else {
                     const isHTML = element.hasAttribute('data-translate-html');
                     if (isHTML) {
-                        console.log(data[key]);
                         element.innerHTML = data[key];
                     } else {
                         element.textContent = data[key];

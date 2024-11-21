@@ -30,31 +30,41 @@ async def authenticate_user(db: DataBase, email: str, password: str):
         return False
     return False
 
-async def token_verification(request: Request, token: str = Depends(oauth2_scheme), db: DataBase = Depends(get_database)) -> dict:
-    if token is None:
+async def token_verification(request: Request, db: DataBase = Depends(get_database)) -> dict:
+    token = request.headers.get("Authorization")
+    if token:
+        scheme, token = token.split(" ", 1)
+        if scheme.lower() != "bearer":
+            raise HTTPException(status_code=401, detail="Invalid authentication scheme")
+    else:
         token = request.cookies.get("access_token")
-        if token is None:
-            raise HTTPException(status_code=401, detail="Token not provided")
-        token = token.replace("Bearer ", "")
+
+    if not token:
+        raise HTTPException(status_code=401, detail="Token not provided")
 
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM], options={"verify_exp": False})
-        if payload.get("exp") < datetime.datetime.now().timestamp():
-            await db.remove_login_session(payload.get("id"), token)
-            raise HTTPException(status_code=401, detail="Token has expired")
-
-        tokens_db = await db.get_login_sessions(payload.get("id"))
-        for token_db in tokens_db:
-            if token_db["token"] == token:
-                if token_db["is_active"]:
-                    payload["token"] = token
-                    return payload
-                else:
-                    break
-        raise HTTPException(status_code=401, detail="The token is not active")
-
+        payload = jwt.decode(
+            token,
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM],
+            options={"verify_exp": False}
+        )
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
+
+    if payload.get("exp") < datetime.datetime.now().timestamp():
+        await db.remove_login_session(payload.get("id"), token)
+        raise HTTPException(status_code=401, detail="Token has expired")
+
+    tokens_db = await db.get_login_sessions(payload.get("id"))
+    for token_db in tokens_db:
+        if token_db["token"] == token:
+            if token_db["is_active"]:
+                payload["token"] = token
+                return payload
+            break
+
+    raise HTTPException(status_code=401, detail="The token is not active")
 
 async def checking_tokens_relevance(user_id: str, db: DataBase = Depends(get_database)) -> bool:
     tokens = await db.get_login_sessions(user_id)

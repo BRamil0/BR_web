@@ -34,20 +34,25 @@ async function setAccountMenu() {
         if (accountMenu.innerHTML !== "") {
             await delAccountMenu()
         }
-        if (await isAuthenticated()) {
-            console.log("User is authenticated, showing account menu");
-        } else {
-            let dataLanguage = await getTextInLanguage(await getLanguage());
+        let dataLanguage = await getTextInLanguage(await getLanguage());
             if (!dataLanguage) {
                 console.error('dataLanguage is undefined or empty.');
                 return false;
             }
+        if (await isAuthenticated()) {
+            accountMenu.innerHTML += `<a href="/account/profile" data-translate="account_profile_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_profile_button"] || "Профіль"}</a>`;
+            accountMenu.innerHTML += `<a href="/account/settings" data-translate="account_settings_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_settings_button"] || "Налаштування"}</a>`;
+            accountMenu.innerHTML += `<button id="form-logout-button" data-translate="account_logout_button" class="jetbrains-mono-br">${dataLanguage["account_logout_button"] || "Вихід"}</button>`;
+            is_show_account_menu = true;
+            await updateAccountButton();
+            return true
+        } else {
             accountMenu.innerHTML += `<a href="/account/login" data-translate="account_login_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_login_button"] || "Авторизація"}</a>`;
             accountMenu.innerHTML += `<a href="/account/register" data-translate="account_register_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_register_button"] || "Реєстрація"}</a>`;
             is_show_account_menu = true;
             return true;
         }
-    }, 100);
+    }, 50);
 }
 
 async function delAccountMenu() {
@@ -72,8 +77,10 @@ async function registerAccount(username, email, password) {
             await showInfoAlert("register_error_cannot_register");
             return false
         }
-        const data = await response.json();
-        console.log(data);
+        username.value = "";
+        email.value = "";
+        password.value = "";
+        window.location.href = "/account/profile/my";
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -98,8 +105,9 @@ async function loginAccount(email, password) {
             await showInfoAlert("login_error_cannot_login");
             return false
         }
-        const data = await response.json();
-        console.log(data);
+        email.value = "";
+        password.value = "";
+        window.location.href = "/account/profile/my";
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -115,8 +123,8 @@ async function logoutAccount() {
             await showInfoAlert("logout_error_cannot_logout");
             return false
         }
-        const data = await response.json();
-        console.log(data);
+        await showInfoAlert("logout_success_logout");
+        window.location.href = "/";
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -127,23 +135,24 @@ async function logoutAccount() {
 
 async function dataVerification(username = null, email, password, password2 = null) {
     const cleanInput = (input) => input.replace(/<[^>]*>?/gm, '');
-
-    if (username.value === "" || email.value === "" || password.value === "") {
+    if (username !== null) {
         if (username.value === "") {
             username.style.borderColor = "red";
         }
-        if (email.value === "") {
-            email.style.borderColor = "red";
-        }
-        if (password.value === "") {
-            password.style.borderColor = "red";
-            if (password2 !== null) {
-                password2.style.borderColor = "red";
-            }
+    }
+    if (email.value === "") {
+        email.style.borderColor = "red";
+    }
+    if (password.value === "") {
+        password.style.borderColor = "red";
+        if (password2 !== null) {
+            password2.style.borderColor = "red";
         }
         await showInfoAlert("register_error_empty_fields");
         setTimeout(() => {
-            username.style.borderColor = "";
+            if (username !== null) {
+                username.style.borderColor = "";
+            }
             email.style.borderColor = "";
             password.style.borderColor = "";
             if (password2 !== null) {
@@ -153,7 +162,7 @@ async function dataVerification(username = null, email, password, password2 = nu
         return false
     }
 
-    if (username.value !== null) {
+    if (username !== null) {
         if (cleanInput(username.value) !== username.value || !await validateUsername(username.value) || username.length > 128 || username.length < 2) {
             username.style.borderColor = "red";
             await showInfoAlert("register_error_invalid_username");
@@ -236,8 +245,9 @@ async function updateAccountButton() {
     if (loginButton !== null) {
         loginButton.addEventListener("click", async function (event) {
             event.preventDefault();
-            const email = document.getElementById("form-login-email-input").value;
-            const password = document.getElementById("form-login-password-input").value;
+            const email = document.getElementById("form-login-email-input");
+            const password = document.getElementById("form-login-password-input");
+            console.log(email, password);
             if (await dataVerification(null, email, password, null)) {
                 if (await loginAccount(email, password)) {
                     await showInfoAlert("login_success_login");

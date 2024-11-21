@@ -1,7 +1,5 @@
 """the main application startup file"""
 import asyncio
-import subprocess
-import signal
 
 import uvicorn
 import fastapi
@@ -117,56 +115,44 @@ async def run_npm() -> bool:
 
 
 async def run_command(command: str) -> bool:
-    """run command"""
+    returncode = None
     logger.opt(colors=True).info(f"<e>Frontend</e> | <c>Starting command: <b>{command}</b></c>")
+
     process = await asyncio.create_subprocess_shell(
         command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
     )
 
-    async def read_stdout():
-        try:
-            while True:
-                line = await process.stdout.readline()
-                if not line:
-                    break
-                decoded_line = line.decode('utf-8').strip()
-                if decoded_line:
-                    logger.opt(colors=True).info(f"<e>Frontend</e> | <c><b>stdout</b></c> | {line.decode('utf-8').strip()}")
-        except Exception as error:
-            logger.opt(colors=True).error(f"<e>Frontend</e> | <c><b>stdout read error: {str(error)}</b></c>")
+    async def read_stream(stream, log_func):
+        while True:
+            line = await stream.readline()
+            if not line:
+                break
+            decoded_line = line.decode("utf-8").strip()
+            if decoded_line:
+                log_func(f"<e>Frontend</e> | {decoded_line}")
 
-    async def read_stderr():
-        try:
-            while True:
-                line = await process.stderr.readline()
-                if not line:
-                    break
-                decoded_line = line.decode('utf-8').strip()
-                if decoded_line:
-                    logger.opt(colors=True).error(f"<e>Frontend</e> | <c><b>stderr</b></c> | {line.decode('utf-8').strip()}")
-        except Exception as error:
-            logger.opt(colors=True).error(f"<e>Frontend</e> | <c><b>stderr read error: {str(error)}</b></c>")
+    stdout_task = asyncio.create_task(read_stream(process.stdout, logger.info))
+    stderr_task = asyncio.create_task(read_stream(process.stderr, logger.error))
 
     try:
-        await asyncio.gather(read_stdout(), read_stderr())
-    except (asyncio.CancelledError, ValueError):
-        logger.opt(colors=True).info("<e>Frontend</e> | <c>Attempting to stop the server process...</c>")
-        process.send_signal(signal.SIGINT)
-        await asyncio.sleep(2)
-        process.kill()
+        returncode = await process.wait()
+        await asyncio.gather(stdout_task, stderr_task)
+    except asyncio.CancelledError:
+        logger.opt(colors=True).info("<e>Frontend</e> | <c>Terminating the subprocess...</c>")
+        process.terminate()
         await process.wait()
-
     finally:
-        if not process.returncode:
-            process.send_signal(signal.SIGINT)
-            await asyncio.sleep(2)
+        if process.returncode is None:
+            logger.opt(colors=True).info("<e>Frontend</e> | <c>Force killing the subprocess...</c>")
             process.kill()
             await process.wait()
 
-    logger.opt(colors=True).info(f"<e>Frontend</e> | <c>Process exited with code <b>{process.returncode}</b></c>")
-    return True
+    logger.opt(colors=True).info(
+        f"<e>Frontend</e> | <c>Process exited with code <b>{process.returncode}</b></c>"
+    )
+    return returncode == 0
 
 async def start() -> None:
     """
