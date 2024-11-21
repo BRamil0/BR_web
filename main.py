@@ -1,5 +1,7 @@
 """the main application startup file"""
 import asyncio
+import subprocess
+import signal
 
 import uvicorn
 import fastapi
@@ -105,12 +107,74 @@ def fast_app_start() -> fastapi.FastAPI:
     return app
 
 
+async def run_npm() -> bool:
+    if settings.DEBUG:
+        logger.opt(colors=True).info("<e>Frontend</e> | <e><b>Watching frontend...</b></e>")
+        return await run_command("npm run watch")
+    else:
+        logger.opt(colors=True).info("<e>Frontend</e> | <e><b>Building frontend...</b></e>")
+        return await run_command("npm run build")
+
+
+async def run_command(command: str) -> bool:
+    """run command"""
+    logger.opt(colors=True).info(f"<e>Frontend</e> | <c>Starting command: <b>{command}</b></c>")
+    process = await asyncio.create_subprocess_shell(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+
+    async def read_stdout():
+        try:
+            while True:
+                line = await process.stdout.readline()
+                if not line:
+                    break
+                decoded_line = line.decode('utf-8').strip()
+                if decoded_line:
+                    logger.opt(colors=True).info(f"<e>Frontend</e> | <c><b>stdout</b></c> | {line.decode('utf-8').strip()}")
+        except Exception as error:
+            logger.opt(colors=True).error(f"<e>Frontend</e> | <c><b>stdout read error: {str(error)}</b></c>")
+
+    async def read_stderr():
+        try:
+            while True:
+                line = await process.stderr.readline()
+                if not line:
+                    break
+                decoded_line = line.decode('utf-8').strip()
+                if decoded_line:
+                    logger.opt(colors=True).error(f"<e>Frontend</e> | <c><b>stderr</b></c> | {line.decode('utf-8').strip()}")
+        except Exception as error:
+            logger.opt(colors=True).error(f"<e>Frontend</e> | <c><b>stderr read error: {str(error)}</b></c>")
+
+    try:
+        await asyncio.gather(read_stdout(), read_stderr())
+    except (asyncio.CancelledError, ValueError):
+        logger.opt(colors=True).info("<e>Frontend</e> | <c>Attempting to stop the server process...</c>")
+        process.send_signal(signal.SIGINT)
+        await asyncio.sleep(2)
+        process.kill()
+        await process.wait()
+
+    finally:
+        if not process.returncode:
+            process.send_signal(signal.SIGINT)
+            await asyncio.sleep(2)
+            process.kill()
+            await process.wait()
+
+    logger.opt(colors=True).info(f"<e>Frontend</e> | <c>Process exited with code <b>{process.returncode}</b></c>")
+    return True
+
 async def start() -> None:
     """
     start of all processes
     :return: None
     """
     record_log(logger)
+
     app: fastapi.FastAPI = fast_app_start()
 
     config: uvicorn.Config = uvicorn.Config(app=app,
@@ -126,8 +190,13 @@ async def start() -> None:
         host = f"http://{host}"
     logger.opt(colors=True).info(f"<e>Server</e> | <c>The server is running at: <b>{host}:{server.config.port}</b></c> <y>(press ctrl+c to stop)</y>")
 
-    await asyncio.gather(server.serve())
+    new_loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(new_loop)
 
+    try:
+        await asyncio.gather(run_npm(), server.serve())
+    finally:
+        new_loop.close()
 
 if "__main__" == __name__:
     try:
@@ -136,6 +205,6 @@ if "__main__" == __name__:
         asyncio.run(start())
     except KeyboardInterrupt:
         logger.opt(colors=True).info("<e>Server</e> | <e><b>Server shutdown by user.</b></e>")
-    except Exception as e:
+    except BaseException as e:
         logger.opt(colors=True).critical(f"<e>Server</e> | <e><b>The server has been shut down due to a critical error or unhandled exception, for more details: {e}</b></e>")
         raise e

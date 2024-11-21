@@ -21,6 +21,7 @@ window.onload = async () => {
     await checkScroll();
     await updateCopyTextElements();
     await sendBrowserInfo();
+    await updateAccountButton();
     setTimeout(async () => {
         await hideLoadingBanner()
     }, 350);

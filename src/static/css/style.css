@@ -116,9 +116,9 @@ textarea, input {
     color: var(--text-color);
     border: var(--bg-color) 0.05vmin solid;
     border-radius: 1vmin;
-    padding: 0.5vmin 1vmin;
+    padding: 1vmin 1vmin;
     box-shadow: var(--box-shadow);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease, border 0.3s ease;
 }
 
 textarea:focus, input:focus {

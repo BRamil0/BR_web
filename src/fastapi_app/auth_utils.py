@@ -9,6 +9,7 @@ import fastapi.security
 
 from src.config.config import settings
 from src.database.database import DataBase, SearchTypeForUser
+from src.logger.logger import logger
 
 oauth2_scheme = fastapi.security.OAuth2PasswordBearer(tokenUrl="/api/auth/login", scheme_name="Bearer")
 ph = argon2.PasswordHasher()
@@ -85,6 +86,9 @@ async def add_new_login(user_id: bson.ObjectId, access_token: str, request:Reque
     if not isinstance(user_agent, str):
         user_agent = "unknown"
 
+    if not ip_address or not user_agent:
+        logger.opt(colors=True).warning(f"<blue>Auth</blue> | <c>Missing IP or User-Agent for user <b>{user_id}</b></c>")
+
     session_data = {
         "token": access_token,
         "device_name": device_name,
@@ -100,8 +104,7 @@ async def set_cookie(response: Response, access_token: str) -> None:
         key="access_token",
         value=access_token,
         httponly=True,
-        max_age=datetime.timedelta(days=180),
-        expires=datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=180),
+        max_age=180 * 24 * 60 * 60,  # 180 днів у секундах
         secure=settings.SECURE_COOKIES,
-        samesite="Strict"
+        samesite="Lax"
     )

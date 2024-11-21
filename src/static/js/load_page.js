@@ -31,6 +31,7 @@ async function loadPage(url) {
         await checkScroll();
         await updateModalButton();
         await updateMessageButton()
+        await updateAccountButton();
 
         document.title = tempDiv.querySelector('title')?.textContent || 'Default Title';
 

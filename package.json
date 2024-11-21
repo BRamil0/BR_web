@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tailwindcss -c src/frontend/tailwind.config.js build src/frontend/css/tailwindcss.css -o src/static/css/tailwindcss.css",
+    "build": "tailwindcss -c src/frontend/tailwind.config.js build -i src/frontend/css/tailwindcss.css -o src/static/css/tailwindcss.css",
     "dev": "vite",
     "start": "python3 -m main.py",
-    "watch": "tailwindcss -c src/frontend/tailwind.config.js build src/frontend/css/tailwindcss.css -o src/static/css/tailwindcss.css --watch"
+    "watch": "tailwindcss -c src/frontend/tailwind.config.js build -i src/frontend/css/tailwindcss.css -o src/static/css/tailwindcss.css --watch"
   },
   "author": "Qulow (Radomyr B.)",
   "license": "MIT",

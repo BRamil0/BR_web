@@ -27,7 +27,7 @@ async def get_database() -> typing.AsyncGenerator[DataBase, None]:
         await db.close_connection()
 
 @router.post("/register", response_model=models.Token)
-async def register_user(user: models.UserCreate, response: Response, request: Request, device_name: str | None = None, db: DataBase = Depends(get_database)):
+async def register_user(user: models.UserCreate, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(get_database)):
     if await db.search_for_attribute_uniqueness(SearchAttributeForUser.email, {"email": user.email}):
        raise HTTPException(status_code=400, detail="User with this email already exists")
     if await db.search_for_attribute_uniqueness(SearchAttributeForUser.username, user.username):
@@ -41,9 +41,6 @@ async def register_user(user: models.UserCreate, response: Response, request: Re
 
     if bleach.clean(user.password) != user.password or not await validators.validate_password(user.password):
         raise HTTPException(status_code=400, detail="Password contains invalid characters or incorrect length")
-
-    if device_name is None:
-        device_name = "unknown"
 
     if device_name != bleach.clean(device_name):
         raise HTTPException(status_code=400, detail="Device name contains invalid characters")
@@ -71,9 +68,7 @@ async def register_user(user: models.UserCreate, response: Response, request: Re
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/login", response_model=models.Token)
-async def login_user(login_form: models.LoginForm, response: Response, request: Request, device_name: str | None = None, db: DataBase = Depends(get_database)):
-    if device_name is None:
-        device_name = "unknown"
+async def login_user(login_form: models.LoginForm, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(get_database)):
     if device_name != bleach.clean(device_name):
         raise HTTPException(status_code=400, detail="Device name contains invalid characters")
 
