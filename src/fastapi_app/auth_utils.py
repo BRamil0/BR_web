@@ -66,6 +66,14 @@ async def token_verification(request: Request, db: DataBase = Depends(get_databa
 
     raise HTTPException(status_code=401, detail="The token is not active")
 
+
+async def token_verification_no_exceptions(request: Request, db: DataBase = Depends(get_database)) -> dict | None:
+    try:
+        return await token_verification(request, db)
+    except HTTPException:
+        return None
+
+
 async def checking_tokens_relevance(user_id: str, db: DataBase = Depends(get_database)) -> bool:
     tokens = await db.get_login_sessions(user_id)
     if not tokens:

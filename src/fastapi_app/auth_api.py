@@ -1,5 +1,4 @@
 import datetime
-import typing
 
 import bleach
 import argon2
@@ -13,21 +12,15 @@ from src.backend import validators
 from src.fastapi_app import auth_utils
 from src.fastapi_app import models
 
+
 router = APIRouter(
     prefix="/api/auth",
     tags=["auth_api"],
 )
 ph = argon2.PasswordHasher()
 
-async def get_database() -> typing.AsyncGenerator[DataBase, None]:
-    db = DataBase("account_info")
-    try:
-        yield db
-    finally:
-        await db.close_connection()
-
 @router.post("/register", response_model=models.Token)
-async def register_user(user: models.UserCreate, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(get_database)):
+async def register_user(user: models.UserCreate, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(auth_utils.get_database)):
     if await db.search_for_attribute_uniqueness(SearchAttributeForUser.email, {"email": user.email}):
        raise HTTPException(status_code=400, detail="User with this email already exists")
     if await db.search_for_attribute_uniqueness(SearchAttributeForUser.username, user.username):
@@ -68,7 +61,7 @@ async def register_user(user: models.UserCreate, response: Response, request: Re
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/login", response_model=models.Token)
-async def login_user(login_form: models.LoginForm, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(get_database)):
+async def login_user(login_form: models.LoginForm, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(auth_utils.get_database)):
     if device_name != bleach.clean(device_name):
         raise HTTPException(status_code=400, detail="Device name contains invalid characters")
 
@@ -82,7 +75,7 @@ async def login_user(login_form: models.LoginForm, response: Response, request: 
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/logout")
-async def logout_user(response: Response, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(
+async def logout_user(response: Response, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(
     auth_utils.token_verification)):
     await db.remove_login_session(bson.ObjectId(token_date["id"]), token_date["token"])
     response.delete_cookie(key="access_token")
@@ -90,8 +83,9 @@ async def logout_user(response: Response, db: DataBase = Depends(get_database), 
     return {"message": "Logged out successfully"}
 
 @router.get("/current_user", response_model=models.ResponseModelForGetCurrentUser)
-async def get_current_user(db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(
-    auth_utils.token_verification)):
+async def get_current_user(db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification_no_exceptions)):
+    if not token_date:
+        return JSONResponse(content={"message": "You are not logged in", "status": "None"})
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
@@ -112,7 +106,7 @@ async def get_current_user(db: DataBase = Depends(get_database), token_date: dic
     return JSONResponse(content=date)
 
 @router.post("/change_password")
-async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(get_database), token_date: dict[str, str] = Depends(
+async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(
     auth_utils.token_verification)):
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not ph.verify(user.password, password_change.old_password):
@@ -122,3 +116,4 @@ async def change_password(password_change: models.PasswordChangeForm, db: DataBa
     new_hashed_password = ph.hash(password_change.new_password)
     await db.set_user_data(user.id, {"password": new_hashed_password})
     return {"message": "Password changed successfully"}
+

@@ -20,11 +20,11 @@ class PasswordChangeForm(pydantic.BaseModel):
 
 class ResponseModelForGetCurrentUser(pydantic.BaseModel):
     class ModelUserForGetCurrentUser(pydantic.BaseModel):
-        id: str
+        id: str | int
         username: str
-        email: list[dict[str, typing.Union[pydantic.EmailStr, bool]]]
-        phone_number: list[dict[str, typing.Union[str, bool]]]
-        login_sessions: list[dict[str, typing.Union[str, bool]]]
+        email: list[dict[str, typing.Union[pydantic.EmailStr, bool | int]]]
+        phone_number: list[dict[str, typing.Union[str, bool | int]]]
+        login_sessions: list[dict[str, typing.Union[str, bool | int]]]
         is_password_active: bool = True
         roles: list[typing.Optional[str]]
         is_active: bool = False

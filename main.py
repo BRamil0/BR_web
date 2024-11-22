@@ -133,8 +133,8 @@ async def run_command(command: str) -> bool:
             if decoded_line:
                 log_func(f"<e>Frontend</e> | {decoded_line}")
 
-    stdout_task = asyncio.create_task(read_stream(process.stdout, logger.info))
-    stderr_task = asyncio.create_task(read_stream(process.stderr, logger.error))
+    stdout_task = asyncio.create_task(read_stream(process.stdout, logger.opt(colors=True).info))
+    stderr_task = asyncio.create_task(read_stream(process.stderr, logger.opt(colors=True).error))
 
     try:
         returncode = await process.wait()
