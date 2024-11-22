@@ -15,10 +15,12 @@ async function getCurrentUser() {
         if (!response.ok) {
             return null;
         }
-        if (await await response.json()["status"] === "None") {
-            return null
+        let data = response.json();
+        console.log(data);
+        if (data["value"]["status"] !== null) {
+            return data;
         }
-        return await response.json();
+        return null;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
         return null;

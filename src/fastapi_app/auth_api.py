@@ -21,22 +21,19 @@ ph = argon2.PasswordHasher()
 
 @router.post("/register", response_model=models.Token)
 async def register_user(user: models.UserCreate, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(auth_utils.get_database)):
-    if await db.search_for_attribute_uniqueness(SearchAttributeForUser.email, {"email": user.email}):
-       raise HTTPException(status_code=400, detail="User with this email already exists")
-    if await db.search_for_attribute_uniqueness(SearchAttributeForUser.username, user.username):
-       raise HTTPException(status_code=400, detail="User with this username already exists")
+    for field, value in [("email", user.email), ("username", user.username)]:
+        if await db.search_for_attribute_uniqueness(getattr(SearchAttributeForUser, field), {field: value}):
+            raise HTTPException(status_code=400, detail=f"User with this {field} already exists")
 
-    if bleach.clean(user.username) != user.username or not await validators.validate_username(user.username):
-        raise HTTPException(status_code=400, detail="Username contains invalid characters or incorrect length")
-
-    if bleach.clean(user.email) != user.email or not await validators.validate_email(user.email):
-        raise HTTPException(status_code=400, detail="Email contains invalid characters")
-
-    if bleach.clean(user.password) != user.password or not await validators.validate_password(user.password):
-        raise HTTPException(status_code=400, detail="Password contains invalid characters or incorrect length")
-
-    if device_name != bleach.clean(device_name):
-        raise HTTPException(status_code=400, detail="Device name contains invalid characters")
+    fields = {
+        "username": {"value": user.username, "validator": validators.validate_username, },
+        "email": {"value": user.email, "validator": validators.validate_email, },
+        "password": {"value": user.password, "validator": validators.validate_password, },
+        "device_name": {"value": device_name, "validator": lambda x: True, },
+    }
+    result = await auth_utils.data_verification(fields)
+    if not result:
+        raise HTTPException(status_code=400, detail="Invalid data")
 
     hashed_password = ph.hash(user.password)
 
@@ -62,8 +59,14 @@ async def register_user(user: models.UserCreate, response: Response, request: Re
 
 @router.post("/login", response_model=models.Token)
 async def login_user(login_form: models.LoginForm, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(auth_utils.get_database)):
-    if device_name != bleach.clean(device_name):
-        raise HTTPException(status_code=400, detail="Device name contains invalid characters")
+    fields = {
+        "email": {"value": login_form.email, "validator": validators.validate_email, },
+        "password": {"value": login_form.password, "validator": validators.validate_password, },
+        "device_name": {"value": device_name, "validator": lambda x: True, },
+    }
+    result = await auth_utils.data_verification(fields)
+    if not result:
+        raise HTTPException(status_code=400, detail="Invalid data")
 
     user = await auth_utils.authenticate_user(db, login_form.email, login_form.password)
     if not user:
@@ -85,7 +88,7 @@ async def logout_user(response: Response, db: DataBase = Depends(auth_utils.get_
 @router.get("/current_user", response_model=models.ResponseModelForGetCurrentUser)
 async def get_current_user(db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification_no_exceptions)):
     if not token_date:
-        return JSONResponse(content={"message": "You are not logged in", "status": "None"})
+        return JSONResponse(content={"message": "You are not logged in", "status": None})
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
@@ -111,7 +114,7 @@ async def change_password(password_change: models.PasswordChangeForm, db: DataBa
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not ph.verify(user.password, password_change.old_password):
         raise HTTPException(status_code=400, detail="Old password is incorrect")
-    if bleach.clean(password_change.new_password) != password_change.new_password or not await validators.validate_password(password_change.new_password):
+    if bleach.clean(password_change.new_password) != password_change.new_password or not validators.validate_password(password_change.new_password):
         raise HTTPException(status_code=400, detail="Password contains invalid characters or incorrect length")
     new_hashed_password = ph.hash(password_change.new_password)
     await db.set_user_data(user.id, {"password": new_hashed_password})

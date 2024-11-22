@@ -1,5 +1,6 @@
 import datetime
 import typing
+import bleach
 
 import jwt
 import argon2
@@ -20,6 +21,13 @@ async def get_database() -> typing.AsyncGenerator[DataBase, None]:
         yield db
     finally:
         await db.close_connection()
+
+async def data_verification(data: dict[str, dict]) -> bool:
+    for key, value in data.items():
+        validator = value.get("validator")
+        if not validator(value["value"]) and bleach.clean(value["value"]) != value["value"]:
+            raise HTTPException(status_code=400, detail=f"{key} contains invalid characters or incorrect length")
+    return True
 
 async def authenticate_user(db: DataBase, email: str, password: str):
     user = await db.get_user(SearchTypeForUser.email, email)
