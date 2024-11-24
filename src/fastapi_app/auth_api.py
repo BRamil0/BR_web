@@ -1,6 +1,5 @@
 import datetime
 
-import bleach
 import argon2
 import bson
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
@@ -90,33 +89,24 @@ async def get_current_user(db: DataBase = Depends(auth_utils.get_database), toke
     if not token_date:
         return JSONResponse(content={"message": "You are not logged in", "status": None})
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-
-    for i in range(len(user.login_sessions)):
-        user.login_sessions[i]["token"] = None
-        user.login_sessions[i]["temporary_ID"] = i
-        user.login_sessions[i]["login_time"] = str(user.login_sessions[i]["login_time"].isoformat())
-
-    user_data = user.model_dump(exclude={"password", "oauth_links"})
-    user_data["id"] = str(user_data["id"])
-    user_data["created_at"] = str(user_data["created_at"].isoformat())
-    user_data["updated_at"] = str(user_data["updated_at"].isoformat())
-
-    date = {"message": "tokens and password were hidden for safety",
-            "status": "ok",
-            "user": user_data}
-    return JSONResponse(content=date)
+    if user:
+        date = {"message": "tokens and password were hidden for safety",
+                "status": "ok",
+                "user": await auth_utils.sanitize_user_data(user)}
+        return JSONResponse(content=date)
+    raise HTTPException(status_code=401, detail="User not found")
 
 @router.post("/change_password")
-async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(
-    auth_utils.token_verification)):
+async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification)):
+
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not ph.verify(user.password, password_change.old_password):
         raise HTTPException(status_code=400, detail="Old password is incorrect")
-    if bleach.clean(password_change.new_password) != password_change.new_password or not validators.validate_password(password_change.new_password):
-        raise HTTPException(status_code=400, detail="Password contains invalid characters or incorrect length")
+
+    await auth_utils.data_verification({"password": {"value": password_change.new_password, "validator": validators.validate_password, }})
+
     new_hashed_password = ph.hash(password_change.new_password)
     await db.set_user_data(user.id, {"password": new_hashed_password})
+
     return {"message": "Password changed successfully"}
 

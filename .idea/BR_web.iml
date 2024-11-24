@@ -9,6 +9,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/fastapi_app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/logger" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/telegram" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/frontend" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/frontend/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/static/js" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12 (BR_web)" jdkType="Python SDK" />
@@ -25,6 +28,7 @@
     </option>
   </component>
   <component name="TemplatesService">
+    <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/src/templates" />

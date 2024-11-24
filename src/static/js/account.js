@@ -15,9 +15,8 @@ async function getCurrentUser() {
         if (!response.ok) {
             return null;
         }
-        let data = response.json();
-        console.log(data);
-        if (data["value"]["status"] !== null) {
+        let data = await response.json();
+        if (data["status"] !== null) {
             return data;
         }
         return null;
@@ -45,7 +44,7 @@ async function setAccountMenu() {
                 return false;
             }
         if (await isAuthenticated()) {
-            accountMenu.innerHTML += `<a href="/account/profile" data-translate="account_profile_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_profile_button"] || "Профіль"}</a>`;
+            accountMenu.innerHTML += `<a href="/account/profile/my" data-translate="account_profile_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_profile_button"] || "Профіль"}</a>`;
             accountMenu.innerHTML += `<a href="/account/settings" data-translate="account_settings_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_settings_button"] || "Налаштування"}</a>`;
             accountMenu.innerHTML += `<button id="form-logout-button" data-translate="account_logout_button" class="jetbrains-mono-br">${dataLanguage["account_logout_button"] || "Вихід"}</button>`;
             is_show_account_menu = true;
@@ -85,7 +84,7 @@ async function registerAccount(username, email, password) {
         username.value = "";
         email.value = "";
         password.value = "";
-        window.location.href = "/account/profile/my";
+        await loadPage("/account/profile/my");
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -112,7 +111,7 @@ async function loginAccount(email, password) {
         }
         email.value = "";
         password.value = "";
-        window.location.href = "/account/profile/my";
+        await loadPage("/account/profile/my");
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -129,7 +128,7 @@ async function logoutAccount() {
             return false
         }
         await showInfoAlert("logout_success_logout");
-        window.location.href = "/";
+        await loadPage("/");
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -230,7 +229,6 @@ async function updateAccountButton() {
     registerButton = document.getElementById("form-register-button");
     loginButton = document.getElementById("form-login-button");
     logoutButton = document.getElementById("form-logout-button");
-    console.log(registerButton, loginButton, logoutButton);
 
     if (registerButton !== null) {
         registerButton.addEventListener("click", async function (event) {
@@ -241,6 +239,7 @@ async function updateAccountButton() {
             const password2 = document.getElementById("form-register-password2-input");
             if (await dataVerification(username, email, password, password2)) {
                 if (await registerAccount(username, email, password)) {
+                    await setAccountMenu();
                     await showInfoAlert("register_success_register");
                 }
             }
@@ -255,6 +254,7 @@ async function updateAccountButton() {
             console.log(email, password);
             if (await dataVerification(null, email, password, null)) {
                 if (await loginAccount(email, password)) {
+                    await setAccountMenu();
                     await showInfoAlert("login_success_login");
                 }
             }
@@ -265,6 +265,7 @@ async function updateAccountButton() {
         logoutButton.addEventListener("click", async function(event) {
             event.preventDefault();
             if (await logoutAccount()) {
+                await setAccountMenu();
                 await showInfoAlert("logout_success_logout");
             }
         });

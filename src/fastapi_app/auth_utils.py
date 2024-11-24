@@ -10,6 +10,7 @@ import fastapi.security
 
 from src.config.config import settings
 from src.database.database import DataBase, SearchTypeForUser
+from src.database import models
 from src.logger.logger import logger
 
 oauth2_scheme = fastapi.security.OAuth2PasswordBearer(tokenUrl="/api/auth/login", scheme_name="Bearer")
@@ -28,6 +29,18 @@ async def data_verification(data: dict[str, dict]) -> bool:
         if not validator(value["value"]) and bleach.clean(value["value"]) != value["value"]:
             raise HTTPException(status_code=400, detail=f"{key} contains invalid characters or incorrect length")
     return True
+
+async def sanitize_user_data(user: models.UserModel) -> dict:
+    for i, session in enumerate(user.login_sessions):
+        session["token"] = None
+        session["temporary_ID"] = i
+        session["login_time"] = str(session["login_time"].isoformat())
+
+    user_data = user.model_dump(exclude={"password", "oauth_links"})
+    user_data["id"] = str(user_data["id"])
+    user_data["created_at"] = str(user_data["created_at"].isoformat())
+    user_data["updated_at"] = str(user_data["updated_at"].isoformat())
+    return user_data
 
 async def authenticate_user(db: DataBase, email: str, password: str):
     user = await db.get_user(SearchTypeForUser.email, email)

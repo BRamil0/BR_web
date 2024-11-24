@@ -23,8 +23,8 @@ window.onload = async () => {
     await sendBrowserInfo();
     await updateAccountButton();
     setTimeout(async () => {
-        await hideLoadingBanner()
-    }, 350);
+        await hideLoadingBanner();
+    }, 150);
 };
 
 window.onscroll = async function() {

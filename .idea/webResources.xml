@@ -6,6 +6,10 @@
         <entryData>
           <resourceRoots>
             <path value="file://$PROJECT_DIR$/src/static" />
+            <path value="file://$PROJECT_DIR$/src/frontend/css" />
+            <path value="file://$PROJECT_DIR$/src/static/image" />
+            <path value="file://$PROJECT_DIR$/src/static/css" />
+            <path value="file://$PROJECT_DIR$/src/static/localizations" />
           </resourceRoots>
         </entryData>
       </entry>

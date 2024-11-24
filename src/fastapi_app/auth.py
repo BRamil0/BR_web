@@ -22,6 +22,10 @@ async def login(request: Request, token_data: dict = Depends(token_verification_
     if token_data: return RedirectResponse("/account/profile/", status_code=302)
     return templates.TemplateResponse("login.html", {"request": request, "title": "Вхід"})
 
+@router.get("/profile/", response_class=HTMLResponse)
+async def profile():
+    return RedirectResponse("/account/profile/my", status_code=302)
+
 @router.get("/profile/my", response_class=HTMLResponse)
 async def profile_my(request: Request, db: DataBase = Depends(get_database), token_data: dict = Depends(token_verification_no_exceptions)):
     if not token_data: return RedirectResponse("/account/login", status_code=302)
