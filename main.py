@@ -184,6 +184,7 @@ async def start() -> None:
     finally:
         new_loop.close()
 
+
 if "__main__" == __name__:
     try:
         logger.opt(colors=True).info("<e>Server</e> | <e><b>Starting server...</b></e>")
