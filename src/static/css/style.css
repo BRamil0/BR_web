@@ -29,14 +29,14 @@ body {
     align-items: center;
     font-size: 2rem;
     z-index: 9999;
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
     transition: opacity 0.15s ease, visibility 0.1s ease;
 }
 
-.loading-banner.hidden {
-    opacity: 0;
-    visibility: hidden;
+.loading-banner.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .loading-banner span {

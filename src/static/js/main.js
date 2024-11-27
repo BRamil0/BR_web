@@ -114,7 +114,7 @@ async function showLoadingBanner() {
     const text1 = document.getElementById('loading-banner-text-1');
     const text2 = document.getElementById('loading-banner-text-2');
     const text3 = document.getElementById('loading-banner-text-3');
-    loadingBanner.classList.remove('hidden');
+    loadingBanner.classList.add('show');
 
     timeout1 = setTimeout(() => {
         text1.classList.add('show');
@@ -131,7 +131,7 @@ async function showLoadingBanner() {
 
 async function hideLoadingBanner() {
     const loadingBanner = document.getElementById('loading-banner');
-    loadingBanner.classList.add('hidden');
+    loadingBanner.classList.remove('show');
 
     if (timeout1) clearTimeout(timeout1);
     if (timeout2) clearTimeout(timeout2);
