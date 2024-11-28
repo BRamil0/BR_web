@@ -44,78 +44,80 @@
     <span id="loading-banner-text-2" data-translate="loading_banner_text_2" class="">Сайт довго завантажується, будь ласка, зачекайте.</span>
     <span id="loading-banner-text-3" data-translate="loading_banner_text_3" class="">Можливо сайт завис, тому, будь ласка, перезавантажте його.</span>
 </div>
-<nav class="nav jetbrains-mono-br">
-    <div class="nav-left">
-        <button class="nav-menu-button mobile-nav-menu-button">☰</button>
-        <img src="/static/image/logo.png" alt="Logo">
-        <a class="link" href="/">BR Web</a>
-    </div>
-    <div class="nav-center">
-        <a href="/index" data-translate="nav_home" class="link">Головна</a>
-        <a href="/project" data-translate="nav_projects" class="link">Мої проєкти</a>
-        <a href="/about" data-translate="nav_about" class="link">Про мене</a>
-        <a href="/contact" data-translate="nav_contact" class="link">Контакти</a>
-        <a href="/blog/post_list" data-translate="nav_blogs" class="link">Блоги</a>
-        <button data-translate="nav_more" class="nav-menu-button jetbrains-mono-br">Більше</button>
-    </div>
-    <div class="nav-right">
-        <button id="language-button-menu" class="language-button-menu">
-            <span id="language-emoji" class="language-emoji">🇺🇦</span>
-            <span id="language-name" class="jetbrains-mono-br language-name">Українська</span>
-        </button>
-        <button id="theme-button-menu" class="theme-button-menu">
-            <span id="theme-emoji" class="theme-emoji">🔃</span>
-        </button>
-        <button id="account-button-menu" class="account-button-menu">
-            <span class="account-emoji">👤</span>
-        </button>
-    </div>
-    <div id="nav-menu" class="nav-menu center jetbrains-mono-br">
-        <div class="nav-container">
+<div class="wrapper">
+    <nav class="nav jetbrains-mono-br">
+        <div class="nav-left">
+            <button class="nav-menu-button mobile-nav-menu-button">☰</button>
+            <img src="/static/image/logo.png" alt="Logo">
+            <a class="link" href="/">BR Web</a>
+        </div>
+        <div class="nav-center">
             <a href="/index" data-translate="nav_home" class="link">Головна</a>
             <a href="/project" data-translate="nav_projects" class="link">Мої проєкти</a>
             <a href="/about" data-translate="nav_about" class="link">Про мене</a>
             <a href="/contact" data-translate="nav_contact" class="link">Контакти</a>
             <a href="/blog/post_list" data-translate="nav_blogs" class="link">Блоги</a>
+            <button data-translate="nav_more" class="nav-menu-button jetbrains-mono-br">Більше</button>
         </div>
-        <div class="nav-container" style="font-size: 0.9rem">
-            <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a>
-            <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
+        <div class="nav-right">
+            <button id="language-button-menu" class="language-button-menu">
+                <span id="language-emoji" class="language-emoji">🇺🇦</span>
+                <span id="language-name" class="jetbrains-mono-br language-name">Українська</span>
+            </button>
+            <button id="theme-button-menu" class="theme-button-menu">
+                <span id="theme-emoji" class="theme-emoji">🔃</span>
+            </button>
+            <button id="account-button-menu" class="account-button-menu">
+                <span class="account-emoji">👤</span>
+            </button>
         </div>
-        <div class="nav-container" style="font-size: 0.9rem">
-            <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie</a>
-            <a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a>
+        <div id="nav-menu" class="nav-menu center jetbrains-mono-br">
+            <div class="nav-container">
+                <a href="/index" data-translate="nav_home" class="link">Головна</a>
+                <a href="/project" data-translate="nav_projects" class="link">Мої проєкти</a>
+                <a href="/about" data-translate="nav_about" class="link">Про мене</a>
+                <a href="/contact" data-translate="nav_contact" class="link">Контакти</a>
+                <a href="/blog/post_list" data-translate="nav_blogs" class="link">Блоги</a>
+            </div>
+            <div class="nav-container" style="font-size: 0.9rem">
+                <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a>
+                <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
+            </div>
+            <div class="nav-container" style="font-size: 0.9rem">
+                <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie</a>
+                <a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a>
+            </div>
+            <div class="nav-container">
+                <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+                <button id="form-button-2" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати через форму</button>
+            </div>
         </div>
-        <div class="nav-container">
-            <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
-            <button id="form-button-2" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати через форму</button>
+        <div id="language-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
+        <div id="theme-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
+        <div id="account-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
+    </nav>
+    <main class="main roboto-medium-br" id="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="footer jetbrains-mono-br">
+        <div class="footer-left">
+            <text data-translate-html="footer_author_photo">Автор фотографії: <a href="" id="author-photo-name" class="link">Radomyr</a></text>
+            <p></p>
+            <a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a> <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie </a>
         </div>
-    </div>
-    <div id="language-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
-    <div id="theme-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
-    <div id="account-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
-</nav>
-<main class="main roboto-medium-br" id="content">
-    {% block content %}
-    {% endblock %}
-</main>
-<footer class="footer jetbrains-mono-br">
-    <div class="footer-left">
-        <text data-translate-html="footer_author_photo">Автор фотографії: <a href="" id="author-photo-name" class="link">Radomyr</a></text>
-        <p></p>
-        <a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a> <a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie </a>
-    </div>
-    <div class="footer-center">
-        <text data-translate="footer_up-to-date_translation">Актуальність перекладу: 2024.10.18</text>
-        <p></p>
-        <text>©2024 BRamil</text>, <text data-translate="footer_rights_reserved">Всі права захищено</text>
-    </div>
-    <div class="footer-right">
-        <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
-        <p></p>
-        <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
-    </div>
-</footer>
+        <div class="footer-center">
+            <text data-translate="footer_up-to-date_translation">Актуальність перекладу: 2024.10.18</text>
+            <p></p>
+            <text>©2024 BRamil</text>, <text data-translate="footer_rights_reserved">Всі права захищено</text>
+        </div>
+        <div class="footer-right">
+            <a href="/index" data-translate="footer_home" class="link">Головна</a> <a href="/contact" data-translate="footer_contact" class="link">Контакти</a> <button id="form-button" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати через форму</button> <a href="mailto:qulowg@gmail.com" data-translate="footer_email">Написати на пошту</a>
+            <p></p>
+            <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a> <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
+        </div>
+    </footer>
+</div>
 <div id="cookie-banner" class="cookie-banner roboto-medium-br">
     <text data-translate-html="cookie_text">
         Цей сайт використовує файли cookie для покращення вашого користувацького досвіду. Продовжуючи використовувати наш сайт, ви погоджуєтесь на використання cookie-файлів відповідно до нашої,
