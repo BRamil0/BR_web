@@ -4,7 +4,7 @@ import typing
 import bson
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from src.database import blog, models
+from src.database import models
 from src.config.config import settings
 from src.logger.logger import database_log_func
 from src.logger.logger_decorator import async_decorator_info_for_database_log_func
@@ -191,8 +191,6 @@ class DataBase:
         return await cursor.to_list(length=1)
 
     async def create_post(self, post: models.PostModel) -> bool:
-        is_new_post = await blog.create_post(post, self.db["posts"])
-        if is_new_post:
-            return True
-        return False
+        result = await self.db["posts"].insert_one(post.model_dump(by_alias=True, exclude={"id"}))
+        return result.acknowledged
 

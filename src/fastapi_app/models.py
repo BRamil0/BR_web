@@ -1,6 +1,9 @@
 import typing
 import pydantic
 
+from src.database.models import ImageModel
+
+
 class UserCreate(pydantic.BaseModel):
     username: str
     email: pydantic.EmailStr
@@ -52,3 +55,13 @@ class LanguageDefaultListModel(pydantic.BaseModel):
 
 class LanguageDefaultModel(pydantic.BaseModel):
     language_default: str
+
+class CreatePostModel(pydantic.BaseModel):
+    title: str
+    content: str
+    author: str
+    language: str
+    description: str
+    image: ImageModel
+    URL: str
+    default_image: ImageModel
