@@ -34,12 +34,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body theme="light">
-<div id="loading-banner" class="loading-banner">
+<div id="loading-banner" class="loading-banner show">
     <span id="loading-banner-text-1" data-translate="loading_banner_text_1" class="">Завантаження...</span>
     <span id="loading-banner-text-2" data-translate="loading_banner_text_2" class="">Сайт довго завантажується, будь ласка, зачекайте.</span>
     <span id="loading-banner-text-3" data-translate="loading_banner_text_3" class="">Можливо сайт завис, тому, будь ласка, перезавантажте його.</span>
@@ -62,7 +60,7 @@
         <div class="nav-right">
             <button id="language-button-menu" class="language-button-menu">
                 <span id="language-emoji" class="language-emoji">🇺🇦</span>
-                <span id="language-name" class="jetbrains-mono-br language-name">Українська</span>
+                <span id="language-name" class="language-name jetbrains-mono-br">Українська</span>
             </button>
             <button id="theme-button-menu" class="theme-button-menu">
                 <span id="theme-emoji" class="theme-emoji">🔃</span>
@@ -147,8 +145,8 @@
 
 {% if DEBUG_MODE %}
 <button id="debug-mode-menu-button" class="jetbrains-mono-br">⚙️</button>
-<div id="debug-mode-menu">
-    <h2>Режим налагодження (Debug Mode)</h2>
+<div id="debug-mode-menu" class="jetbrains-mono-br">
+    <h2 class="roboto-medium-br text-center">Режим налагодження (Debug Mode)</h2>
     <div class="item-container">
         <button id="reload-page-button" class="item-base jetbrains-mono-br">Перезавантажити сторінку</button>
         <button id="clear-cookies-button" class="item-base jetbrains-mono-br">Видалити всі cookies</button>
@@ -162,18 +160,8 @@
 </div>
 {% endif %}
 
-<script src="/static/js/main.js"></script>
-<script src="/static/js/modal.js"></script>
-<script src="/static/js/background.js"></script>
-<script src="/static/js/theme_menu.js"></script>
-<script src="/static/js/language_menu.js"></script>
-<script src="/static/js/cookie_banner.js"></script>
-<script src="/static/js/copy_text.js"></script>
-<script src="/static/js/load_page.js"></script>
-<script src="/static/js/nav_menu.js"></script>
-<script src="/static/js/message_form.js"></script>
-<script src="/static/js/account.js"></script>
-{% if DEBUG_MODE %}<script src="/static/js/debug_mode.js"></script>{% endif %}
+<script type="module" src="/static/new_js/main.js"></script>
+{% if DEBUG_MODE %}<script type="module" src="/static/new_js/debug_mode.js"></script>{% endif %}
 
 </body>
 </html>

@@ -8,14 +8,14 @@ import bson
 class UserModel(pydantic.BaseModel):
     id: typing.Optional[bson.ObjectId] = pydantic.Field(default=None, alias="_id")
     username: str
-    email: typing.List[typing.Dict[str, typing.Union[pydantic.EmailStr, bool]]] = [] # for example [{email: test@test, is_verified: False}, {email: test2@test2, is_verified: True}]
-    phone_number: typing.List[typing.Dict[str, typing.Union[str, bool]]] = [] # for example [{phone_number: +380123456789, is_verified: False}, {phone_number: +380987654321, is_verified: True}]
-    login_sessions: typing.List[typing.Dict[str, typing.Union[str, bool, datetime.datetime]]] = []
+    email: typing.List[typing.Dict[str, typing.Union[pydantic.EmailStr, bool]]] = pydantic.Field(default_factory=lambda: []) # for example [{email: test@test, is_verified: False}, {email: test2@test2, is_verified: True}]
+    phone_number: typing.List[typing.Dict[str, typing.Union[str, bool]]] = pydantic.Field(default_factory=lambda: []) # for example [{phone_number: +380123456789, is_verified: False}, {phone_number: +380987654321, is_verified: True}]
+    login_sessions: typing.List[typing.Dict[str, typing.Union[str, bool, datetime.datetime]]] = pydantic.Field(default_factory=lambda: [])
     password: str
     is_password_active: bool = True
-    roles: typing.List[typing.Optional[str]] = [] # it's like what the user can do, for example, if the word admin is there, then the user has access to the admin panel
+    roles: typing.List[typing.Optional[str]] = pydantic.Field(default_factory=lambda: []) # it's like what the user can do, for example, if the word admin is there, then the user has access to the admin panel
     is_active: bool = False
-    oauth_links: typing.List[typing.Dict[str, str]] = [] # is a list of links to other accounts via OAuth services
+    oauth_links: typing.List[typing.Dict[str, str]] = pydantic.Field(default_factory=lambda: []) # is a list of links to other accounts via OAuth services
     created_at: datetime.datetime
     updated_at: datetime.datetime
     about_me: str | None = None
@@ -33,7 +33,7 @@ class UserModel(pydantic.BaseModel):
         protected_namespaces = ()
 
     @pydantic.model_validator(mode="before")
-    def convert_id(cls, values):
+    def convert_id(self, values):
         if "_id" in values:
             values["id"] = values["_id"]
         return values

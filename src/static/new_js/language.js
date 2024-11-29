@@ -1,5 +1,7 @@
 import * as cookies from "./cookies.js";
 
+export let isLoaded = false;
+
 export async function getLanguage() {
     try {
         const response = await fetch(`/api/default_language`);
@@ -65,11 +67,22 @@ export async function loadLocalization(lang) {
                 }
             }
         });
+        const languageName = document.querySelectorAll('.language-name');
+        const languageEmoji = document.querySelectorAll('.language-emoji');
 
-        await setLanguageName(data);
+        for (const element of languageName) {
+            if (element) await setLanguageName(data, element);
+        }
+
+        for (const element of languageEmoji) {
+            if (element) await setLanguageEmoji(data, element);
+        }
+
         document.documentElement.setAttribute('lang', lang);
 
         await cookies.setCookie('language', lang, 7);
+        if (!isLoaded) {isLoaded = true}
+
         return true;
     } catch (error) {
         console.error('Localization loading failed:', error);
@@ -77,7 +90,16 @@ export async function loadLocalization(lang) {
     }
 }
 
-async function setLanguageName(lang) {
+async function setLanguageName(lang, languageName) {
+    if (!languageName) {
+        return;
+    }
     languageName.textContent = lang["info"]["original_name"];
+}
+
+async function setLanguageEmoji(lang, languageEmoji) {
+    if (!languageEmoji) {
+        return;
+    }
     languageEmoji.textContent = lang["info"]["emoji"];
 }

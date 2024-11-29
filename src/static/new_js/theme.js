@@ -1,5 +1,7 @@
 import * as cookies from "./cookies.js";
 
+export let isLoaded = false;
+
 export async function getTheme() {
     try {
         const response = await fetch(`/api/default_theme`);
@@ -17,21 +19,27 @@ export async function getTheme() {
 
 export async function applyTheme(theme) {
     let system = false;
+    let themeEmoji = document.getElementsByClassName('theme-emoji')
     await cookies.setCookie('theme', theme, 7);
     if (theme === 'system') {
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         theme = systemPrefersDark ? 'dark' : 'light';
         system = true;
     }
-    body.setAttribute('theme', theme);
+    document.body.setAttribute('theme', theme);
     if (!system) {
-        await setThemeEmoji(theme);
+        for (let i = 0; i < themeEmoji.length; i++) {
+            await setThemeEmoji(theme, themeEmoji[i]);
+        }
     } else {
-        themeEmoji.textContent = "🖥️";
+        for (let i = 0; i < themeEmoji.length; i++) {
+            themeEmoji[i].textContent = "🖥️";
+        }
     }
+    if (!isLoaded) {isLoaded = true}
 }
 
-async function setThemeEmoji(value) {
+async function setThemeEmoji(value, themeEmoji) {
     if (value === "light") themeEmoji.textContent = "☀️";
     else if (value === "dark") themeEmoji.textContent = "🌙";
     else themeEmoji.textContent = "🔃";

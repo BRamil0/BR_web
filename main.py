@@ -15,6 +15,15 @@ from src.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, b
 from src.logger.logger import logger, log_requests
 from src.logger.record_log import record_log
 
+class CustomStaticFiles(StaticFiles):
+    async def get_response(self, path: str, scope):
+        response = await super().get_response(path, scope)
+        if response.status_code == 404:
+            return fastapi.responses.Response("File not found", status_code=404)
+        if path.endswith(".js"):
+            response.headers["Content-Type"] = "application/javascript"
+        return response
+
 def import_routers(app: fastapi.FastAPI) -> None:
     """
     import routers
@@ -98,7 +107,7 @@ def fast_app_start() -> fastapi.FastAPI:
     )
     app.add_middleware(BaseHTTPMiddleware, dispatch=log_requests)
 
-    app.mount("/static", StaticFiles(directory="src/static"), name="static")
+    app.mount("/static", CustomStaticFiles(directory="src/static"), name="static")
 
     import_routers(app)
     init_codes(app)

@@ -55,6 +55,7 @@ async function showInfoAlert(langKey) {
         }, 500);
     }, 3000);
 }
+
 async function checkScroll() {
     if (!is_show_navigation_buttons) {
         return;
@@ -191,4 +192,4 @@ async function sendBrowserInfo() {
         console.error('Error sending browser info:', error);
         return false;
     }
-};
+}

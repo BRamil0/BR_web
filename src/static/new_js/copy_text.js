@@ -1,3 +1,5 @@
+import * as info_alert from "./info_alert.js";
+
 export async function updateCopyTextElements() {
     const copyTextElements = document.querySelectorAll('.copy-text');
     copyTextElements.forEach(element => {
@@ -12,12 +14,12 @@ async function handleCopyClick(event) {
     const text = event.currentTarget.textContent;
     try {
         await navigator.clipboard.writeText(text);
-        await showInfoAlert("copy_alert");
+        await info_alert.showInfoAlert("copy_alert");
     } catch (error) {
         console.warn('Clipboard API failed, trying fallback...', error);
         const result = await copyToClipboardFallback(text);
         if (result) {
-            await showInfoAlert("copy_alert");
+            await info_alert.showInfoAlert("copy_alert");
         } else {
             console.error('Fallback copying failed.', error);
         }

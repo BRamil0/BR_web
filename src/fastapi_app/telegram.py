@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, status
 from starlette.requests import Request
 from starlette.responses import JSONResponse
@@ -12,19 +14,25 @@ router = APIRouter(
 
 @router.post("/info")
 async def info(request: Request, tt: TelegramInformant):
-    ts = informant.TelegramSender()
-    shipment_status = await ts.send(request, tt)
+    try:
+        ts = informant.TelegramSender()
+        shipment_status = await ts.send(request, tt)
 
-    if shipment_status["ok"]:
-        return JSONResponse({"ok": True}, status_code=status.HTTP_200_OK)
+        if shipment_status["ok"]:
+            return JSONResponse({"ok": True}, status_code=status.HTTP_200_OK)
+    except BaseException as E:
+        logging.error(f"{E}")
     return JSONResponse({"ok": False}, status_code=status.HTTP_400_BAD_REQUEST)
 
 
 @router.post("/message")
 async def send_message(request: Request, tms: TelegramMessage):
-    ts = message.TelegramSender()
-    shipment_status = await ts.send(request, tms)
+    try:
+        ts = message.TelegramSender()
+        shipment_status = await ts.send(request, tms)
 
-    if shipment_status["ok"]:
-        return JSONResponse({"ok": True}, status_code=status.HTTP_200_OK)
+        if shipment_status["ok"]:
+            return JSONResponse({"ok": True}, status_code=status.HTTP_200_OK)
+    except BaseException as E:
+        logging.error(f"{E}")
     return JSONResponse({"ok": False}, status_code=status.HTTP_400_BAD_REQUEST)

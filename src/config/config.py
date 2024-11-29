@@ -6,6 +6,7 @@ import enum
 import toml
 import yaml
 import pathlib
+import pydantic
 import pydantic_settings
 import dotenv
 
@@ -34,10 +35,10 @@ class Settings(pydantic_settings.BaseSettings):
 
     host: str = "localhost"
     port: int = 8080
-    default_theme_list: typing.List[str] = ["system", "light", "dark"]
-    default_list_of_languages: typing.List[str] = ["eng", "ukr"]
+    default_theme_list: typing.List[str] = pydantic.Field(default_factory=lambda: ["system", "light", "dark"])
+    default_list_of_languages: typing.List[str] = pydantic.Field(default_factory=lambda: ["eng", "ukr"])
     default_theme: str = "system"
-    default_language: str = "eng"
+    default_language: str = "ukr"
     log_dir: str = "/tmp/logs/"
     is_log_record: bool = False
 
