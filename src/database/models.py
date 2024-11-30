@@ -31,6 +31,49 @@ class ImageModel(pydantic.BaseModel):
     URL: typing.Union[dict[str, str], list[str], str, None] = None
     B64: typing.Union[dict[str, str], list[str], str, None] = None
 
+    model_version: int | str = 1
+
+class PermissionsBaseModel(pydantic.BaseModel):
+    class PostPermissionModel(pydantic.BaseModel):
+        create_post: bool = False
+        edit_post: bool = False
+        delete_post: bool = False
+
+    site_administration_panel: bool = False
+    post: PostPermissionModel
+
+    date_added: datetime.datetime
+    end_date: datetime.datetime | None = None
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {PyObjectId: str}
+        protected_namespaces = ()
+
+class PolesModel(PermissionsBaseModel, pydantic.BaseModel):
+    class LanguageNameModel(pydantic.BaseModel):
+        name: str
+        language_code: str
+
+    class ThemeColorModel(pydantic.BaseModel):
+        theme: str
+        color: str | None = None
+
+    id: PyObjectId | None = pydantic.Field(default=None, alias="_id")
+    default_name: str
+    default_color: str
+
+    language_name: list[LanguageNameModel | None] = pydantic.Field(default_factory=lambda: [])
+    theme_color: list[ThemeColorModel | None] = pydantic.Field(default_factory=lambda: [])
+
+    model_version: int | str = 1
+
+
+class PermissionsModel(PermissionsBaseModel, pydantic.BaseModel):
+    id: PyObjectId | None = pydantic.Field(default=None, alias="_id")
+    user_id: PyObjectId | None = None
+
+    model_version: int | str = 1
 
 class UserModel(pydantic.BaseModel):
     class EmailModel(pydantic.BaseModel):
@@ -80,9 +123,7 @@ class UserModel(pydantic.BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
-        json_encoders = {
-            PyObjectId: str
-        }
+        json_encoders = {PyObjectId: str}
         protected_namespaces = ()
 
 class PostModel(pydantic.BaseModel):
@@ -101,12 +142,11 @@ class PostModel(pydantic.BaseModel):
     created_at: datetime.datetime
     updated_at: datetime.datetime
     default_image: ImageModel = ImageModel()
+
     model_version: int | str = 1
 
     class Config:
         arbitrary_types_allowed = True
-        json_encoders = {
-            PyObjectId: str
-        }
+        json_encoders = {PyObjectId: str}
         protected_namespaces = ()
 

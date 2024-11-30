@@ -31,16 +31,21 @@ async def data_verification(data: dict[str, dict]) -> bool:
     return True
 
 async def sanitize_user_data(user: models.UserModel) -> dict:
-    for i, session in enumerate(user.login_sessions):
-        session["token"] = None
-        session["temporary_ID"] = i
-        session["login_time"] = str(session["login_time"].isoformat())
-
     user_data = user.model_dump(exclude={"password", "oauth_links"})
+    temp_id = 0
+
+    for session in user_data.get("login_sessions", []):
+        session["token"] = "REDACTED"
+        session["login_time"] = str(session["login_time"].isoformat())
+        session["temp_id"] = temp_id
+        temp_id += 1
+
     user_data["id"] = str(user_data["id"])
     user_data["created_at"] = str(user_data["created_at"].isoformat())
     user_data["updated_at"] = str(user_data["updated_at"].isoformat())
+
     return user_data
+
 
 async def authenticate_user(db: DataBase, email: str, password: str):
     user = await db.get_user(SearchTypeForUser.email, email)
