@@ -39,11 +39,11 @@ class Settings(pydantic_settings.BaseSettings):
     default_list_of_languages: typing.List[str] = pydantic.Field(default_factory=lambda: ["eng", "ukr"])
     default_theme: str = "system"
     default_language: str = "ukr"
-    log_dir: str = "/tmp/logs/"
+    log_dir: str = "./temp/logs/"
     is_log_record: bool = False
 
     class Config:
-        env_file = ".config.env"
+        env_file = ".env"
         env_file_encoding = "utf-8"
 
     def __init__(self, **kwargs: typing.Any):

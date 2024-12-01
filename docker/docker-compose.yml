@@ -1,11 +1,44 @@
-version: '1.0'
 services:
-  app:
+  frontend:
     build:
-      context: ..
+      context: ../
       dockerfile: docker/Dockerfile
+      target: frontend
+    working_dir: /usr/app/frontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: backend
     environment:
       PORT: 8080
       HOST: 0.0.0.0
+      MONGODB_URI: "mongodb://mongo:27017"
+    env_file:
+      - ../.env
+
     ports:
       - "8080:8080"
+    depends_on:
+      - frontend
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../data/db:/data/db
+      - ../mongod.conf:/etc/mongod.conf
+    command: [ "mongod", "--config", "/etc/mongod.conf" ]
+    networks:
+      - mynetwork
+volumes:
+  mongodb_data:
+
+networks:
+  mynetwork:

@@ -377,3 +377,4 @@ cython_debug/
 /.config.env
 /src/static/css/tailwindcss.css
 /node_modules/
+/data/
