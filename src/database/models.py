@@ -103,28 +103,42 @@ class UserModel(pydantic.BaseModel):
         pass
 
     id: typing.Optional[PyObjectId] = pydantic.Field(default=None, alias="_id")
+
     username: str
     email: list[EmailModel | None] = pydantic.Field(default_factory=lambda: []) # for example [{email: test@test, is_verified: False}, {email: test2@test2, is_verified: True}]
     phone_number: list[PhoneNumberModel | None] = pydantic.Field(default_factory=lambda: []) # for example [{phone_number: +380123456789, is_verified: False}, {phone_number: +380987654321, is_verified: True}]
+
     login_sessions: list[LoginSessionModel | None] = pydantic.Field(default_factory=lambda: [])
+    oauth_links: list[typing.Dict[str, str]] = pydantic.Field(default_factory=lambda: []) # is a list of links to other accounts via OAuth services
+
     roles: list[RoleModel | None] = pydantic.Field(default_factory=lambda: []) # it's like what the user can do, for example, if the word admin is there, then the user has access to the admin panel
+
     password: str
     is_password_active: bool = True
-    is_active: bool = False
-    oauth_links: list[typing.Dict[str, str]] = pydantic.Field(default_factory=lambda: []) # is a list of links to other accounts via OAuth services
+
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    about_me: str | None = None
-    language: str | None = None
-    theme: str | None = None
-    avatar: str | None = None
-    background_image: str | None = None
+
+    is_active: bool = False
+
     model_version: int | str = 1
 
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {PyObjectId: str}
         protected_namespaces = ()
+
+class SettingsModel(pydantic.BaseModel):
+    id: PyObjectId | None = pydantic.Field(default=None, alias="_id")
+    user_id : PyObjectId | None = None
+
+    about_me: str | None = None
+    language: str | None = None
+    theme: str | None = None
+    avatar: list[ImageModel | None] = pydantic.Field(default_factory=lambda: [])
+    background_image: list[ImageModel | None] = pydantic.Field(default_factory=lambda: [])
+
+    model_version: int | str = 1
 
 class PostModel(pydantic.BaseModel):
     class ContentModel(pydantic.BaseModel):
