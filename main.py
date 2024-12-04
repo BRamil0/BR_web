@@ -11,16 +11,50 @@ try:
     from src.backend import cmd
     is_whether_dependencies_established = True
 except ImportError:
-    server, cmd = None, None
-    from src.logger.default_logger import logger
+    import logging
+    from src.logger.default_logger import default_logger
     is_whether_dependencies_established = False
-    logger.log("CRITICAL", "Main | no dependencies for making applications are installed")
+    default_logger.log(logging.CRITICAL, "Main | no dependencies for making applications are installed")
+    logger = None
+    class FakeServer:
+        @staticmethod
+        async def start():
+            print("FakeServer | Starting fake server...")
+
+    class FakeCmd:
+        @staticmethod
+        async def docker_start():
+            print("FakeCmd | Starting fake Docker...")
+
+        @staticmethod
+        async def docker_stop():
+            print("FakeCmd | Stopping fake Docker...")
+
+        @staticmethod
+        async def docker_build():
+            print("FakeCmd | Building fake Docker...")
+
+        @staticmethod
+        async def docker_log():
+            print("FakeCmd | Showing fake Docker logs...")
+
+        @staticmethod
+        async def frontend_build():
+            print("FakeCmd | Building fake frontend...")
+
+        @staticmethod
+        async def frontend_watch():
+            print("FakeCmd | Watching fake frontend...")
+
+    server = FakeServer()
+    cmd = FakeCmd()
 
 async def logger_check(level: str = "INFO", message: str = "") -> bool:
     if is_whether_dependencies_established:
         logger.opt(colors=True).log(level, message)
     else:
-        logger.log(level, message)
+        level_dict = {"DEBUG": logging.DEBUG, "INFO": logging.INFO, "WARNING": logging.WARNING, "ERROR": logging.ERROR, "CRITICAL": logging.CRITICAL}
+        default_logger.log(level_dict[level], message)
     return True
 
 async def version_checking():
@@ -34,21 +68,9 @@ async def version_checking():
     await logger_check("INFO", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <lg><b>supported</b></lg>.</lc>")
     return True
 
-async def docker_function(option):
-    pass
-
-async def database_function(option):
-    if is_whether_dependencies_established:
-        program = {"start": cmd.database_start, "stop": cmd.database_stop}
-        await program[option]()
-        return True
-    await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>You have not set up dependencies for making apps.</b></lr>")
-    return False
-
-async def run_function(options):
-    if is_whether_dependencies_established:
+async def start_function(program: dict, options: dict, ignore_package: bool = False):
+    if is_whether_dependencies_established or ignore_package:
         run_list = []
-        program = {"server": server.start, "f-build": cmd.frontend_build, "f-watch": cmd.frontend_watch}
         for option in options:
             if option not in run_list: run_list.append(program[option]())
         await asyncio.gather(*run_list)
@@ -56,20 +78,32 @@ async def run_function(options):
     await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>You have not set up dependencies for making apps.</b></lr>")
     return False
 
+async def docker_function(option):
+    program = {"start": cmd.docker_start, "stop": cmd.docker_stop, "build": cmd.docker_build, "log": cmd.docker_log}
+    await start_function(program, option)
+
+async def database_function(option):
+    program = {"start": cmd.database_start, "stop": cmd.database_stop}
+    await start_function(program, option)
+
+async def run_function(options):
+    program = {"server": server.start, "f-build": cmd.frontend_build, "f-watch": cmd.frontend_watch}
+    await start_function(program, options)
+
 async def script_function(options):
     from scripts import create_venv, create_config
-    run_list = []
     scripts = {"c-venv": create_venv.create_venv, "c-config": create_config.create_configs_files}
-    for option in options:
-        if option not in run_list: run_list.append(scripts[option]())
-    await asyncio.gather(*run_list)
-    return True
+    await start_function(scripts, options, ignore_package=True)
 
-async def add_arguments(parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Please select the type of application launch.")) -> argparse.Namespace:
+async def custom_error_handler(message):
+    await logger_check("ERROR", f"<le><b>Argparse</b></le> | <lr>Argparse Error: <r><b>{message}</b></r></lr>")
+    sys.exit(2)
+
+async def add_arguments(parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Please select the type of application launch.", exit_on_error=False)) -> argparse.Namespace:
     subparsers = parser.add_subparsers(dest="command")
 
     docker_parser = subparsers.add_parser("docker")
-    docker_parser.add_argument("actions", choices=["start", "stop", "build", "rebuild"], help="Working with Docker teams.")
+    docker_parser.add_argument("actions", choices=["start", "stop", "build", "log"], help="Working with Docker teams.")
 
     database_parser = subparsers.add_parser("database")
     database_parser.add_argument("actions", choices=["start", "stop", "docker-start", "docker-stop"], help="run only the DBMS.")
@@ -85,7 +119,7 @@ async def start() -> bool:
     await version_checking()
     args = await add_arguments()
 
-    if args.command is None:
+    if args.command is None and is_whether_dependencies_established:
         await logger_check("INFO", "<le><b>Main</b></le> | <lc>No arguments passed, automatic start of the <c>server</c>.</lc> <v><ly>(<b>command</b>: run server)</ly></v>")
         args.command = "run"; args.actions = ["server"]
 
@@ -93,9 +127,9 @@ async def start() -> bool:
     if args.command in functions:
         await functions[args.command](args.actions)
     else:
-        await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>Unknown option.</b></lr>")
+        await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>Unknown option. Write to <u>'help'</u> for more information.</b></lr>")
 
-    await logger_check("INFO", "<le><b>Main</b></le> | <e><b>Program finished.</b></e>")
+    await logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program finished.</b></lm>")
 
 if __name__ == "__main__":
     asyncio.run(logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program started.</b></lm>"))
@@ -103,6 +137,11 @@ if __name__ == "__main__":
         asyncio.run(start())
     except KeyboardInterrupt:
         asyncio.run(logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program shutdown by user.</b></lm>"))
+    except argparse.ArgumentError as e:
+        asyncio.run(custom_error_handler(str(e)))
+    except SystemExit as e:
+        if e.code != 0: asyncio.run(logger_check("WARNING", f"<le><b>Main</b></le> | <ly><b>System exit triggered: <y><v>{e}</v></y></b></ly>"))
     except BaseException as e:
+        print(e)
         asyncio.run(logger_check("CRITICAL", f"<le><b>Main</b></le> | <lr><b>The program has been shut down due to a critical error or unhandled exception, for more details: <r><v>{e}</v></r></b></lr>"))
         raise e

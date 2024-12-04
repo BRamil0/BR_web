@@ -7,7 +7,7 @@ class CustomFormatter(logging.Formatter):
         'INFO': '\033[32m',    # Green
         'WARNING': '\033[33m', # Yellow
         'ERROR': '\033[31m',   # Red
-        'CRITICAL': '\033[41m' # Red background
+        'CRITICAL': '\033[31m' # Red background
     }
     RESET = '\033[0m'
 
@@ -24,4 +24,4 @@ def get_logger():
     logger.setLevel(logging.INFO)
     return logger
 
-logger = get_logger()
+default_logger = get_logger()

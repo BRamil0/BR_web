@@ -1,13 +1,13 @@
 const modal = document.getElementById("modal");
 const closeModalButton = document.getElementsByClassName("close-modal-button");
 
-async function showModal() {
+export async function showModal() {
     modal.style.display = "block";
     await new Promise(resolve => setTimeout(resolve, 100));
     modal.classList.add("show")
 }
 
-async function hideModal() {
+export async function hideModal() {
     const contentModals = modal.querySelectorAll(".modal-content");
     const hasVisibleContent = Array.from(contentModals).some(content => content.classList.contains("show"));
 
@@ -17,13 +17,13 @@ async function hideModal() {
         modal.style.display = "none";
     }
 }
-async function showContentModal(id) {
+export async function showContentModal(id) {
     let contentModal = document.getElementById(id);
     console.log(contentModal);
     contentModal.classList.add("show")
 }
 
-async function hideContentModal(id) {
+export async function hideContentModal(id) {
     let contentModal = document.getElementById(id);
     console.log(contentModal);
     contentModal.classList.remove("show")
@@ -35,7 +35,7 @@ window.addEventListener("click", async (event) => {
     }
 });
 
-async function updateModalButton() {
+export async function updateModalButton() {
     for (let i = 0; i < closeModalButton.length; i++) {
         closeModalButton[i].addEventListener("click", async function (event) {
             const contentId = event.target.closest(".modal-content").id;

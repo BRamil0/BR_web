@@ -1,25 +1,47 @@
-let copyTextElements = document.querySelectorAll('.copy-text');
+import * as info_alert from "./info_alert.js";
 
-async function updateCopyTextElements() {
-    copyTextElements = document.querySelectorAll('.copy-text');
-    for (const element of copyTextElements) {
-        element.addEventListener('click', async () => {
-            const text = element.textContent;
-            await copyToClipboard(text);
-            await showInfoAlert("copy_alert");
-        });
+export async function updateCopyTextElements() {
+    const copyTextElements = document.querySelectorAll('.copy-text');
+    copyTextElements.forEach(element => {
+        if (!element.hasAttribute('data-copy-initialized')) {
+            element.addEventListener('click', handleCopyClick);
+            element.setAttribute('data-copy-initialized', 'true');
+        }
+    });
+}
+
+async function handleCopyClick(event) {
+    const text = event.currentTarget.textContent;
+    try {
+        await navigator.clipboard.writeText(text);
+        await info_alert.showInfoAlert("copy_alert");
+    } catch (error) {
+        console.warn('Clipboard API failed, trying fallback...', error);
+        const result = await copyToClipboardFallback(text);
+        if (result) {
+            await info_alert.showInfoAlert("copy_alert");
+        } else {
+            console.error('Fallback copying failed.', error);
+        }
     }
 }
 
-async function copyToClipboard(text) {
+async function copyToClipboardFallback(text) {
     const tempInput = document.createElement('input');
     tempInput.value = text;
+    tempInput.setAttribute('readonly', '');
+    tempInput.style.position = 'absolute';
+    tempInput.style.left = '-9999px';
     document.body.appendChild(tempInput);
     tempInput.select();
+
+    let result = false;
     try {
-        await navigator.clipboard.writeText(text);
+        result = document.execCommand('copy');
     } catch (error) {
-        console.error('Copying text failed', error);
+        console.error('Fallback copy failed', error);
+    } finally {
+        document.body.removeChild(tempInput);
     }
-    document.body.removeChild(tempInput);
+    return result;
 }

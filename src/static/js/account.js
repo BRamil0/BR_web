@@ -1,12 +1,8 @@
-const accountButtonMenu = document.getElementById("account-button-menu");
-const accountMenu = document.getElementById("account-menu");
 let registerButton = document.getElementById("form-register-button");
 let loginButton = document.getElementById("form-login-button");
 let logoutButton = document.getElementById("form-logout-button");
 
-let is_show_account_menu = true;
-
-async function getCurrentUser() {
+export async function getCurrentUser() {
     try {
         const response = await fetch("/api/auth/current_user", {
             method: "GET",
@@ -26,44 +22,12 @@ async function getCurrentUser() {
     }
 }
 
-async function isAuthenticated() {
+export async function isAuthenticated() {
     const user = await getCurrentUser();
     return user !== null;
 }
 
-async function setAccountMenu() {
-    is_show_account_menu = false;
-    accountMenu.classList.remove("show");
-    setTimeout( async () => {
-        if (accountMenu.innerHTML !== "") {
-            await delAccountMenu()
-        }
-        let dataLanguage = await getTextInLanguage(await getLanguage());
-            if (!dataLanguage) {
-                console.error('dataLanguage is undefined or empty.');
-                return false;
-            }
-        if (await isAuthenticated()) {
-            accountMenu.innerHTML += `<a href="/account/profile/my" data-translate="account_profile_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_profile_button"] || "Профіль"}</a>`;
-            accountMenu.innerHTML += `<a href="/account/settings" data-translate="account_settings_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_settings_button"] || "Налаштування"}</a>`;
-            accountMenu.innerHTML += `<button id="form-logout-button" data-translate="account_logout_button" class="jetbrains-mono-br">${dataLanguage["account_logout_button"] || "Вихід"}</button>`;
-            is_show_account_menu = true;
-            await updateAccountButton();
-            return true
-        } else {
-            accountMenu.innerHTML += `<a href="/account/login" data-translate="account_login_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_login_button"] || "Авторизація"}</a>`;
-            accountMenu.innerHTML += `<a href="/account/register" data-translate="account_register_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_register_button"] || "Реєстрація"}</a>`;
-            is_show_account_menu = true;
-            return true;
-        }
-    }, 50);
-}
-
-async function delAccountMenu() {
-    accountMenu.innerHTML = "";
-}
-
-async function registerAccount(username, email, password) {
+export async function registerAccount(username, email, password) {
     try {
         const response = await fetch("/api/auth/register", {
             method: "POST",
@@ -93,7 +57,7 @@ async function registerAccount(username, email, password) {
     }
 }
 
-async function loginAccount(email, password) {
+export async function loginAccount(email, password) {
     try {
         const response = await fetch("/api/auth/login", {
             method: "POST",
@@ -120,7 +84,7 @@ async function loginAccount(email, password) {
     }
 }
 
-async function logoutAccount() {
+export async function logoutAccount() {
     try {
         const response = await fetch("/api/auth/logout");
         if (!response.ok) {
@@ -225,7 +189,7 @@ async function validatePassword(password) {
     return pattern.test(password);
 }
 
-async function updateAccountButton() {
+export async function updateAccountButton() {
     registerButton = document.getElementById("form-register-button");
     loginButton = document.getElementById("form-login-button");
     logoutButton = document.getElementById("form-logout-button");
@@ -260,30 +224,4 @@ async function updateAccountButton() {
             }
         });
     }
-
-    if (logoutButton !== null) {
-        logoutButton.addEventListener("click", async function(event) {
-            event.preventDefault();
-            if (await logoutAccount()) {
-                await setAccountMenu();
-                await showInfoAlert("logout_success_logout");
-            }
-        });
-    }
 }
-
-accountButtonMenu.addEventListener("click", async function() {
-    if (is_show_account_menu) {
-        if (accountMenu.classList.contains("show")) {
-            accountMenu.classList.remove("show");
-        } else {
-            accountMenu.classList.add("show");
-        }
-    }
-});
-
-document.addEventListener("click", async function(event) {
-    if (!accountMenu.contains(event.target) && !accountButtonMenu.contains(event.target)) {
-        accountMenu.classList.remove("show");
-    }
-});

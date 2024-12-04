@@ -1,12 +1,15 @@
+import * as modal from "./modal.js";
+import * as info_alert from "./info_alert.js";
+
 const formMessageButton = document.getElementsByClassName("form-message-button");
 const sendModalMessageButton = document.getElementById("send-modal-message-button");
 
-async function updateMessageButton() {
+export async function updateMessageButton() {
     for (let i = 0; i < formMessageButton.length; i++) {
         formMessageButton[i].addEventListener("click", async function (event) {
             const targetId = event.currentTarget.getAttribute("data-target");
-            await showModal();
-            await showContentModal(targetId);
+            await modal.showModal();
+            await modal.showContentModal(targetId);
         });
     }
 }
@@ -18,7 +21,7 @@ sendModalMessageButton.addEventListener("click", async function () {
     const message = document.getElementById("form-message-input").value.trim();
 
     if (message === "" || name === "") {
-        await showInfoAlert("no_required_fields_message_alert");
+        await info_alert.showInfoAlert("no_required_fields_message_alert");
         document.getElementById("form-message-name-input").style.borderColor = "red";
         document.getElementById("form-message-input").style.borderColor = "red";
         setTimeout(() => {
@@ -43,17 +46,17 @@ sendModalMessageButton.addEventListener("click", async function () {
         });
 
         if (response.ok) {
-            await showInfoAlert("message_alert");
+            await info_alert.showInfoAlert("message_alert");
             document.getElementById("form-message-name-input").value = "";
             document.getElementById("form-message-input").value = "";
-            await hideContentModal("form-message-modal");
-            await hideModal();
+            await modal.hideContentModal("form-message-modal");
+            await modal.hideModal();
         } else {
             console.error("Error:", response.statusText);
-            await showInfoAlert("error_when_patching_message_alert");
+            await info_alert.showInfoAlert("error_when_patching_message_alert");
         }
     } catch (error) {
         console.error("Error:", error);
-        await showInfoAlert("error_when_patching_message_alert");
+        await info_alert.showInfoAlert("error_when_patching_message_alert");
     }
 });

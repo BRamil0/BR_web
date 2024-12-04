@@ -1,3 +1,7 @@
+import * as nav from "./nav.js";
+import * as loading_banner from "./loading_banner.js";
+import * as info_alert from "./info_alert.js";
+
 document.addEventListener("DOMContentLoaded", function() {
     const debugModeButton = document.getElementById("debug-mode-menu-button");
     const debugModeMenu = document.getElementById("debug-mode-menu");
@@ -16,14 +20,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    function clearCookies() {
-        document.cookie.split(';').forEach(function(c) {
-            document.cookie = c.trim().split('=')[0] + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    async function clearCookies() {
+        const domain = window.location.hostname;
+        const paths = ['/'];
+
+        document.cookie.split(';').forEach(cookie => {
+            const cookieName = cookie.trim().split('=')[0];
+
+            if (cookieName) {
+                paths.forEach(path => {
+                    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}; domain=${domain}; SameSite=None; Secure`;
+                });
+            }
         });
-        alert("Cookies очищено!");
+        console.log("Cookies очищено!");
+        await info_alert.showInfoAlert("cookies_cleared");
     }
 
-    function clearCache() {
+    async function clearCache() {
         if ('caches' in window) {
             caches.keys().then(function(names) {
                 names.forEach(function(name) {
@@ -31,11 +45,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             });
         }
-        alert("Кеш очищено!");
+        console.log("Кеш очищено!");
+        await info_alert.showInfoAlert("cache_cleared");
     }
 
-    function reloadPage() {
+    async function reloadPage() {
         window.location.reload();
+    }
+
+    async function delThemeMenu() {
+        await nav.delMenu(document.getElementById("theme-menu"));
+        console.log("Меню тем очищено!");
+        await info_alert.showInfoAlert("theme_menu_cleared");
+    }
+
+    async function delLanguageMenu() {
+        await nav.delMenu(document.getElementById("language-menu"));
+        console.log("Меню мов очищено!");
+        await info_alert.showInfoAlert("language_menu_cleared");
+    }
+
+    async function delAccountMenu() {
+        await nav.delMenu(document.getElementById("account-menu"));
+        console.log("Меню облікового запису очищено!");
+        await info_alert.showInfoAlert("account_menu_cleared");
     }
 
     document.getElementById("reload-page-button").addEventListener("click", reloadPage);
@@ -44,6 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("clear-theme-button").addEventListener("click", delThemeMenu);
     document.getElementById("clear-language-button").addEventListener("click", delLanguageMenu);
     document.getElementById("clear-account-button").addEventListener("click", delAccountMenu);
-    document.getElementById("on-banner-button").addEventListener("click", showLoadingBanner);
-    document.getElementById("off-banner-button").addEventListener("click", hideLoadingBanner);
+    document.getElementById("on-banner-button").addEventListener("click", loading_banner.showLoadingBanner);
+    document.getElementById("off-banner-button").addEventListener("click", loading_banner.hideLoadingBanner);
 });

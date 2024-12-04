@@ -27,6 +27,27 @@ async def database_stop() -> None:
     else:
         logger.opt(colors=True).warning("<le><b>Database</b></le> | <lm><b>MongoDB is not running.</b></lm>")
 
+async def docker_start() -> bool:
+    logger.opt(colors=True).info("<le><b>Docker</b></le> | <e><b>Starting Docker compose...</b></e>")
+    return await run_command("docker-compose -f ./docker/docker-compose.yml up -d", name="Docker")
+
+async def docker_stop() -> None:
+    process = processes.get("Docker")
+    if process and process.returncode is None:
+        logger.opt(colors=True).info("<le><b>Docker</b></le> | <lm><b>Stopping Docker compose...</b></lm>")
+        process.send_signal(signal.SIGTERM)
+        await process.wait()
+        logger.opt(colors=True).info("<le><b>Docker</b></le> | <lm><b>Docker stopped.</b></lm>")
+    else:
+        logger.opt(colors=True).warning("<le><b>Docker</b></le> | <lm><b>Docker is not running.</b></lm>")
+
+async def docker_build() -> bool:
+    logger.opt(colors=True).info("<le><b>Docker</b></le> | <lm><b>Building Docker compose...</b></lm>")
+    return await run_command("docker-compose -f ./docker/docker-compose.yml up --build", name="Docker")
+
+async def docker_log() -> bool:
+    return await run_command("docker-compose -f ./docker/docker-compose.yml logs", name="Docker")
+
 async def run_command(command: str, name="") -> bool:
     returncode = None
     logger.opt(colors=True).info(f"<le><b>{name}</b></le> | <lc>Starting command: <b><lg>{command}</lg></b></lc>")
