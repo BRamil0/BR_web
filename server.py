@@ -118,8 +118,8 @@ async def start() -> None:
     start the server
     :return: None
     """
-    logger.opt(colors=True).info("<e>Server</e> | <e><b>Starting server...</b></e>")
-    logger.opt(colors=True).info(f"<e>Server</e> | <cyan>Debug mode: <b>{settings.DEBUG}</b></cyan> | <cyan>Debug database mode: <b>{settings.DEBUG_DATABASE}</b></cyan> | <cyan>Logging: <b>{settings.is_log_record}</b></cyan>")
+    logger.opt(colors=True).info("<le><b>Server</b></le> | <lm><b>Starting server...</b></lm>")
+    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>Debug mode: <c><b>{settings.DEBUG}</b></c></lc> | <lc>Debug database mode: <c><b>{settings.DEBUG_DATABASE}</b></c></lc> | <lc>Logging: <c><b>{settings.is_log_record}</b></c></lc>")
 
     record_log(logger)
 
@@ -136,7 +136,7 @@ async def start() -> None:
     host = server.config.host
     if host not in "http://":
         host = f"http://{host}"
-    logger.opt(colors=True).info(f"<e>Server</e> | <c>The server is running at: <b>{host}:{server.config.port}</b></c> <y>(press ctrl+c to stop)</y>")
+    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>The server is running at: <c><b>{host}:{server.config.port}</b></c></lc> <ly><v>(press ctrl+c to stop)</v></ly>")
 
     new_loop = asyncio.new_event_loop()
     asyncio.set_event_loop(new_loop)
@@ -150,7 +150,7 @@ if "__main__" == __name__:
     try:
         asyncio.run(start())
     except KeyboardInterrupt:
-        logger.opt(colors=True).info("<e>Server</e> | <e><b>Server shutdown by user.</b></e>")
+        logger.opt(colors=True).info("<le><b>Server</b></le> | <e><b>Server shutdown by user.</b></e>")
     except BaseException as e:
-        logger.opt(colors=True).critical(f"<e>Server</e> | <e><b>The server has been shut down due to a critical error or unhandled exception, for more details: {e}</b></e>")
+        logger.opt(colors=True).critical(f"<le><b>Server</b></le> | <e><b>The server has been shut down due to a critical error or unhandled exception, for more details: {e}</b></e>")
         raise e

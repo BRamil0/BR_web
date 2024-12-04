@@ -58,10 +58,10 @@ class Settings(pydantic_settings.BaseSettings):
     def load_env_file(self):
         env_file = self.Config.env_file
         if os.path.exists(env_file):
-            logger.opt(colors=True).info(f"<blue>Settings</blue> | <c>Load config from env-file: <b>{env_file}</b></c>")
+            logger.opt(colors=True).info(f"<le><b>Settings</b></le> | <lc>Load config from env-file: <lg><b>{env_file}</b></lg></lc>")
             self.load_from_env()
         else:
-            logger.opt(colors=True).info(f"<blue>Settings</blue> | <c>Env file not found, checking environment variables...</c>")
+            logger.opt(colors=True).info(f"<le><b>Settings</b></le> | <lm>Env file not found, checking environment variables...</lm>")
             dotenv.load_dotenv()
 
     def load_from_env(self):
@@ -70,7 +70,7 @@ class Settings(pydantic_settings.BaseSettings):
             if env_value is not None:
                 setattr(self, field, env_value)
             elif not hasattr(self, field):
-                logger.opt(colors=True).critical(f"<blue>Settings</blue> | <c>Field '{field}' is missing in the environment variables</c>")
+                logger.opt(colors=True).critical(f"<le><b>Settings</b></le> | <lr>Field <v>'{field}'</v> is missing in the environment variables</lr>")
                 raise ValueError(f"Field '{field}' is missing in the environment variables.")
 
     def load_config_file(self):
@@ -82,18 +82,18 @@ class Settings(pydantic_settings.BaseSettings):
 
         for file_name, file_type in config_files:
             if pathlib.Path(file_name).is_file():
-                logger.opt(colors=True).info(f"<blue>Settings</blue> | <c>Load config file: <b>{file_name}</b></c>")
+                logger.opt(colors=True).info(f"<le><b>Settings</b></le> | <lc>Load config file: <lg><b>{file_name}</b></lg></lc>")
                 self.load_from_file(file_name, file_type)
                 break
         else:
-            logger.opt(colors=True).warning("<blue>Settings</blue> | <c>Config file not found</c> <y>(create the file “config.json/yaml/toml” in the project root)</y>")
+            logger.opt(colors=True).warning("<le><b>Settings</b></le> | <lc>Config file not found</lc> <ly><v>(create the file “config.json/yaml/toml” in the project root)</v></ly>")
 
     def load_from_file(self, config_file: str, file_type: str = "yaml"):
         try:
             handler = getattr(self, LoadTypeFile[file_type].value)
             return handler(config_file)
         except KeyError:
-            logger.opt(colors=True).critical(f"<blue>Settings</blue> | <c>Unsupported file type: <b>{file_type}</b></c>")
+            logger.opt(colors=True).critical(f"<le><b>Settings</b></le> | <lc>Unsupported file type: <c><b>{file_type}</b></c></lc>")
             raise ValueError(f"Unsupported file type: {file_type}")
 
     def _load_config(self, data: dict[str, str | int | typing.List[str]]):
@@ -119,5 +119,5 @@ try:
     settings.load_config_file()
     settings.check_for_none_values()
 except ValueError as e:
-    logger.opt(colors=True).critical(f"<blue>Settings</blue> | <c>Load config file error</c> <y>{e}</y>")
+    logger.opt(colors=True).critical(f"<le><b>Settings</b></le> | <b><lr>Load config file error <v>{e}</v></lr></b>")
     raise ValueError(f"Load config file error: {e}")

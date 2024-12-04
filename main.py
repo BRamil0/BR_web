@@ -8,10 +8,10 @@ RECOMMENDED_VERSION_PYTHON = (3, 12, 7)
 try:
     from src.logger.logger import logger
     import server
-    from src.frontend import frontend
+    from src.backend import cmd
     is_whether_dependencies_established = True
 except ImportError:
-    server, frontend = None, None
+    server, cmd = None, None
     from src.logger.default_logger import logger
     is_whether_dependencies_established = False
     logger.log("CRITICAL", "Main | no dependencies for making applications are installed")
@@ -26,26 +26,34 @@ async def logger_check(level: str = "INFO", message: str = "") -> bool:
 async def version_checking():
     current_version = sys.version_info[:3]
     if  current_version < MINIMUM_VERSION_PYTHON:
-        await logger_check("CRITICAL", f"<e>Main</e> | <c>Python version  <b>{'.'.join(map(str, current_version))}</b> is not supported. Minimum version: <b>{MINIMUM_VERSION_PYTHON}</b>.</c>")
+        await logger_check("CRITICAL", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <lr><b>not supported</b></lr>.</lc> | <lc>Minimum version: <c><b>{MINIMUM_VERSION_PYTHON}</b></c>.</lc>")
         raise SystemExit
     elif current_version < RECOMMENDED_VERSION_PYTHON:
-        await logger_check("WARNING", f"<e>Main</e> | <c>Python version  <b>{'.'.join(map(str, current_version))}</b> is not recommended. Recommended version: <b>{RECOMMENDED_VERSION_PYTHON}</b>.</c>")
+        await logger_check("WARNING", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <ly><b>not recommended</b></ly>.</lc> | <lc>Recommended version: <c><b>{RECOMMENDED_VERSION_PYTHON}</b></c>.</lc>")
         return False
-    await logger_check("INFO", f"<e>Main</e> | <c>Python version <b>{'.'.join(map(str, current_version))}</b> is supported.</c>")
+    await logger_check("INFO", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <lg><b>supported</b></lg>.</lc>")
     return True
 
 async def docker_function(option):
     pass
 
+async def database_function(option):
+    if is_whether_dependencies_established:
+        program = {"start": cmd.database_start, "stop": cmd.database_stop}
+        await program[option]()
+        return True
+    await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>You have not set up dependencies for making apps.</b></lr>")
+    return False
+
 async def run_function(options):
     if is_whether_dependencies_established:
         run_list = []
-        program = {"server": server.start, "f-build": frontend.build, "f-watch": frontend.watch}
+        program = {"server": server.start, "f-build": cmd.frontend_build, "f-watch": cmd.frontend_watch}
         for option in options:
             if option not in run_list: run_list.append(program[option]())
         await asyncio.gather(*run_list)
         return True
-    await logger_check("ERROR", "<e>Main</e> | <e><b>You have not set up dependencies for making apps.</b></e>")
+    await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>You have not set up dependencies for making apps.</b></lr>")
     return False
 
 async def script_function(options):
@@ -57,12 +65,14 @@ async def script_function(options):
     await asyncio.gather(*run_list)
     return True
 
-
 async def add_arguments(parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Please select the type of application launch.")) -> argparse.Namespace:
     subparsers = parser.add_subparsers(dest="command")
 
     docker_parser = subparsers.add_parser("docker")
-    docker_parser.add_argument("actions", choices=["start", "stop", "restart"], help="Working with Docker teams.")
+    docker_parser.add_argument("actions", choices=["start", "stop", "build", "rebuild"], help="Working with Docker teams.")
+
+    database_parser = subparsers.add_parser("database")
+    database_parser.add_argument("actions", choices=["start", "stop", "docker-start", "docker-stop"], help="run only the DBMS.")
 
     run_parser = subparsers.add_parser("run")
     run_parser.add_argument("actions", nargs='*', choices=["server", "f-build", "f-watch"], help="Run server or watch.")
@@ -76,23 +86,23 @@ async def start() -> bool:
     args = await add_arguments()
 
     if args.command is None:
-        await logger_check("INFO", "<e>Main</e> | <c>No arguments passed, automatic start of the server.</c> <y>(<b>command</b>: run server)</y>")
+        await logger_check("INFO", "<le><b>Main</b></le> | <lc>No arguments passed, automatic start of the <c>server</c>.</lc> <v><ly>(<b>command</b>: run server)</ly></v>")
         args.command = "run"; args.actions = ["server"]
 
-    functions = {"docker": docker_function, "run": run_function, "scripts": script_function}
+    functions = {"docker": docker_function, "database": database_function, "run": run_function, "scripts": script_function}
     if args.command in functions:
         await functions[args.command](args.actions)
     else:
-        await logger_check("ERROR", "<e>Main</e> | <e><b>Unknown option.</b></e>")
+        await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>Unknown option.</b></lr>")
 
-    await logger_check("INFO", "<e>Main</e> | <e><b>Program finished.</b></e>")
+    await logger_check("INFO", "<le><b>Main</b></le> | <e><b>Program finished.</b></e>")
 
 if __name__ == "__main__":
-    asyncio.run(logger_check("INFO", "<e>Main</e> | <e><b>Program started.</b></e>"))
+    asyncio.run(logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program started.</b></lm>"))
     try:
         asyncio.run(start())
     except KeyboardInterrupt:
-        asyncio.run(logger_check("INFO", "<e>Main</e> | <e><b>Program shutdown by user.</b></e>"))
+        asyncio.run(logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program shutdown by user.</b></lm>"))
     except BaseException as e:
-        asyncio.run(logger_check("CRITICAL", f"<e>Main</e> | <e><b>The program has been shut down due to a critical error or unhandled exception, for more details: {e}</b></e>"))
+        asyncio.run(logger_check("CRITICAL", f"<le><b>Main</b></le> | <lr><b>The program has been shut down due to a critical error or unhandled exception, for more details: <r><v>{e}</v></r></b></lr>"))
         raise e
