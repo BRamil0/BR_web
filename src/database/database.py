@@ -33,6 +33,10 @@ class SearchAttributeForUser(enum.Enum):
     login_sessions: str = "login_sessions"
     oauth_links: str = "oauth_links"
 
+class SearchTypeForPost(enum.Enum):
+    url: str = "url"
+    id: bson.ObjectId = "id"
+
 class DataBase:
     def __init__(self, db_name: str) -> None:
         self.client = AsyncIOMotorClient(settings.MONGODB_URI)
@@ -163,33 +167,28 @@ class DataBase:
         result = await self.db["users"].update_one(filter, update)
         return result.acknowledged
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @async_decorator_info_for_database_log_func
     async def get_all_posts(self) -> list:
         cursor = self.db["posts"].find()
         return await cursor.to_list(length=None)
 
+    @async_decorator_info_for_database_log_func
     async def get_post_id(self, post_id: str) -> list:
         cursor = self.db["posts"].find({"_id": post_id})
         return await cursor.to_list(length=1)
 
+    @async_decorator_info_for_database_log_func
+    async def get_post(self, type: SearchTypeForPost, data: str):
+        if type == SearchTypeForPost.url:
+            cursor = self.db["posts"].find({"url": data})
+        elif type == SearchTypeForPost.id:
+            cursor = self.db["posts"].find({"_id": bson.ObjectId(data)})
+        else:
+            await database_log_func("get_post", "Invalid search type", "error")
+            return None
+        return await cursor.to_list(length=1)
+
+    @async_decorator_info_for_database_log_func
     async def create_post(self, post: models.PostModel) -> bool:
         result = await self.db["posts"].insert_one(post.model_dump(by_alias=True, exclude={"id"}))
         return result.acknowledged

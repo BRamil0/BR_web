@@ -2,7 +2,7 @@ import { main } from "./main.js";
 import * as theme from "./theme.js";
 import * as language from "./language.js";
 
-async function loadPage(url) {
+export async function loadPage(url) {
     try {
         const response = await fetch(url);
         if (!response.ok) {

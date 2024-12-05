@@ -12,7 +12,6 @@
   },
   "author": "Qulow (Radomyr B.)",
   "license": "MIT",
-  "type": "module",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

@@ -142,17 +142,17 @@ class SettingsModel(pydantic.BaseModel):
 
 class PostModel(pydantic.BaseModel):
     class ContentModel(pydantic.BaseModel):
-        title: str
-        content: str
-        author: str
-        language: str
-        description: str
+        title: str | None = None
+        content: str | None = None
+        author: str | None = None
+        language: str | None = None
+        description: str | None = None
         image: ImageModel = ImageModel()
 
     id: typing.Optional[PyObjectId] = pydantic.Field(default=None, alias="_id")
-    URL: str
+    url: str
     user_id: PyObjectId | None = None
-    contents: list[ContentModel]
+    contents: list[ContentModel | None] = pydantic.Field(default_factory=lambda: [])
     created_at: datetime.datetime
     updated_at: datetime.datetime
     default_image: ImageModel = ImageModel()

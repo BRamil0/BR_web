@@ -1,3 +1,7 @@
+import {showInfoAlert} from "./info_alert.js";
+import {setAccountMenu} from "./nav.js";
+import {loadPage} from "./load_page.js";
+
 let registerButton = document.getElementById("form-register-button");
 let loginButton = document.getElementById("form-login-button");
 let logoutButton = document.getElementById("form-logout-button");
