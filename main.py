@@ -8,7 +8,7 @@ RECOMMENDED_VERSION_PYTHON = (3, 12, 7)
 try:
     from src.logger.logger import logger
     import server
-    from src.backend import cmd
+    from src.backend import commands
     is_whether_dependencies_established = True
 except ImportError:
     import logging
@@ -21,7 +21,7 @@ except ImportError:
         async def start():
             print("FakeServer | Starting fake server...")
 
-    class FakeCmd:
+    class FakeCommands:
         @staticmethod
         async def docker_start():
             print("FakeCmd | Starting fake Docker...")
@@ -47,7 +47,7 @@ except ImportError:
             print("FakeCmd | Watching fake frontend...")
 
     server = FakeServer()
-    cmd = FakeCmd()
+    commands = FakeCommands()
 
 async def logger_check(level: str = "INFO", message: str = "") -> bool:
     if is_whether_dependencies_established:
@@ -79,15 +79,15 @@ async def start_function(program: dict, options: dict, ignore_package: bool = Fa
     return False
 
 async def docker_function(option):
-    program = {"start": cmd.docker_start, "stop": cmd.docker_stop, "build": cmd.docker_build, "log": cmd.docker_log}
+    program = {"start": commands.docker_start, "stop": commands.docker_stop, "build": commands.docker_build, "log": commands.docker_log}
     await start_function(program, option)
 
 async def database_function(option):
-    program = {"start": cmd.database_start, "stop": cmd.database_stop}
+    program = {"start": commands.database_start, "stop": commands.database_stop}
     await start_function(program, option)
 
 async def run_function(options):
-    program = {"server": server.start, "f-build": cmd.frontend_build, "f-watch": cmd.frontend_watch}
+    program = {"server": server.start, "f-build": commands.frontend_build, "f-watch": commands.frontend_watch}
     await start_function(program, options)
 
 async def script_function(options):

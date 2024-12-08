@@ -59,12 +59,22 @@ class PolesModel(PermissionsBaseModel, pydantic.BaseModel):
         theme: str
         color: str | None = None
 
+    class BlogAccessRightsModel(pydantic.BaseModel):
+        create_post: bool = False
+        view_post: bool = False
+        edit_post: bool = False
+        delete_post: bool = False
+
     id: PyObjectId | None = pydantic.Field(default=None, alias="_id")
     default_name: str
     default_color: str
 
     language_name: list[LanguageNameModel | None] = pydantic.Field(default_factory=lambda: [])
     theme_color: list[ThemeColorModel | None] = pydantic.Field(default_factory=lambda: [])
+
+    is_active: bool = True
+
+    blog_access_rights: BlogAccessRightsModel = BlogAccessRightsModel()
 
     model_version: int | str = 1
 
@@ -95,6 +105,8 @@ class UserModel(pydantic.BaseModel):
     class RoleModel(pydantic.BaseModel):
         name: str
         id: PyObjectId | None = None
+        at_added: datetime.datetime | None = None
+        at_works_until: datetime.datetime | None = None
 
         class Config:
             populate_by_name = True
@@ -147,7 +159,7 @@ class PostModel(pydantic.BaseModel):
         author: str | None = None
         language: str | None = None
         description: str | None = None
-        image: ImageModel = ImageModel()
+        image: ImageModel = pydantic.Field(default_factory=ImageModel)
 
     id: typing.Optional[PyObjectId] = pydantic.Field(default=None, alias="_id")
     url: str
@@ -155,7 +167,8 @@ class PostModel(pydantic.BaseModel):
     contents: list[ContentModel | None] = pydantic.Field(default_factory=lambda: [])
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    default_image: ImageModel = ImageModel()
+    default_image: ImageModel = pydantic.Field(default_factory=ImageModel)
+    is_active: bool = True
 
     model_version: int | str = 1
 

@@ -4,7 +4,7 @@ import typing
 from fastapi import APIRouter, Depends, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from src.database.database import DataBase
+from src.database.database import DataBase, SearchTypeForPost
 from src.backend.templates import templates
 
 router = APIRouter(
@@ -38,5 +38,5 @@ async def post_redirect():
 
 @router.get("/post/{post_id}", response_class=HTMLResponse)
 async def get_post(request: Request, post_id: int, db: DataBase = Depends(get_database)):
-    post = await db.get_post_id(post_id)
+    post = await db.get_post(SearchTypeForPost.id, post_id)
     return templates.TemplateResponse("post.html", {"request": request, "post": post[0]})
