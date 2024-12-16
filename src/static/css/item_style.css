@@ -21,9 +21,6 @@
     background-color: var(--bg-color);
     border-radius: 2vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
-    width: 20rem;
-    height: 22.5rem;
-    visibility: visible;
 }
 
 .item-card p {
@@ -45,7 +42,6 @@
     text-decoration: none;
     text-align: center;
     transition: color 0.3s ease;
-    visibility: hidden;
 }
 
 .item-card:hover {

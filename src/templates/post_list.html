@@ -3,10 +3,15 @@
 {% block content %}
 <div class="">
     <h1 data-translate="">Список постів</h1>
+    <div class= "item-card w-72">
+        <a href="/blog/create_post" class="link a-card">
+            <h2>Створити пост</h2>
+        </a>
+    </div>
     <div class="item-card-container">
         {% for post in posts %}
-            <a href="/blog/post/{% if post.URL %}{{ post.URL }}{% else %}{{ post._id }}{% endif %}" class="link a-card">
-                <div class="item-card">
+            <a href="/blog/post/{% if post.URL %}{{ post.URL }}{% else %}{{ post._id }}{% endif %}" class="link a-card invisible">
+                <div class="item-card h-80 w-72 visible">
                     <img src="{{ post.image }}" alt="Image">
                     <h2>{{ post.title }}</h2>
                     <p data-translate="">{{ post.description }}</p>
