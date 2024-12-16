@@ -34,13 +34,22 @@ class ImageModel(pydantic.BaseModel):
     model_version: int | str = 1
 
 class PermissionsBaseModel(pydantic.BaseModel):
+    class RolesPermissionModel(pydantic.BaseModel):
+        create_role: bool = False
+        edit_role: bool = False
+        delete_role: bool = False
+
     class PostPermissionModel(pydantic.BaseModel):
         create_post: bool = False
+        view_post: bool = True
         edit_post: bool = False
         delete_post: bool = False
 
+    root: bool = False
     site_administration_panel: bool = False
-    post: PostPermissionModel
+
+    roles_permission: RolesPermissionModel = RolesPermissionModel()
+    blog_permission: PostPermissionModel = PostPermissionModel()
 
     date_added: datetime.datetime
     end_date: datetime.datetime | None = None
@@ -50,7 +59,7 @@ class PermissionsBaseModel(pydantic.BaseModel):
         json_encoders = {PyObjectId: str}
         protected_namespaces = ()
 
-class PolesModel(PermissionsBaseModel, pydantic.BaseModel):
+class RolesModel(PermissionsBaseModel, pydantic.BaseModel):
     class LanguageNameModel(pydantic.BaseModel):
         name: str
         language_code: str
@@ -59,22 +68,14 @@ class PolesModel(PermissionsBaseModel, pydantic.BaseModel):
         theme: str
         color: str | None = None
 
-    class BlogAccessRightsModel(pydantic.BaseModel):
-        create_post: bool = False
-        view_post: bool = False
-        edit_post: bool = False
-        delete_post: bool = False
-
     id: PyObjectId | None = pydantic.Field(default=None, alias="_id")
     default_name: str
-    default_color: str
+    default_color: str | None = None
 
     language_name: list[LanguageNameModel | None] = pydantic.Field(default_factory=lambda: [])
     theme_color: list[ThemeColorModel | None] = pydantic.Field(default_factory=lambda: [])
 
     is_active: bool = True
-
-    blog_access_rights: BlogAccessRightsModel = BlogAccessRightsModel()
 
     model_version: int | str = 1
 

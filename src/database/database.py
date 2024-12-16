@@ -251,14 +251,14 @@ class DataBase:
 
 
     @async_decorator_info_for_database_log_func
-    async def get_role(self, role_id: bson.ObjectId) -> models.PolesModel | None:
+    async def get_role(self, role_id: bson.ObjectId) -> models.RolesModel | None:
         if not bson.ObjectId.is_valid(role_id):
             await database_log_func("get_role", "Invalid role ID", "critical")
             raise ValueError("Invalid role ID")
 
         role_data = await self.db["roles"].find_one({"_id": bson.ObjectId(role_id)})
         if role_data:
-            return models.PolesModel(**role_data)
+            return models.RolesModel(**role_data)
         return None
 
     @async_decorator_info_for_database_log_func
@@ -269,7 +269,7 @@ class DataBase:
     @async_decorator_info_for_database_log_func
     async def search_by_roles_attribute(self, type: SearchTypeForRole, data: dict | str) -> list:
         if type == SearchTypeForRole.name:
-            query = {"name": data}
+            query = {"default_name": data}
         elif type == SearchTypeForRole.id:
             query = {"_id": bson.ObjectId(data)}
         else:
@@ -279,7 +279,7 @@ class DataBase:
         return await cursor.to_list(length=None)
 
     @async_decorator_info_for_database_log_func
-    async def create_role(self, role: models.PolesModel) -> bool:
+    async def create_role(self, role: models.RolesModel) -> bool:
         result = await self.db["roles"].insert_one(role.model_dump(by_alias=True, exclude={"id"}))
         return result.acknowledged
 

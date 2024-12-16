@@ -99,7 +99,6 @@ async def token_verification_no_exceptions(request: Request, db: DataBase = Depe
     except HTTPException:
         return None
 
-
 async def checking_tokens_relevance(user_id: str, db: DataBase = Depends(get_database)) -> bool:
     tokens = await db.get_login_sessions(user_id)
     if not tokens:
