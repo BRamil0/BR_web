@@ -104,8 +104,8 @@ class UserModel(pydantic.BaseModel):
         ip_address: str | None = None
 
     class RoleModel(pydantic.BaseModel):
-        name: str
-        id: PyObjectId | None = None
+        name: str | None = None
+        id: PyObjectId
         at_added: datetime.datetime | None = None
         at_works_until: datetime.datetime | None = None
 

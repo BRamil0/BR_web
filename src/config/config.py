@@ -35,6 +35,10 @@ class Settings(pydantic_settings.BaseSettings):
 
     host: str = "localhost"
     port: int = 8080
+    https: bool = False
+    file_ssl_key: str = "cert.pem"
+    file_ssl_cert: str = "key.pem"
+
     default_theme_list: typing.List[str] = pydantic.Field(default_factory=lambda: ["system", "light", "dark"])
     default_list_of_languages: typing.List[str] = pydantic.Field(default_factory=lambda: ["eng", "ukr"])
     default_theme: str = "system"

@@ -6,6 +6,21 @@ class UserCreate(pydantic.BaseModel):
     email: pydantic.EmailStr
     password: str
 
+class RoleCreate(pydantic.BaseModel):
+    class LanguageNameModel(pydantic.BaseModel):
+        name: str
+        language_code: str
+
+    class ThemeColorModel(pydantic.BaseModel):
+        theme: str
+        color: str | None = None
+
+    default_name: str
+    default_color: str | None = pydantic.Field(default_factory=None)
+
+    language_name: list[LanguageNameModel | None] = pydantic.Field(default_factory=lambda: [])
+    theme_color: list[ThemeColorModel | None] = pydantic.Field(default_factory=lambda: [])
+
 class Token(pydantic.BaseModel):
     access_token: str
     token_type: str

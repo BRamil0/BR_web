@@ -133,14 +133,15 @@ class DataBase:
         return None
 
     @async_decorator_info_for_database_log_func
-    async def create_user(self, user: models.UserModel) -> int:
+    async def create_user(self, user: models.UserModel) -> bson.ObjectId | int:
         """
         Create user
         :param user: user
-        :return: user id
+        :return: user id (if 0 then error)
         """
         if not isinstance(user, models.UserModel):
             await database_log_func("create_user", "Invalid user data", "critical")
+            return 0
         user_data = user.model_dump(by_alias=True, exclude={"id"})
         result = await self.db["users"].insert_one(user_data)
         return result.inserted_id
@@ -280,6 +281,15 @@ class DataBase:
 
     @async_decorator_info_for_database_log_func
     async def create_role(self, role: models.RolesModel) -> bool:
+        if isinstance(role, models.RolesModel):
+            await database_log_func("create_role", "Invalid roles data", "critical")
+            return False
+
+        existing_role = await self.db["roles"].find_one({"default_name": role.default_name})
+        if existing_role:
+            await database_log_func("create_role", f"Role with default_name '{role.default_name}' already exists", "error")
+            return False
+
         result = await self.db["roles"].insert_one(role.model_dump(by_alias=True, exclude={"id"}))
         return result.acknowledged
 

@@ -3,6 +3,7 @@ import asyncio
 
 import uvicorn
 import fastapi
+import ssl
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -10,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from src.config.config import settings
 from src.backend.templates import templates
 
-from src.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, base, blog
+from src.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, base, blog, roles_api
 
 from src.logger.logger import logger, log_requests
 from src.logger.record_log import record_log
@@ -23,6 +24,15 @@ class CustomStaticFiles(StaticFiles):
         if path.endswith(".js"):
             response.headers["Content-Type"] = "application/javascript"
         return response
+
+def ssl_init() ->ssl.SSLContext:
+    """
+
+    :return:
+    """
+    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_context.load_cert_chain(settings.file_ssl_cert, settings.file_ssl_key)
+    return ssl_context
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -39,6 +49,7 @@ def import_routers(app: fastapi.FastAPI) -> None:
     app.include_router(blog_api.router)
     app.include_router(auth.router)
     app.include_router(auth_api.router)
+    app.include_router(roles_api.router)
 
 
 def init_codes(app: fastapi.FastAPI) -> None:
@@ -119,7 +130,7 @@ async def start() -> None:
     :return: None
     """
     logger.opt(colors=True).info("<le><b>Server</b></le> | <lm><b>Starting server...</b></lm>")
-    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>Debug mode: <c><b>{settings.DEBUG}</b></c></lc> | <lc>Debug database mode: <c><b>{settings.DEBUG_DATABASE}</b></c></lc> | <lc>Logging: <c><b>{settings.is_log_record}</b></c></lc>")
+    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>Https: <c><b>{settings.https}</b></c></lc> | <lc>Debug mode: <c><b>{settings.DEBUG}</b></c></lc> | <lc>Debug database mode: <c><b>{settings.DEBUG_DATABASE}</b></c></lc> | <lc>Logging: <c><b>{settings.is_log_record}</b></c></lc>")
 
     record_log(logger)
 
@@ -131,11 +142,16 @@ async def start() -> None:
                                             loop="asyncio",
                                             reload=settings.DEBUG,
                                             log_config=None)
+    if settings.https:
+        config.ssl = ssl_init()
+        host_ssl = "https"
+    else:
+        host_ssl = "http"
     server = uvicorn.Server(config=config)
 
     host = server.config.host
-    if host not in "http://":
-        host = f"http://{host}"
+    if host not in f"{host_ssl}://":
+        host = f"{host_ssl}://{host}"
     logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>The server is running at: <c><b>{host}:{server.config.port}</b></c></lc> <ly><v>(press ctrl+c to stop)</v></ly>")
 
     new_loop = asyncio.new_event_loop()

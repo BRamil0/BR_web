@@ -56,7 +56,7 @@ async def authenticate_user(db: DataBase, email: str, password: str):
         return False
     return False
 
-async def token_verification(request: Request, db: DataBase = Depends(get_database)) -> dict:
+async def token_verification(request: Request, response: Response, db: DataBase = Depends(get_database)) -> dict:
     token = request.headers.get("Authorization")
     if token:
         scheme, token = token.split(" ", 1)
@@ -81,8 +81,11 @@ async def token_verification(request: Request, db: DataBase = Depends(get_databa
     if payload.get("exp") < datetime.datetime.now().timestamp():
         await db.remove_login_session(payload.get("id"), token)
         raise HTTPException(status_code=401, detail="Token has expired")
-
-    tokens_db = await db.get_login_sessions(payload.get("id"))
+    try:
+        tokens_db = await db.get_login_sessions(payload.get("id"))
+    except:
+        response.delete_cookie(key="access_token")
+        raise HTTPException(status_code=403, detail="token is not Fol")
     for token_db in tokens_db:
         if token_db["token"] == token:
             if token_db["is_active"]:

@@ -41,7 +41,7 @@ async def register_user(user: models.UserCreate, response: Response, request: Re
         email=[{"email": user.email, "is_verified": False}],
         password=hashed_password,
         is_active=True,
-        roles=[{"name": "user"}],
+        roles=[],
         created_at=datetime.datetime.now(datetime.timezone.utc),
         updated_at=datetime.datetime.now(datetime.timezone.utc),
     )
