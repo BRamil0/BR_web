@@ -4,7 +4,7 @@ import typing
 from fastapi import APIRouter, Depends, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-import auth_utils
+from src.fastapi_app import auth_utils
 from src.database.database import DataBase, SearchTypeForPost
 from src.backend.templates import templates
 

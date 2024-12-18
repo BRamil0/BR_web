@@ -40,6 +40,11 @@ async def sanitize_user_data(user: models.UserModel) -> dict:
         session["temp_id"] = temp_id
         temp_id += 1
 
+    for role in user_data.get("roles", []):
+        role["id"] = str(role["id"])
+        if role["at_added"] is not None: role["at_added"] = str(role["at_added"].isoformat())
+        if role["at_works_until"] is not None: role["at_works_until"] = str(role["at_works_until"].isoformat())
+
     user_data["id"] = str(user_data["id"])
     user_data["created_at"] = str(user_data["created_at"].isoformat())
     user_data["updated_at"] = str(user_data["updated_at"].isoformat())
@@ -56,7 +61,7 @@ async def authenticate_user(db: DataBase, email: str, password: str):
         return False
     return False
 
-async def token_verification(request: Request, response: Response, db: DataBase = Depends(get_database)) -> dict:
+async def token_verification(request: Request, db: DataBase = Depends(get_database)) -> dict:
     token = request.headers.get("Authorization")
     if token:
         scheme, token = token.split(" ", 1)
@@ -67,7 +72,6 @@ async def token_verification(request: Request, response: Response, db: DataBase 
 
     if not token:
         raise HTTPException(status_code=401, detail="Token not provided")
-
     try:
         payload = jwt.decode(
             token,

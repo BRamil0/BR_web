@@ -25,6 +25,7 @@ class Settings(pydantic_settings.BaseSettings):
     DEBUG_DATABASE: bool = False
     server_version: str | int = 2
 
+    LOCAL_PASSWORD: str = "brweb"
     BOT_TOKEN: str = None
     TELEGRAM_CHAT_ID: int = None
     MONGODB_URI: str = None

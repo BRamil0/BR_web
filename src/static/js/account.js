@@ -220,11 +220,9 @@ export async function updateAccountButton() {
             const email = document.getElementById("form-login-email-input");
             const password = document.getElementById("form-login-password-input");
             console.log(email, password);
-            if (await dataVerification(null, email, password, null)) {
-                if (await loginAccount(email, password)) {
-                    await setAccountMenu();
-                    await showInfoAlert("login_success_login");
-                }
+            if (await loginAccount(email, password)) {
+                await setAccountMenu();
+                await showInfoAlert("login_success_login");
             }
         });
     }

@@ -9,12 +9,13 @@ try:
     from src.logger.logger import logger
     import server
     from src.backend import commands
+    from src.database import db_initialisation
     is_whether_dependencies_established = True
-except ImportError:
+except ImportError as e:
     import logging
     from src.logger.default_logger import default_logger
     is_whether_dependencies_established = False
-    default_logger.log(logging.CRITICAL, "Main | no dependencies for making applications are installed")
+    default_logger.log(logging.CRITICAL, f"Main | no dependencies for making applications are installed (additional information: {e})")
     logger = None
     class FakeServer:
         @staticmethod
@@ -46,8 +47,14 @@ except ImportError:
         async def frontend_watch():
             print("FakeCmd | Watching fake frontend...")
 
+    class FakeDBInitialisation:
+        @staticmethod
+        async def init_db(self):
+            pass
+
     server = FakeServer()
     commands = FakeCommands()
+    db_initialisation = FakeDBInitialisation()
 
 async def logger_check(level: str = "INFO", message: str = "") -> bool:
     if is_whether_dependencies_established:
@@ -71,8 +78,11 @@ async def version_checking():
 async def start_function(program: dict, options: dict, ignore_package: bool = False):
     if is_whether_dependencies_established or ignore_package:
         run_list = []
-        for option in options:
-            if option not in run_list: run_list.append(program[option]())
+        if type(options) == list:
+            for option in options:
+                if option not in run_list: run_list.append(program[option]())
+        else:
+            run_list.append(program[options]())
         await asyncio.gather(*run_list)
         return True
     await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>You have not set up dependencies for making apps.</b></lr>")
@@ -83,7 +93,7 @@ async def docker_function(option):
     await start_function(program, option)
 
 async def database_function(option):
-    program = {"start": commands.database_start, "stop": commands.database_stop}
+    program = {"start": commands.database_start, "stop": commands.database_stop, "init": db_initialisation.init_db}
     await start_function(program, option)
 
 async def run_function(options):
@@ -106,7 +116,7 @@ async def add_arguments(parser: argparse.ArgumentParser = argparse.ArgumentParse
     docker_parser.add_argument("actions", choices=["start", "stop", "build", "log"], help="Working with Docker teams.")
 
     database_parser = subparsers.add_parser("database")
-    database_parser.add_argument("actions", choices=["start", "stop", "docker-start", "docker-stop"], help="run only the DBMS.")
+    database_parser.add_argument("actions", choices=["start", "stop", "docker-start", "docker-stop", "init"], help="run only the DBMS.")
 
     run_parser = subparsers.add_parser("run")
     run_parser.add_argument("actions", nargs='*', choices=["server", "f-build", "f-watch"], help="Run server or watch.")
@@ -118,7 +128,6 @@ async def add_arguments(parser: argparse.ArgumentParser = argparse.ArgumentParse
 async def start() -> bool:
     await version_checking()
     args = await add_arguments()
-
     if args.command is None and is_whether_dependencies_established:
         await logger_check("INFO", "<le><b>Main</b></le> | <lc>No arguments passed, automatic start of the <c>server</c>.</lc> <v><ly>(<b>command</b>: run server)</ly></v>")
         args.command = "run"; args.actions = ["server"]

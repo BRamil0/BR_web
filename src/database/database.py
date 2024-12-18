@@ -277,12 +277,16 @@ class DataBase:
             await database_log_func("search_by_roles_attribute", "Invalid search type", "error")
             return None
         cursor = self.db["roles"].find(query)
-        return await cursor.to_list(length=None)
+        roles = []
+        async for role_data in cursor:
+            role = models.RolesModel(**role_data)
+            roles.append(role)
+        return roles
 
     @async_decorator_info_for_database_log_func
     async def create_role(self, role: models.RolesModel) -> bool:
-        if isinstance(role, models.RolesModel):
-            await database_log_func("create_role", "Invalid roles data", "critical")
+        if not isinstance(role, models.RolesModel):
+            await database_log_func("create_role", "Invalid roles data", "CRITICAL")
             return False
 
         existing_role = await self.db["roles"].find_one({"default_name": role.default_name})
