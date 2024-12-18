@@ -1,5 +1,6 @@
 from fastapi import APIRouter, status, Request
 from starlette.responses import HTMLResponse, RedirectResponse
+from starlette.staticfiles import StaticFiles
 
 from src.backend.templates import templates
 
@@ -17,6 +18,22 @@ async def index(request: Request):
 @router.get("/index")
 async def home():
     return RedirectResponse(url="/")
+
+@router.get("/site_map", response_class=HTMLResponse)
+async def site_map(request: Request):
+    return templates.TemplateResponse("site_map.html", {"request": request,
+                                                        "title": "site_map",
+                                                        "link": "site_map"})
+
+@router.get("/robots.txt", response_class=HTMLResponse)
+async def robots(request: Request):
+    response = await StaticFiles(directory="src/static").get_response("robots.txt", request.scope)
+    return response
+
+@router.get("/sitemap.xml", response_class=HTMLResponse)
+async def robots(request: Request):
+    response = await StaticFiles(directory="src/static").get_response("sitemap.xml", request.scope)
+    return response
 
 @router.get("/terms_of_use", response_class=HTMLResponse)
 async def terms_of_use(request: Request):
@@ -59,6 +76,12 @@ async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request,
                                                      "title": "Про мене",
                                                      "link": "about"})
+
+@router.get("/about_site", response_class=HTMLResponse)
+async def about_site(request: Request):
+    return templates.TemplateResponse("about_site.html", {"request": request,
+                                                     "title": "about_site",
+                                                     "link": "about_site"})
 
 @router.get("/418", status_code=status.HTTP_418_IM_A_TEAPOT)
 async def code_418(request: Request):

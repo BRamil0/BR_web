@@ -63,12 +63,14 @@ body {
 .main a {
     color: var(--text-color);
     border-radius: 1vmin;
+    padding: 0.1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .main a:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
+    text-decoration: none;
 }
 
 button {

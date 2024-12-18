@@ -49,6 +49,30 @@
     background-color: var(--text-color);
 }
 
+.card {
+    display: block;
+    box-shadow: var(--box-shadow);
+    margin: 1vmin;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border-radius: 2vmin;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.card a {
+    text-decoration: none;
+    margin: 2vmin;
+    padding: 0.5rem;
+}
+
+.card button {
+    text-decoration: none;
+    margin: 2vmin;
+    padding: 0.5rem;
+}
+
 .item-container {
     display: flex;
     flex-wrap: wrap; /* Додає перенесення блоків на новий ряд, якщо вони не вміщаються */

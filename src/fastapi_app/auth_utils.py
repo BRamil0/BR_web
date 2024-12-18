@@ -84,8 +84,7 @@ async def token_verification(request: Request, response: Response, db: DataBase 
     try:
         tokens_db = await db.get_login_sessions(payload.get("id"))
     except:
-        response.delete_cookie(key="access_token")
-        raise HTTPException(status_code=403, detail="token is not Fol")
+        raise HTTPException(status_code=403, detail="token not found")
     for token_db in tokens_db:
         if token_db["token"] == token:
             if token_db["is_active"]:
