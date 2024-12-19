@@ -26,8 +26,7 @@ export async function getCurrentUser() {
     }
 }
 
-export async function isAuthenticated() {
-    const user = await getCurrentUser();
+export async function isAuthenticated(user) {
     return user !== null;
 }
 

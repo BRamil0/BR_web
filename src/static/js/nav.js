@@ -1,6 +1,8 @@
 import * as theme from "./theme.js";
 import * as language from "./language.js";
 import * as account from "./account.js";
+import * as role from "./role.js";
+import * as load_page from "./load_page.js";
 
 const navMenu = document.getElementById('nav-menu');
 const themeMenu = document.getElementById('theme-menu');
@@ -86,18 +88,25 @@ export async function setAccountMenu() {
 
     try {
         let dataLanguage = await language.getTextInLanguage(await language.getLanguage());
-            if (!dataLanguage) {
-                console.error('dataLanguage is undefined or empty.');
-                return false;
-            }
-        if (await account.isAuthenticated()) {
+        if (!dataLanguage) {
+            console.error('dataLanguage is undefined or empty.');
+            return false;
+        }
+        let user = await account.getCurrentUser();
+        if (await account.isAuthenticated(user)) {
+            user = user["user"];
             accountMenu.innerHTML += `<a href="/account/profile/my" data-account="profile" data-translate="account_profile_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_profile_button"] || "Профіль"}</a>`;
             accountMenu.innerHTML += `<a href="/account/settings" data-account="settings" data-translate="account_settings_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_settings_button"] || "Налаштування"}</a>`;
+            let user_roles = await role.getRolesForUser(user["id"]);
+            if (await role.isPermission(user_roles, "root") || await role.isPermission(user_roles, "site_administration_panel")) {
+                accountMenu.innerHTML += `<a href="/account/control_panel" data-account="control_panel" data-translate="control_panel" class="link a-button jetbrains-mono-br">${dataLanguage["account_control_panel_button"] || "Панель керування"}</a>`;
+            }
             accountMenu.innerHTML += `<button id="form-logout-button" data-account="logout" data-translate="account_logout_button" class="jetbrains-mono-br">${dataLanguage["account_logout_button"] || "Вихід"}</button>`;
         } else {
             accountMenu.innerHTML += `<a href="/account/login" data-account="login" data-translate="account_login_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_login_button"] || "Авторизація"}</a>`;
             accountMenu.innerHTML += `<a href="/account/register" data-account="register" data-translate="account_register_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_register_button"] || "Реєстрація"}</a>`;
         }
+        await load_page.updateLinkClicks();
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
         return false;
@@ -108,6 +117,7 @@ export async function setAccountMenu() {
         if (selectedItem) {
             if (selectedItem === "logout") {
                 await account.logoutAccount();
+                await setAccountMenu();
             }
             accountMenu.classList.remove('show');
         }

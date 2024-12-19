@@ -30,9 +30,9 @@ async def remove_role_from_user(user_id: bson.ObjectId, role_id: bson.ObjectId, 
 async def is_permission_in_user(user_id: bson.ObjectId, permission: str, db: DataBase) -> bool:
     user = await db.get_user(SearchTypeForUser.id, user_id)
     try:
-        if not user.roles:
+        if user.roles:
             for user_role in user.roles:
-                role = await db.get_role(user_role.role_id)
+                role = await db.get_role(user_role.id)
                 if await check_permission(role, permission):
                     return True
     except Exception as e:

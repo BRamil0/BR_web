@@ -14,6 +14,24 @@ router = APIRouter(
     tags=["roles_api"],
 )
 
+@router.get("/get_role/{role_id}")
+async def get_role(role_id: str, db: DataBase = Depends(auth_utils.get_database)):
+    role = await db.get_role(role_id)
+    if role:
+        return role
+    raise HTTPException(404)
+
+@router.get("/get_roles_for_user/{user_id}")
+async def get_roles_for_user(user_id: str, db: DataBase = Depends(auth_utils.get_database)):
+    user = await db.get_user(SearchTypeForUser.id, user_id)
+    if user:
+        if not user.roles: return []
+        role_data = []
+        for role in user.roles:
+            role_data.append(await db.get_role(role.id))
+        return role_data
+    raise HTTPException(404)
+
 @router.post("/create_role")
 async def create_role(role: models.RoleCreate, db: DataBase = Depends(auth_utils.get_database), token_data: dict = Depends(auth_utils.token_verification)):
     user = await db.get_user(SearchTypeForUser.id, token_data["id"])

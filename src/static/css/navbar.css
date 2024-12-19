@@ -47,7 +47,7 @@ nav img {
 
 nav a {
     color: var(--text-color);
-    padding: calc(0.5vw + 0.5vh);
+    padding: 1.4vmin;
     border-radius: 1.8vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
@@ -65,7 +65,7 @@ nav button {
     color: var(--text-color);
     font-size: 1rem;
     cursor: pointer;
-    padding: calc(0.5vw + 0.5vh);
+    padding: 1.4vmin;
     border-radius: 1.8vmin;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     display: inline;
