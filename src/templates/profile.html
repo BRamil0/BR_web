@@ -2,7 +2,14 @@
 
 {% block content %}
 <div class="">
-    <h2>Профіль користувача {{ user.username }}</h2>
-    <i>Дата створення: {{ user.created_at }}, ID: {{ user.id }}</i>
+    <h2>Профіль користувача</h2>
+    <div class="card-profile">
+        <img src="{% if not user %}none{% else %}/static/image/background/jpg/1.jpg{% endif %}" class="h-40 w-40 rounded-full" alt="logo profile">
+        <div class="text-left">
+            <h1>{{ user.username }}</h1>
+            <p>ID: <i>{{ user.id }}</i></p>
+            <p>Дата створення: <i>{{ user.created_at.strftime("%d.%m.%Y") }}</i></p>
+        </div>
+    </div>
 </div>
 {% endblock %}

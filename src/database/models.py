@@ -147,7 +147,7 @@ class SettingsModel(pydantic.BaseModel):
     about_me: str | None = None
     language: str | None = None
     theme: str | None = None
-    avatar: list[ImageModel | None] = pydantic.Field(default_factory=lambda: [])
+    profile_photo_image: list[ImageModel | None] = pydantic.Field(default_factory=lambda: [])
     background_image: list[ImageModel | None] = pydantic.Field(default_factory=lambda: [])
 
     model_version: int | str = 1
