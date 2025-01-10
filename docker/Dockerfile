@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r re
 
 COPY . /usr/app
 
-COPY --from=frontend /usr/app/src/static /usr/app/src/static
+COPY --from=frontend /usr/app/src/frontend/static /usr/app/src/frontend/static
 
 EXPOSE 8080
 
