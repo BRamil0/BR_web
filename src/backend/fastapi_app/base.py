@@ -1,6 +1,5 @@
 from fastapi import APIRouter, status, Request
 from starlette.responses import HTMLResponse, RedirectResponse
-from starlette.staticfiles import StaticFiles
 
 from src.backend.core.templates import templates
 
@@ -25,15 +24,6 @@ async def site_map(request: Request):
                                                         "title": "site_map",
                                                         "link": "site_map"})
 
-@router.get("/robots.txt", response_class=HTMLResponse)
-async def robots(request: Request):
-    response = await StaticFiles(directory="src/static").get_response("robots.txt", request.scope)
-    return response
-
-@router.get("/sitemap.xml", response_class=HTMLResponse)
-async def robots(request: Request):
-    response = await StaticFiles(directory="src/static").get_response("sitemap.xml", request.scope)
-    return response
 
 @router.get("/terms_of_use", response_class=HTMLResponse)
 async def terms_of_use(request: Request):

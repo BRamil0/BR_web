@@ -6,11 +6,11 @@ router = APIRouter(
 )
 
 
-@router.get("static/robots.txt", include_in_schema=False)
+@router.get("/robots.txt")
 async def robots():
     return FileResponse("src/frontend/static/robots.txt")
 
 
-@router.get("static/sitemap.xml", include_in_schema=False)
+@router.get("/sitemap.xml")
 async def sitemap():
     return FileResponse("src/frontend/static/sitemap.xml")
