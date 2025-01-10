@@ -2,7 +2,7 @@ import random
 
 from fastapi import APIRouter
 
-from src.fastapi_app import models
+from src.backend.fastapi_app import models
 from src.config.config import settings
 
 router = APIRouter(

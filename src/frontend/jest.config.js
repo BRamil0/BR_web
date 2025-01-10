@@ -1,5 +1,5 @@
 module.exports = {
   testMatch: [
-    '**/src/frontend/test/**/*.test.js',
+    '**/src/frontend/tests/**/*.test.js',
   ],
 };

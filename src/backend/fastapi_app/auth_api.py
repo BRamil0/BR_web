@@ -5,11 +5,11 @@ import bson
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from starlette.responses import JSONResponse
 
-from src.database.database import DataBase, SearchTypeForUser, SearchAttributeForUser
-from src.database.models import UserModel
-from src.backend import validators
-from src.fastapi_app import auth_utils
-from src.fastapi_app import models
+from src.backend.database.database import DataBase, SearchTypeForUser, SearchAttributeForUser
+from src.backend.database.models import UserModel
+from src.backend.core import validators
+from src.backend.fastapi_app import auth_utils
+from src.backend.fastapi_app import models
 
 
 router = APIRouter(

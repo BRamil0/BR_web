@@ -8,9 +8,9 @@ router = APIRouter(
 
 @router.get("static/robots.txt", include_in_schema=False)
 async def robots():
-    return FileResponse("src/static/robots.txt")
+    return FileResponse("src/frontend/static/robots.txt")
 
 
 @router.get("static/sitemap.xml", include_in_schema=False)
 async def sitemap():
-    return FileResponse("src/static/sitemap.xml")
+    return FileResponse("src/frontend/static/sitemap.xml")

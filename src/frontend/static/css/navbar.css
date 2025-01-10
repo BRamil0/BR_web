@@ -1,6 +1,6 @@
 .nav {
     flex: 0.005;
-    position: static;
+    position: relative;
     margin: calc(1vw + 1vh);
     padding: calc(0.5vw + 0.5vh);
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));

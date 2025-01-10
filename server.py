@@ -1,4 +1,4 @@
-"""the main application startup file"""
+"""the server startup file"""
 import asyncio
 
 import uvicorn
@@ -9,9 +9,9 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from src.config.config import settings
-from src.backend.templates import templates
+from src.backend.core.templates import templates
 
-from src.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, base, blog, roles_api
+from src.backend.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, base, blog, roles_api
 
 from src.logger.logger import logger, log_requests
 from src.logger.record_log import record_log
@@ -118,7 +118,7 @@ def fast_app_start() -> fastapi.FastAPI:
     )
     app.add_middleware(BaseHTTPMiddleware, dispatch=log_requests)
 
-    app.mount("/static", CustomStaticFiles(directory="src/static"), name="static")
+    app.mount("/static", CustomStaticFiles(directory="src/frontend/static"), name="static")
 
     import_routers(app)
     init_codes(app)

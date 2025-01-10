@@ -9,8 +9,8 @@ from fastapi import HTTPException, Depends, Response, Request
 import fastapi.security
 
 from src.config.config import settings
-from src.database.database import DataBase, SearchTypeForUser
-from src.database import models
+from src.backend.database.database import DataBase, SearchTypeForUser
+from src.backend.database import models
 from src.logger.logger import logger
 
 oauth2_scheme = fastapi.security.OAuth2PasswordBearer(tokenUrl="/api/auth/login", scheme_name="Bearer")

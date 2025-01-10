@@ -1,7 +1,7 @@
 const topButton = document.getElementById("top-button");
 const bostonButton = document.getElementById("boston-button");
 
-export let isShowNavigationButtons = true;
+export let isShowNavigationButtons = false;
 
 export async function checkScroll() {
     if (!isShowNavigationButtons) {

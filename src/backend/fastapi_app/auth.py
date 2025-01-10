@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Request, Depends, HTTPException
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from src.database.database import DataBase, SearchTypeForUser
-from src.database import db_utils
-from src.backend.templates import templates
-from src.fastapi_app.auth_utils import token_verification_no_exceptions, get_database
+from src.backend.database.database import DataBase, SearchTypeForUser
+from src.backend.database import db_utils
+from src.backend.core.templates import templates
+from src.backend.fastapi_app.auth_utils import token_verification_no_exceptions, get_database
 
 router = APIRouter(
     prefix="/account",

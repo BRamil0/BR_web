@@ -5,7 +5,7 @@ import bson
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import ASCENDING, TEXT
 
-from src.database import models
+from src.backend.database import models
 from src.config.config import settings
 from src.logger.logger import database_log_func
 from src.logger.logger_decorator import async_decorator_info_for_database_log_func

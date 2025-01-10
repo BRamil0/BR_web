@@ -4,8 +4,8 @@ from fastapi import APIRouter, status
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from src.telegram.models import TelegramInformant, TelegramMessage
-from src.telegram import informant, message
+from src.backend.telegram.models import TelegramInformant, TelegramMessage
+from src.backend.telegram import informant, message
 
 router = APIRouter(
     prefix="/api/telegram",

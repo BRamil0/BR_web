@@ -22,8 +22,8 @@
 }
 
 .nav-menu.near {
-    top: 14vb;
-    right: 1.5vw;
+    top: calc(8vh + 1rem);
+    right: 0.1vw;
 }
 
 .nav-menu.show {
@@ -38,7 +38,7 @@
     color: var(--text-color);
     font-size: 1rem;
     cursor: pointer;
-    padding: 1vmin;
+    padding: 1.4vmin;
     border-radius: 1.4vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
     text-align: center;
@@ -51,7 +51,7 @@
 }
 .nav-menu a {
     color: var(--text-color);
-    padding: 1vmin;
+    padding: 1.4vmin;
     border-radius: 1.4vmin;
     background: none;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -62,7 +62,7 @@
 
 .nav-menu .a-button {
     color: var(--text-color);
-    padding: 1vmin;
+    padding: 1.4vmin;
     border-radius: 1.4vmin;
     background: none;
     transition: background-color 0.3s ease, color 0.3s ease;

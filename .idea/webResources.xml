@@ -5,11 +5,11 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/src/static" />
+            <path value="file://$PROJECT_DIR$/src/frontend/static" />
             <path value="file://$PROJECT_DIR$/src/frontend/css" />
-            <path value="file://$PROJECT_DIR$/src/static/image" />
-            <path value="file://$PROJECT_DIR$/src/static/css" />
-            <path value="file://$PROJECT_DIR$/src/static/localizations" />
+            <path value="file://$PROJECT_DIR$/src/frontend/static//image" />
+            <path value="file://$PROJECT_DIR$/src/frontend/static//css" />
+            <path value="file://$PROJECT_DIR$/src/frontend/static//localizations" />
             <path value="file://$PROJECT_DIR$/data" />
           </resourceRoots>
         </entryData>

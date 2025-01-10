@@ -8,8 +8,8 @@ RECOMMENDED_VERSION_PYTHON = (3, 12, 7)
 try:
     from src.logger.logger import logger
     import server
-    from src.backend import commands
-    from src.database import db_initialisation
+    from src.backend.core import commands
+    from src.backend.database import db_initialisation
     is_whether_dependencies_established = True
 except ImportError as e:
     import logging

@@ -4,9 +4,9 @@ import typing
 from fastapi import APIRouter, Depends, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from src.fastapi_app import auth_utils
-from src.database.database import DataBase, SearchTypeForPost
-from src.backend.templates import templates
+from src.backend.fastapi_app import auth_utils
+from src.backend.database.database import DataBase, SearchTypeForPost
+from src.backend.core.templates import templates
 
 router = APIRouter(
     prefix="/blog",

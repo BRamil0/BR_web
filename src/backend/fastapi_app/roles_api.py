@@ -2,11 +2,11 @@ import datetime
 
 from fastapi import APIRouter, HTTPException, Depends
 
-from src.database.database import DataBase, SearchTypeForUser
-from src.database import db_utils
-from src.fastapi_app import auth_utils
-from src.fastapi_app import models
-from src.database import models as models_db
+from src.backend.database.database import DataBase, SearchTypeForUser
+from src.backend.database import db_utils
+from src.backend.fastapi_app import auth_utils
+from src.backend.fastapi_app import models
+from src.backend.database import models as models_db
 
 
 router = APIRouter(

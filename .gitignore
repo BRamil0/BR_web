@@ -381,3 +381,4 @@ cython_debug/
 /config.json
 /config.yaml
 /config.toml
+/src/frontend/static/css/tailwindcss.css

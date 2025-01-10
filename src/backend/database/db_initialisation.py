@@ -3,8 +3,8 @@ import datetime
 import argon2
 import getpass
 
-from src.database.database import DataBase, SearchTypeForRole, SearchTypeForUser
-from src.database import models, db_utils
+from src.backend.database.database import DataBase, SearchTypeForRole, SearchTypeForUser
+from src.backend.database import models, db_utils
 from src.logger.logger import logger
 from src.config.config import settings
 

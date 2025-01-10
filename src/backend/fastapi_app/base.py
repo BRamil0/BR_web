@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 from starlette.staticfiles import StaticFiles
 
-from src.backend.templates import templates
+from src.backend.core.templates import templates
 
 router = APIRouter(
     tags=["base"],

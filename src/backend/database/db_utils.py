@@ -2,7 +2,7 @@ import datetime
 
 import bson
 
-from src.database.database import DataBase, SearchTypeForUser
+from src.backend.database.database import DataBase, SearchTypeForUser
 from src.logger.logger import logger
 
 
