@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="">
-    <h2>Про сайт</h2>
-    <text data-translate="">Актуальність перекладу: 2024.10.18</text>
+    <h2 data-translate="">Про сайт</h2>
+    <p>Цей сайт створено на основі <a href="https://fastapi.tiangolo.com/">FastAPI</a>, вихідний код доступний на <a href="https://github.com/BRamil0/BR_web">GitHub</a>.</p>
+        <h3 data-translate="">Корисна інформація</h3>
+        <p data-translate="">Актуальність перекладу на українську мову: 2024.10.18</p>
+        <p><span data-translate="">Версія сервера та сайту: </span><span>{{ server_version }}</span>, <span data-translate="">Версія API: </span><span>{{ api_version }}</span></p>
+        <p><span data-translate="">Налагодження (debug): </span>{% if DEBUG_MODE %}<span data-translate="">Так</span>{% else %}<span data-translate="">Ні</span>{% endif %}</p>
 </div>
 {% endblock %}
