@@ -81,3 +81,9 @@ class CreatePostModel(pydantic.BaseModel):
 
     class Config:
         from_attributes = True
+
+class InfoAPIModel(pydantic.BaseModel):
+    debug_mode: bool
+    experimental_functions: bool
+    server_version: str | int
+    api_version: str | int

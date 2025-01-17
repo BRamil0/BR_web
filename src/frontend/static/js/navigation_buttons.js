@@ -1,10 +1,14 @@
 const topButton = document.getElementById("top-button");
 const bostonButton = document.getElementById("boston-button");
 
-export let isShowNavigationButtons = false;
+export let isShowNavigationButtons = async () => {
+    const response = await fetch("/api/info/experimental_functions");
+    const data = await response.json();
+    return data["experimental_functions"];
+};
 
 export async function checkScroll() {
-    if (!isShowNavigationButtons) {
+    if (!await isShowNavigationButtons()) {
         topButton.classList.remove("show");
         bostonButton.classList.remove("show");
         return;

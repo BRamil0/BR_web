@@ -17,7 +17,7 @@
 .nav-menu.center {
     background-color: var(--bg-color);
     left: 50%;
-    top: calc(1vw + 1vh);
+    top: calc(0.5vh + 0.5rem);
     transform: translateX(-50%);
 }
 

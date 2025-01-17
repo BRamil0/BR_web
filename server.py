@@ -121,7 +121,8 @@ async def start() -> None:
     :return: None
     """
     logger.opt(colors=True).info("<le><b>Server</b></le> | <lm><b>Starting server...</b></lm>")
-    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>Https: <c><b>{settings.https}</b></c></lc> | <lc>Debug mode: <c><b>{settings.DEBUG}</b></c></lc> | <lc>Debug database mode: <c><b>{settings.DEBUG_DATABASE}</b></c></lc> | <lc>Logging: <c><b>{settings.is_log_record}</b></c></lc>")
+    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>Version: <c><b>{settings.server_version}</b></c></lc> | <lc>Version API: <c><b>{settings.api_version}</b></c></lc>")
+    logger.opt(colors=True).info(f"<le><b>Server</b></le> | <lc>Https: <c><b>{settings.https}</b></c></lc> | <lc>Debug mode: <c><b>{settings.DEBUG}</b></c></lc> | <lc>Debug database mode: <c><b>{settings.DEBUG_DATABASE}</b></c></lc> | <lc>Log entry: <c><b>{settings.is_log_record}</b></c></lc> | <lc>Experimental: <c><b>{settings.experimental_functions}</b></c></lc>")
 
     record_log(logger)
 

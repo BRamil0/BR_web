@@ -47,6 +47,25 @@ async def default_theme():
 async def default_language():
     return {"language_default": settings.default_language}
 
-@router.get("/debug_mode")
+@router.get("/info", response_model=models.InfoAPIModel)
+async def info():
+    return {"debug_mode": settings.DEBUG,
+            "experimental_functions": settings.experimental_functions,
+            "server_version": settings.server_version,
+            "api_version": settings.api_version}
+
+@router.get("/info/debug_mode")
 async def debug_mode():
     return {"debug_mode": settings.DEBUG}
+
+@router.get("/info/experimental_functions")
+async def experimental_functions():
+    return {"experimental_functions": settings.experimental_functions}
+
+@router.get("/info/server_version")
+async def server_version():
+    return {"server_version": settings.server_version}
+
+@router.get("/info/api_version")
+async def api_version():
+    return {"api_version": settings.api_version}

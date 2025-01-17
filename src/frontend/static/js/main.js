@@ -11,6 +11,7 @@ import * as modal from "./modal.js";
 import * as message_form from "./message_form.js";
 import * as load_page from "./load_page.js";
 import "./cookie_banner.js";
+import {isShowNavigationButtons} from "./navigation_buttons.js";
 
 export async function main() {
     await nav.updateNavButtons();
@@ -44,7 +45,7 @@ window.onload = async () => {
 };
 
 window.onscroll = async function() {
-    if (navigation_buttons.isShowNavigationButtons) {
+    if (await navigation_buttons.isShowNavigationButtons()) {
         await navigation_buttons.checkScroll();
     }
 };

@@ -22,8 +22,10 @@ class Settings(pydantic_settings.BaseSettings):
     """Settings for the application."""
 
     DEBUG: bool = False
+    experimental_functions: bool = False
     DEBUG_DATABASE: bool = False
     server_version: str | int = 2
+    api_version: str | int = 2
 
     LOCAL_PASSWORD: str = "brweb"
     BOT_TOKEN: str = None
