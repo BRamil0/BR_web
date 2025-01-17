@@ -9,6 +9,13 @@ const themeMenu = document.getElementById('theme-menu');
 const languageMenu = document.getElementById('language-menu');
 const accountMenu = document.getElementById("account-menu");
 
+const isExperimental_functions = async () => {
+    const response = await fetch("/api/info/experimental_functions");
+    const data = await response.json();
+    return data["experimental_functions"];
+};
+
+
 export async function updateNavButtons() {
     await updateMenuButtons('.nav-menu-button', navMenu);
     await updateMenuButtons('.theme-button-menu', themeMenu);
@@ -104,7 +111,9 @@ export async function setAccountMenu() {
             accountMenu.innerHTML += `<button id="form-logout-button" data-account="logout" data-translate="account_logout_button" class="jetbrains-mono-br">${dataLanguage["account_logout_button"] || "Вихід"}</button>`;
         } else {
             accountMenu.innerHTML += `<a href="/account/login" data-account="login" data-translate="account_login_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_login_button"] || "Авторизація"}</a>`;
+            if (await isExperimental_functions()) {
             accountMenu.innerHTML += `<a href="/account/register" data-account="register" data-translate="account_register_button" class="link a-button jetbrains-mono-br">${dataLanguage["account_register_button"] || "Реєстрація"}</a>`;
+            }
         }
         await load_page.updateLinkClicks();
     } catch (error) {
