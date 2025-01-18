@@ -19,3 +19,4 @@ loguru
 pyyaml
 toml
 python-dotenv
+slowapi

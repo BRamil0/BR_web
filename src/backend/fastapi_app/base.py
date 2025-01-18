@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from src.backend.core.templates import templates
+from src.backend.core.router_config import templates
 
 router = APIRouter(
     tags=["base"],

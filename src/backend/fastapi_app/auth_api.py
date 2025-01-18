@@ -10,6 +10,7 @@ from src.backend.database.models import UserModel
 from src.backend.core import validators
 from src.backend.fastapi_app import auth_utils
 from src.backend.fastapi_app import models
+from src.backend.core.router_config import limiter
 
 
 router = APIRouter(
@@ -19,6 +20,7 @@ router = APIRouter(
 ph = argon2.PasswordHasher()
 
 @router.post("/register", response_model=models.Token)
+@limiter.limit("10/1m")
 async def register_user(user: models.UserCreate, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(auth_utils.get_database)):
     for field, value in [("email", user.email), ("username", user.username)]:
         if await db.search_for_attribute_uniqueness(getattr(SearchAttributeForUser, field), {field: value}):
@@ -57,6 +59,7 @@ async def register_user(user: models.UserCreate, response: Response, request: Re
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/login", response_model=models.Token)
+@limiter.limit("10/1m")
 async def login_user(login_form: models.LoginForm, response: Response, request: Request, device_name: str | None = "unknown", db: DataBase = Depends(auth_utils.get_database)):
     fields = {
         "email": {"value": login_form.email, "validator": validators.validate_email, },
@@ -77,7 +80,8 @@ async def login_user(login_form: models.LoginForm, response: Response, request: 
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/logout")
-async def logout_user(response: Response, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(
+@limiter.limit("10/1m")
+async def logout_user(request: Request, response: Response, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(
     auth_utils.token_verification)):
     await db.remove_login_session(bson.ObjectId(token_date["id"]), token_date["token"])
     response.delete_cookie(key="access_token")
@@ -85,7 +89,8 @@ async def logout_user(response: Response, db: DataBase = Depends(auth_utils.get_
     return {"message": "Logged out successfully"}
 
 @router.get("/current_user", response_model=models.ResponseModelForGetCurrentUser)
-async def get_current_user(db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification_no_exceptions)):
+@limiter.limit("5/10c")
+async def get_current_user(request: Request, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification_no_exceptions)):
     if not token_date:
         return JSONResponse(content={"message": "You are not logged in", "status": None})
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
@@ -97,7 +102,8 @@ async def get_current_user(db: DataBase = Depends(auth_utils.get_database), toke
     raise HTTPException(status_code=401, detail="User not found")
 
 @router.post("/change_password")
-async def change_password(password_change: models.PasswordChangeForm, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification)):
+@limiter.limit("10/1m")
+async def change_password(request: Request, password_change: models.PasswordChangeForm, db: DataBase = Depends(auth_utils.get_database), token_date: dict[str, str] = Depends(auth_utils.token_verification)):
 
     user = await db.get_user(SearchTypeForUser.id, token_date["id"])
     if not ph.verify(user.password, password_change.old_password):

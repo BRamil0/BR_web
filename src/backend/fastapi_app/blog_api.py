@@ -1,9 +1,10 @@
 import datetime
 import typing
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from starlette.responses import RedirectResponse
 
+from src.backend.core.router_config import limiter
 from src.backend.fastapi_app import auth_utils
 from src.backend.fastapi_app import models
 from src.backend.database.database import DataBase, SearchTypeForPost
@@ -22,21 +23,25 @@ async def get_database() -> typing.AsyncGenerator[DataBase, None]:
         await db.close_connection()
 
 @router.get("/post_list/")
-async def post_list(db: DataBase = Depends(get_database)):
+@limiter.limit("5/10s")
+async def post_list(request: Request, db: DataBase = Depends(get_database)):
     return {"posts": await db.get_all_posts()}
 
 @router.get("/get_post/")
-async def get_post_list():
+@limiter.limit("5/10s")
+async def get_post_list(request: Request):
     return RedirectResponse(url="/post_list/")
 
 @router.get("/get_post/{post_url}")
-async def get_post(post_url: str, db: DataBase = Depends(get_database)):
+@limiter.limit("5/10s")
+async def get_post(request: Request, post_url: str, db: DataBase = Depends(get_database)):
     post = await db.get_post(SearchTypeForPost.url, post_url)
     if not post: post = await db.get_post(SearchTypeForPost.id, post_url)
     return {"post": post}
 
 @router.post("/create_post")
-async def create_post(post: models.CreatePostModel, db: DataBase = Depends(get_database), token_data: dict = Depends(auth_utils.token_verification)):
+@limiter.limit("4/10m")
+async def create_post(request: Request, post: models.CreatePostModel, db: DataBase = Depends(get_database), token_data: dict = Depends(auth_utils.token_verification)):
     new_post = PostModel(
         **post.model_dump(exclude_unset=True),
         user_id=token_data["id"],

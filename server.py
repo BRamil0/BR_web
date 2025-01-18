@@ -3,13 +3,15 @@ import asyncio
 
 import uvicorn
 import fastapi
+import slowapi
 import ssl
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
+from slowapi.errors import RateLimitExceeded
 
 from src.config.config import settings
-from src.backend.core.templates import templates
+from src.backend.core.router_config import templates, limiter
 
 from src.backend.fastapi_app import auth_api, blog_api, api, auth, telegram, indexing, base, blog, roles_api
 
@@ -110,7 +112,8 @@ def fast_app_start() -> fastapi.FastAPI:
     app.add_middleware(BaseHTTPMiddleware, dispatch=log_requests)
 
     app.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
-
+    app.add_exception_handler(RateLimitExceeded, slowapi._rate_limit_exceeded_handler)
+    app.state.limiter = limiter
     import_routers(app)
     init_codes(app)
     return app

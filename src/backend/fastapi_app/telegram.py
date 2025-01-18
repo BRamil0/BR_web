@@ -6,6 +6,8 @@ from starlette.responses import JSONResponse
 
 from src.backend.telegram.models import TelegramInformant, TelegramMessage
 from src.backend.telegram import informant, message
+from src.backend.core.router_config import limiter
+
 
 router = APIRouter(
     prefix="/api/telegram",
@@ -13,6 +15,7 @@ router = APIRouter(
 )
 
 @router.post("/info")
+@limiter.limit("10/10s")
 async def info(request: Request, tt: TelegramInformant):
     try:
         ts = informant.TelegramSender()
@@ -26,6 +29,7 @@ async def info(request: Request, tt: TelegramInformant):
 
 
 @router.post("/message")
+@limiter.limit("4/10minutes")
 async def send_message(request: Request, tms: TelegramMessage):
     try:
         ts = message.TelegramSender()

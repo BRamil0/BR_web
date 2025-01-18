@@ -6,7 +6,7 @@ from starlette.responses import HTMLResponse, RedirectResponse
 
 from src.backend.fastapi_app import auth_utils
 from src.backend.database.database import DataBase, SearchTypeForPost
-from src.backend.core.templates import templates
+from src.backend.core.router_config import templates
 
 router = APIRouter(
     prefix="/blog",
