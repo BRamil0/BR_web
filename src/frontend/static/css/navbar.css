@@ -40,7 +40,7 @@
 }
 
 .nav img {
-    width: 3vw;
+    width: 3rem;
     height: auto;
     align-items: center;
 }
@@ -82,10 +82,6 @@
 }
 
 @media (max-width: 768px) {
-    nav img {
-        width: 9vw;
-        height: auto;
-    }
 
     .nav-center {
         display: none;
