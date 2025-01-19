@@ -54,11 +54,5 @@
     color: var(--bg-color);
 }
 
-@media (max-width: 1000px) {
-    .cookie-banner {
-        font-size: 2rem;
-    }
-    .cookie-btn {
-        font-size: 2.2rem;
-    }
+@media (max-width: 1024px) {
 }

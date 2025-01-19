@@ -144,18 +144,4 @@
 }
 
 @media (max-width: 1000px) {
-    .item-base {
-        gap: 4vw; /* Відстань між логотипом і текстом */
-        max-width: 40rem; /* Максимальна ширина блоку */
-    }
-    .item-base a {
-        font-size: 2.2rem;
-    }
-    .item-base text {
-        font-size: 2.2rem;
-    }
-    .item-base img {
-        width: 4rem;
-        height: 4rem;
-    }
 }

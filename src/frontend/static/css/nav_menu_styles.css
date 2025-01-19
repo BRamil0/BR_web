@@ -2,7 +2,7 @@
     position: absolute;
     background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
     color: var(--text-color);
-    padding: 1vw;
+    padding: 0.5em;
     border-radius: 2vmin;
     opacity: 0;
     visibility: hidden;
@@ -82,4 +82,14 @@
     justify-content: center;
     gap: 1vmin;
     border-radius: 2vmin;
+}
+
+@media (max-width: 768px) {
+    .nav-menu.center {
+        top: calc(0.5vh + 0.5rem);
+    }
+
+    .nav-menu.near {
+        top: calc(4vh + 1rem);
+    }
 }

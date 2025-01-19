@@ -16,9 +16,10 @@
     border-radius: 2vmin;
     padding: 1rem;
     border: var(--text-color) 0.1vmin solid;
-    width: auto;
+    width: 35rem;
     box-shadow: var(--box-shadow);
     max-width: 50%;
+    min-width: 25%;
 }
 
 .modal-content-message-form.show {
@@ -56,7 +57,7 @@
     border-radius: 1vmin;
     padding: 0.5vmin 1vmin;
     margin: 1vmin;
-    width: 80%;
+    width: 90%;
     height: 10rem;
     resize: none;
     box-shadow: var(--box-shadow);
@@ -71,7 +72,7 @@
     border-radius: 1vmin;
     padding: 0.5vmin 1vmin;
     margin: 1vmin;
-    width: 80%;
+    width: 90%;
     box-shadow: var(--box-shadow);
     font-size: 1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -84,7 +85,7 @@
 }
 
 .modal-content-message-form .author-mail input {
-    width: 38%;
+    width: 42.5%;
 }
 
 .modal-content-message-form textarea:focus, .modal-content-message-form input:focus {
@@ -93,24 +94,9 @@
     outline: none;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
     .modal-content-message-form {
-        max-width: 80%;
-    }
-
-    .modal-content-message-form h2 {
-        font-size: 2.5rem;
-    }
-
-    .modal-content-message-form button {
-        font-size: 1.5rem;
-    }
-
-    .modal-content-message-form textarea {
-        font-size: 1.5rem;
-    }
-
-    .modal-content-message-form input {
-        font-size: 1.5rem;
+        max-width: 90%;
+        min-width: 50%;
     }
 }

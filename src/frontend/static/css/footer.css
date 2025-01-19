@@ -38,50 +38,43 @@
 }
 
 
-footer a {
+.footer a {
     color: var(--text-color);
     text-decoration: none;
     border-radius: 1vmin;
-    padding: 0.25rem;
+    padding: 0.15rem;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-footer a:hover {
+.footer a:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
 
-footer button {
+.footer button {
     text-decoration: none;
     outline: none;
     background: none;
     border: none;
     font-size: 0.85rem;
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0.15rem;
     color: var(--text-color);
     border-radius: 1vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-footer button:hover {
+.footer button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
 
-@media (max-width: 1000px) {
-    .footer {
-        font-size: 1.15rem;
-    }
+.footer .none_768 {
+    display: compact;
+}
 
-    footer a, footer button {
-        font-size: 1.15rem;
-        margin: 0.5rem 0;
-    }
-
-    .footer-center {
-        display: block;
-        text-align: center;
-        margin-top: 1rem;
+@media (max-width: 768px) {
+    .footer .none_768 {
+        display: none;
     }
 }

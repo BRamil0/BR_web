@@ -39,13 +39,13 @@
     text-decoration: none;
 }
 
-nav img {
+.nav img {
     width: 3vw;
     height: auto;
     align-items: center;
 }
 
-nav a {
+.nav a {
     color: var(--text-color);
     padding: 1.4vmin;
     border-radius: 1.8vmin;
@@ -54,12 +54,12 @@ nav a {
     white-space: nowrap;
 }
 
-nav a:hover {
+.nav a:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
 
-nav button {
+.nav button {
     background: none;
     border: none;
     color: var(--text-color);
@@ -72,7 +72,7 @@ nav button {
     z-index: 20;
 }
 
-nav button:hover {
+.nav button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
 }
@@ -81,76 +81,22 @@ nav button:hover {
     display: none;
 }
 
-@media (max-width: 1000px) {
-    .nav {
-        font-size: 2.5rem;
-        flex-direction: row;
-    }
+@media (max-width: 768px) {
     nav img {
         width: 9vw;
-    }
-
-    .mobile-nav-menu-button {
-        display: inline-block;
-        font-size: 2.5rem;
-    }
-
-    .nav-menu-button {
-        font-size: 2.5rem;
-    }
-
-    .lang-button-menu, .emoji-button-menu, .menu-toggle {
-        font-size: 2.2rem;
+        height: auto;
     }
 
     .nav-center {
         display: none;
     }
 
-    .nav-right {
-        display: block;
-        gap: 2vmin;
-        font-size: 2.5rem;
-    }
-
-    .nav .nav-center {
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-        top: 10rem;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 95%;
-        padding: calc(0.5vw + 0.5vh);
-        border-radius: 2vmin;
-        background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
-        text-align: center;
-        justify-content: center;
-        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-        box-shadow: var(--box-shadow);
-        z-index: 50;
-        display: flex;
-    }
-
-    /* Коли меню відкрите */
-    .nav.open .nav-center {
-        visibility: visible;
-        opacity: 1;
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 700px) {
-    #a-home {
-        display: none;
-    }
     nav .nav-right {
         text-align: center;
         white-space: nowrap;
     }
-    nav img {
-        width: 9vw;
-        height: auto;
-    }
 
+    .mobile-nav-menu-button {
+        display: inline-block;
+    }
 }

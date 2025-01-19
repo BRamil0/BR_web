@@ -54,10 +54,21 @@
     padding: calc(0.5vw + 0.5vh);
     border-radius: 1.6vmin;
     transition: background-color 0.3s ease, color 0.3s ease;
-    text-align: left;
+    text-align: center;
 }
 
 #debug-mode-menu button:hover {
     background-color: var(--text-color);
     color: var(--bg-color);
+}
+
+@media (max-width: 768px) {
+    #debug-mode-menu-button {
+        top: 7vh;
+        transform: none;
+    }
+    #debug-mode-menu {
+        min-width: 85%;
+        max-width: 95%;
+    }
 }
