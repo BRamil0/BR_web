@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from fastapi import APIRouter, status, Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
@@ -63,9 +65,13 @@ async def project(request: Request):
 
 @router.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
+    birth_date = datetime(2006, 10, 23)
+    current_date = datetime.now()
+    years_old = current_date.year - birth_date.year - ((current_date.month, current_date.day) < (birth_date.month, birth_date.day))
     return templates.TemplateResponse("about.html", {"request": request,
                                                      "title": "Про мене",
-                                                     "link": "about"})
+                                                     "link": "about",
+                                                     "years_old": years_old,})
 
 @router.get("/about_site", response_class=HTMLResponse)
 async def about_site(request: Request):
