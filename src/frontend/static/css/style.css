@@ -156,16 +156,14 @@ textarea:focus, input:focus {
 }
 
 .navigation-buttons.top {
-    top: 46.5%;
-    transform: translateY(-46.5%);
+    top: calc(50% - 1.5rem);
+    transform: translateY(-50%);
 }
 
 .navigation-buttons.boston {
-    top: 53.5%;
-    transform: translateY(-53.5%);
+    top: calc(50% + 1.5rem);
+    transform: translateY(-50%);
 }
-
-
 
 ::selection {
     background-color: var(--text-color);
@@ -177,5 +175,19 @@ textarea:focus, input:focus {
     color: var(--bg-color);
 }
 
-@media (max-height: 1024px) {
+a:active, button:active {
+    color: var(--bg-color);
+    background-color: var(--text-color);
+}
+
+a:focus, button:focus {
+    color: var(--bg-color) !important;
+    background-color: var(--text-color) !important;
+}
+
+button:-moz-focusring, a:-moz-focusring {
+    outline: none;
+}
+
+@media (max-height: 768px) {
 }

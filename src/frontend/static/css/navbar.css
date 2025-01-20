@@ -37,6 +37,7 @@
     flex: 1;
     text-align: right;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .nav img {
@@ -78,7 +79,7 @@
 }
 
 .mobile-nav-menu-button {
-    display: none;
+    display: none !important;
 }
 
 @media (max-width: 768px) {
@@ -88,11 +89,16 @@
     }
 
     nav .nav-right {
-        text-align: center;
         white-space: nowrap;
     }
 
     .mobile-nav-menu-button {
-        display: inline-block;
+        display: inline-block !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .language-name {
+        display: none;
     }
 }
