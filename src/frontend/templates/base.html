@@ -12,7 +12,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <title>{% if title %}{{ title }} | {% endif %}BR Web</title>
+    <title data-translate="title-{{ title }}">{% if title %}{{ title }} | {% endif %}BR Web</title>
 
     <link rel="icon" href="/static/image/favicon.ico">
 
@@ -50,9 +50,9 @@
             <a class="link" href="/">BR Web</a>
         </div>
         <div class="nav-center">
-            <a href="/index" data-translate="nav_home" class="link">Головна</a>
-            <a href="/project" data-translate="nav_projects" class="link">Мої проєкти</a>
-            <a href="/contact" data-translate="nav_contact" class="link">Контакти</a>
+            <a href="/index" data-translate="home" class="link">Головна</a>
+            <a href="/project" data-translate="projects" class="link">Мої проєкти</a>
+            <a href="/contact" data-translate="contact" class="link">Контакти</a>
             <button data-translate="nav_more" class="nav-menu-button jetbrains-mono-br">Більше</button>
         </div>
         <div class="nav-right">
@@ -70,15 +70,15 @@
         <div id="nav-menu" class="nav-menu center jetbrains-mono-br">
             <div class="nav-container">
                 <a href="/index" data-translate="nav_home" class="link">Головна</a>
-                <a href="/project" data-translate="nav_projects" class="link">Мої проєкти</a>
-                <a href="/about" data-translate="nav_about" class="link">Про мене</a>
-                <a href="/contact" data-translate="nav_contact" class="link">Контакти</a>
+                <a href="/project" data-translate="projects" class="link">Мої проєкти</a>
+                <a href="/about" data-translate="about" class="link">Про мене</a>
+                <a href="/contact" data-translate="contact" class="link">Контакти</a>
                 <a href="/blog/post_list" data-translate="nav_blogs" class="link">Блоги</a>
-                <a href="/site_map" data-translate="" class="link">Карта сайту</a>
+                <a href="/site_map" data-translate="site_map" class="link">Карта сайту</a>
             </div>
             <div class="nav-container">
-                <a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a>
-                <a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a>
+                <a href="/terms_of_use" data-translate="terms_of_use" class="link">Умови використання</a>
+                <a href="/privacy_policy" data-translate="privacy_policy" class="link">Політика конфіденційності</a>
             </div>
         </div>
         <div id="language-menu" class="nav-menu near"><span data-translate="loading">Завантаження...</span></div>
@@ -98,10 +98,10 @@
             <text data-translate="footer_rights_reserved" class="">Всі права захищено</text>
         </div>
         <div class="footer-right">
-            <a href="/index" data-translate="footer_home" class="link">Головна</a>
-            <a href="/contact" data-translate="footer_contact" class="link none_768">Контакти</a>
+            <a href="/index" data-translate="home" class="link">Головна</a>
+            <a href="/contact" data-translate="contact" class="link none_768">Контакти</a>
             <button id="form-button" class="form-message-button jetbrains-mono-br" data-translate="footer_message_form" data-target="modal-message-form">Написати нам</button>
-            <a href="/site_map" data-translate="" class="link">Карта сайту</a>
+            <a href="/site_map" data-translate="site_map" class="link">Карта сайту</a>
         </div>
     </footer>
 </div>
@@ -114,16 +114,16 @@
 </div>
 <div id="modal" class="modal">
     <div id="modal-message-form" class="modal-content modal-content-message-form roboto-medium-br">
-        <h2 class="roboto-medium-br" data-translate="message_text">Написати повідомлення</h2>
-        <label for="form-message-name-input"></label><input id="form-message-name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)" data-translate="placeholder_message_name" required>
+        <h2 class="roboto-medium-br" data-translate="modal_content_message_text">Написати повідомлення</h2>
+        <label for="form-message-name-input"></label><input id="form-message-name-input" class="jetbrains-mono-br"  placeholder="Назва повідомлення (обов'язково)" data-translate="modal_content_message_name" required>
         <div class="author-mail">
-            <label for="form-message-author-input"></label><input id="form-message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)" data-translate="placeholder_message_author">
-            <label for="form-message-email-input"></label><input id="form-message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)" data-translate="placeholder_message_email">
+            <label for="form-message-author-input"></label><input id="form-message-author-input" class="jetbrains-mono-br"  placeholder="Ваше ім'я (Необов'язково)" data-translate="modal_content_message_author">
+            <label for="form-message-email-input"></label><input id="form-message-email-input" class="jetbrains-mono-br" placeholder="Ваша пошта (Необов'язково)" data-translate="modal_content_message_email">
         </div>
-        <label for="form-message-input"></label><textarea id="form-message-input" class="jetbrains-mono-br" placeholder="Введіть ваше повідомлення (обов'язково)" data-translate="placeholder_message_input_text" required></textarea>
+        <label for="form-message-input"></label><textarea id="form-message-input" class="jetbrains-mono-br" placeholder="Введіть ваше повідомлення (обов'язково)" data-translate="modal_content_message_input_text" required></textarea>
         <div class="message-button">
-            <button id="send-modal-message-button" class="jetbrains-mono-br" data-translate="message_send">Надіслати</button>
-            <button class="close-modal-button jetbrains-mono-br" data-translate="message_close">Закрити</button>
+            <button id="send-modal-message-button" class="jetbrains-mono-br" data-translate="modal_content_message_send">Надіслати</button>
+            <button class="close-modal-button jetbrains-mono-br" data-translate="modal_content_message_close">Закрити</button>
         </div>
     </div>
 </div>

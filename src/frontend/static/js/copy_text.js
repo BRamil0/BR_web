@@ -14,12 +14,12 @@ async function handleCopyClick(event) {
     const text = event.currentTarget.textContent;
     try {
         await navigator.clipboard.writeText(text);
-        await info_alert.showInfoAlert("copy_alert");
+        await info_alert.showInfoAlert("copy_text_success");
     } catch (error) {
         console.warn('Clipboard API failed, trying fallback...', error);
         const result = await copyToClipboardFallback(text);
         if (result) {
-            await info_alert.showInfoAlert("copy_alert");
+            await info_alert.showInfoAlert("copy_text_success");
         } else {
             console.error('Fallback copying failed.', error);
         }

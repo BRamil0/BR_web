@@ -21,7 +21,7 @@ sendModalMessageButton.addEventListener("click", async function () {
     const message = document.getElementById("form-message-input").value.trim();
 
     if (message === "" || name === "") {
-        await info_alert.showInfoAlert("no_required_fields_message_alert");
+        await info_alert.showInfoAlert("error_empty_fields");
         document.getElementById("form-message-name-input").style.borderColor = "red";
         document.getElementById("form-message-input").style.borderColor = "red";
         setTimeout(() => {
@@ -46,17 +46,21 @@ sendModalMessageButton.addEventListener("click", async function () {
         });
 
         if (response.ok) {
-            await info_alert.showInfoAlert("message_alert");
+            await info_alert.showInfoAlert("success_message_alert");
             document.getElementById("form-message-name-input").value = "";
             document.getElementById("form-message-input").value = "";
-            await modal.hideContentModal("form-message-modal");
+            await modal.hideContentModal("modal-message-form");
             await modal.hideModal();
         } else {
             console.error("Error:", response.statusText);
-            await info_alert.showInfoAlert("error_when_patching_message_alert");
+            if (response.status === 429) {
+                await info_alert.showInfoAlert("error_too_many_requests");
+            } else {
+                await info_alert.showInfoAlert("error_sending_request");
+            }
         }
     } catch (error) {
         console.error("Error:", error);
-        await info_alert.showInfoAlert("error_when_patching_message_alert");
+        await info_alert.showInfoAlert("error_when_patching");
     }
 });

@@ -45,7 +45,7 @@ export async function registerAccount(username, email, password) {
         });
         if (!response.ok) {
             console.log(response.json());
-            await showInfoAlert("register_error_cannot_register");
+            await showInfoAlert("error_cannot_register");
             return false
         }
         username.value = "";
@@ -55,7 +55,7 @@ export async function registerAccount(username, email, password) {
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
-        await showInfoAlert("register_error_cannot_register");
+        await showInfoAlert("error_cannot_register");
         return false
     }
 }
@@ -73,7 +73,7 @@ export async function loginAccount(email, password) {
             }),
         });
         if (!response.ok) {
-            await showInfoAlert("login_error_cannot_login");
+            await showInfoAlert("error_cannot_login");
             return false
         }
         email.value = "";
@@ -82,7 +82,7 @@ export async function loginAccount(email, password) {
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
-        await showInfoAlert("login_error_cannot_login");
+        await showInfoAlert("error_cannot_login");
         return false
     }
 }
@@ -91,15 +91,15 @@ export async function logoutAccount() {
     try {
         const response = await fetch("/api/auth/logout");
         if (!response.ok) {
-            await showInfoAlert("logout_error_cannot_logout");
+            await showInfoAlert("error_cannot_logout");
             return false
         }
-        await showInfoAlert("logout_success_logout");
+        await showInfoAlert("success_logout");
         await loadPage("/");
         return true
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
-        await showInfoAlert("logout_error_cannot_logout");
+        await showInfoAlert("error_cannot_logout");
         return false
     }
 }
@@ -119,7 +119,7 @@ async function dataVerification(username = null, email, password, password2 = nu
         if (password2 !== null) {
             password2.style.borderColor = "red";
         }
-        await showInfoAlert("register_error_empty_fields");
+        await showInfoAlert("error_empty_fields");
         setTimeout(() => {
             if (username !== null) {
                 username.style.borderColor = "";
@@ -136,7 +136,7 @@ async function dataVerification(username = null, email, password, password2 = nu
     if (username !== null) {
         if (cleanInput(username.value) !== username.value || !await validateUsername(username.value) || username.length > 128 || username.length < 2) {
             username.style.borderColor = "red";
-            await showInfoAlert("register_error_invalid_username");
+            await showInfoAlert("error_invalid_username");
             setTimeout(() => {
                 username.style.borderColor = "";
             })
@@ -146,7 +146,7 @@ async function dataVerification(username = null, email, password, password2 = nu
 
     if (cleanInput(email.value) !== email.value || !await validateEmail(email.value)) {
         email.style.borderColor = "red";
-        await showInfoAlert("register_error_invalid_email");
+        await showInfoAlert("error_invalid_email");
         setTimeout(() => {
             email.style.borderColor = "";
         })
@@ -155,7 +155,7 @@ async function dataVerification(username = null, email, password, password2 = nu
 
     if (cleanInput(password.value) !== password.value || !await validatePassword(password.value) || password.length > 128 || password.length < 8) {
         password.style.borderColor = "red";
-        await showInfoAlert("register_error_invalid_password");
+        await showInfoAlert("error_invalid_password");
         setTimeout(() => {
             password.style.borderColor = "";
         })
@@ -165,7 +165,7 @@ async function dataVerification(username = null, email, password, password2 = nu
         if (password.value !== password.value) {
             password.style.borderColor = "red";
             password2.style.borderColor = "red";
-            await showInfoAlert("register_error_passwords_not_match");
+            await showInfoAlert("error_passwords_not_match");
             setTimeout(() => {
                 password.style.borderColor = "";
                 password2.style.borderColor = "";
@@ -207,7 +207,7 @@ export async function updateAccountButton() {
             if (await dataVerification(username, email, password, password2)) {
                 if (await registerAccount(username, email, password)) {
                     await setAccountMenu();
-                    await showInfoAlert("register_success_register");
+                    await showInfoAlert("success_register");
                 }
             }
         });
@@ -221,7 +221,7 @@ export async function updateAccountButton() {
             console.log(email, password);
             if (await loginAccount(email, password)) {
                 await setAccountMenu();
-                await showInfoAlert("login_success_login");
+                await showInfoAlert("success_login");
             }
         });
     }
