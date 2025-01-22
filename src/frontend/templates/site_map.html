@@ -2,28 +2,28 @@
 
 {% block content %}
 <div class="">
-    <h2>Карта сайту</h2>
+    <h2 data-translate="site_map">Карта сайту</h2>
     <div class="item-card-container">
         <div class="card">
-            <p><a href="/index" data-translate="" class="link">Головна</a></p>
-            <p><a href="/project" data-translate="" class="link">Мої проєкти</a></p>
-            <p><a href="/about" data-translate="" class="link">Про мене</a></p>
-            <p><a href="/contact" data-translate="" class="link">Контакти</a></p>
-            {% if not experimental_functions %}<p><a href="/blog/post_list" data-translate="" class="link">Список постів</a></p>{% endif %}
+            <p><a href="/index" data-translate="home" class="link">Головна</a></p>
+            <p><a href="/project" data-translate="projects" class="link">Мої проєкти</a></p>
+            <p><a href="/about" data-translate="about" class="link">Про мене</a></p>
+            <p><a href="/contact" data-translate="contact" class="link">Контакти</a></p>
+            {% if not experimental_functions %}<p><a href="/blog/post_list" data-translate="nav_blogs" class="link">Список постів</a></p>{% endif %}
         </div>
         {% if experimental_functions %}
             <div class="card">
-                <p><a href="/blog/post_list" data-translate="" class="link">Список постів</a></p>
-                <p><a href="/account/profile/my" data-account="profile" data-translate="account_profile_button" class="link">Мій профіль</a></p>
+                <p><a href="/blog/post_list" data-translate="nav_blogs" class="link">Список постів</a></p>
+                <p><a href="/account/profile/my" data-account="profile" data-translate="account_profile" class="link">Мій профіль</a></p>
                 <p><a href="/blog/create_post" data-translate="" class="link">Створити пост</a></p>
             </div>
         {% endif %}
         <div class="card">
-            <p><a href="/about_site" data-translate="" class="link">Про сайт</a></p>
-            <p><a href="/terms_of_use" data-translate="footer_terms_of_use" class="link">Умови використання</a></p>
-            <p><a href="/privacy_policy" data-translate="footer_privacy_policy" class="link">Політика конфіденційності</a></p>
-            <p><a href="/cookie_policy" data-translate="footer_cookie_policy" class="link">Політика використання cookie</a></p>
-            <p><a href="/content_used" data-translate="footer_content_used" class="link">Використаний контент</a></p>
+            <p><a href="/about_site" data-translate="about_site" class="link">Про сайт</a></p>
+            <p><a href="/terms_of_use" data-translate="terms_of_use" class="link">Умови використання</a></p>
+            <p><a href="/privacy_policy" data-translate="privacy_policy" class="link">Політика конфіденційності</a></p>
+            <p><a href="/cookie_policy" data-translate="cookie_policy" class="link">Політика використання cookie</a></p>
+            <p><a href="/content_used" data-translate="content_used" class="link">Використаний контент</a></p>
         </div>
         {% if experimental_functions %}
         <div class="card">

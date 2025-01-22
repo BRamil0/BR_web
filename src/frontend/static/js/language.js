@@ -2,6 +2,10 @@ import * as cookies from "./cookies.js";
 
 export let isLoaded = false;
 
+export async function isLoadedLanguage(valve) {
+    isLoaded = valve;
+}
+
 export async function getLanguage() {
     try {
         const response = await fetch(`/api/default_language`);
@@ -54,9 +58,6 @@ export async function loadLocalization(lang) {
                 if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     element.setAttribute('placeholder', data[key]);
                 }
-                else if (element.tagName === 'BUTTON' || element.tagName === 'INPUT' && element.type === 'button') {
-                    element.setAttribute('value', data[key]);
-                }
                 else {
                     const isHTML = element.hasAttribute('data-translate-html');
                     if (isHTML) {
@@ -81,7 +82,7 @@ export async function loadLocalization(lang) {
         document.documentElement.setAttribute('lang', lang);
 
         await cookies.setCookie('language', lang, 7);
-        if (!isLoaded) {isLoaded = true}
+        isLoaded = true;
 
         return true;
     } catch (error) {

@@ -17,7 +17,8 @@
     height: auto;
 
     box-shadow: var(--box-shadow);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.025s ease;
+    opacity: 1;
 }
 
 .main a {
@@ -28,6 +29,10 @@
 
 .main button {
     box-shadow: var(--box-shadow);
+}
+
+.main.hide {
+    opacity: 0;
 }
 
 @media (max-width: 1000px) {
