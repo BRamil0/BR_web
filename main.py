@@ -1,141 +1,156 @@
-"""the main application startup file"""
 import asyncio
+import sys
+import argparse
 
-import uvicorn
-import fastapi
-from starlette.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+MINIMUM_VERSION_PYTHON = (3, 12, 0)
+RECOMMENDED_VERSION_PYTHON = (3, 12, 7)
 
-from src.config.config import settings
-from fastapi.templating import Jinja2Templates
+try:
+    from src.logger.logger import logger
+    import server
+    from src.backend.core import commands
+    from src.backend.database import db_initialisation
+    is_whether_dependencies_established = True
+except ImportError as e:
+    import logging
+    from src.logger.default_logger import default_logger
+    is_whether_dependencies_established = False
+    default_logger.log(logging.CRITICAL, f"Main | no dependencies for making applications are installed (additional information: {e})")
+    logger = None
+    class FakeServer:
+        @staticmethod
+        async def start():
+            print("FakeServer | Starting fake server...")
 
-from src.app.fastapi import base
-from src.app.fastapi import background
-from src.app.fastapi import telegram
-from src.app.fastapi import indexing
+    class FakeCommands:
+        @staticmethod
+        async def docker_start():
+            print("FakeCmd | Starting fake Docker...")
 
+        @staticmethod
+        async def docker_stop():
+            print("FakeCmd | Stopping fake Docker...")
 
-def import_routers(app: fastapi.FastAPI) -> None:
-    """
-    import routers
-    :param app: fastapi.FastAPI
-    :return: None
-    """
+        @staticmethod
+        async def docker_build():
+            print("FakeCmd | Building fake Docker...")
 
-    app.include_router(base.router)
-    app.include_router(background.router)
-    app.include_router(telegram.router)
-    app.include_router(indexing.router)
+        @staticmethod
+        async def docker_log():
+            print("FakeCmd | Showing fake Docker logs...")
 
+        @staticmethod
+        async def frontend_build():
+            print("FakeCmd | Building fake frontend...")
 
-def init_codes(app: fastapi.FastAPI) -> None:
-    """
-    init codes
-    :param app: fastapi.FastAPI
-    :return: None
-    """
+        @staticmethod
+        async def frontend_watch():
+            print("FakeCmd | Watching fake frontend...")
 
-    templates = Jinja2Templates(directory="src/templates")
+    class FakeDBInitialisation:
+        @staticmethod
+        async def init_db(self):
+            pass
 
+    server = FakeServer()
+    commands = FakeCommands()
+    db_initialisation = FakeDBInitialisation()
 
-    @app.exception_handler(400)
-    async def custom_400_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 400",
-                                                        "code": 400,
-                                                        "message": "bad request"})
+async def logger_check(level: str = "INFO", message: str = "") -> bool:
+    if is_whether_dependencies_established:
+        logger.opt(colors=True).log(level, message)
+    else:
+        level_dict = {"DEBUG": logging.DEBUG, "INFO": logging.INFO, "WARNING": logging.WARNING, "ERROR": logging.ERROR, "CRITICAL": logging.CRITICAL}
+        default_logger.log(level_dict[level], message)
+    return True
 
-    @app.exception_handler(401)
-    async def custom_401_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 401",
-                                                        "code": 401,
-                                                        "message": "unauthorized"})
+async def version_checking():
+    current_version = sys.version_info[:3]
+    if  current_version < MINIMUM_VERSION_PYTHON:
+        await logger_check("CRITICAL", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <lr><b>not supported</b></lr>.</lc> | <lc>Minimum version: <c><b>{MINIMUM_VERSION_PYTHON}</b></c>.</lc>")
+        raise SystemExit
+    elif current_version < RECOMMENDED_VERSION_PYTHON:
+        await logger_check("WARNING", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <ly><b>not recommended</b></ly>.</lc> | <lc>Recommended version: <c><b>{RECOMMENDED_VERSION_PYTHON}</b></c>.</lc>")
+        return False
+    await logger_check("INFO", f"<le><b>Main</b></le> | <lc>Python version <c><b>{'.'.join(map(str, current_version))}</b></c> is <lg><b>supported</b></lg>.</lc>")
+    return True
 
-    @app.exception_handler(403)
-    async def custom_403_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 403",
-                                                        "code": 403,
-                                                        "message": "access forbidden"})
-    @app.exception_handler(404)
-    async def custom_404_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 404",
-                                                        "code": 404,
-                                                        "message": "page not found"})
+async def start_function(program: dict, options: dict, ignore_package: bool = False):
+    if is_whether_dependencies_established or ignore_package:
+        run_list = []
+        if type(options) == list:
+            for option in options:
+                if option not in run_list: run_list.append(program[option]())
+        else:
+            run_list.append(program[options]())
+        await asyncio.gather(*run_list)
+        return True
+    await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>You have not set up dependencies for making apps.</b></lr>")
+    return False
 
-    @app.exception_handler(418)
-    async def custom_418_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 418",
-                                                        "code": 418,
-                                                        "message": "I'm a teapot"})
+async def docker_function(option):
+    program = {"start": commands.docker_start, "stop": commands.docker_stop, "build": commands.docker_build, "log": commands.docker_log}
+    await start_function(program, option)
 
+async def database_function(option):
+    program = {"start": commands.database_start, "stop": commands.database_stop, "init": db_initialisation.init_db}
+    await start_function(program, option)
 
-    @app.exception_handler(500)
-    async def custom_500_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 500",
-                                                        "code": 500,
-                                                        "message": "internal server error"})
+async def run_function(options):
+    program = {"server": server.start, "f-build": commands.frontend_build, "f-watch": commands.frontend_watch}
+    await start_function(program, options)
 
-    @app.exception_handler(501)
-    async def custom_501_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 501",
-                                                        "code": 501,
-                                                        "message": "not implemented"})
+async def script_function(options):
+    from scripts import create_venv, create_config
+    scripts = {"c-venv": create_venv.create_venv, "c-config": create_config.create_configs_files}
+    await start_function(scripts, options, ignore_package=True)
 
-    @app.exception_handler(505)
-    async def custom_505_handler(request, __):
-        return templates.TemplateResponse("code.html", {"request": request,
-                                                        "title": "code 505",
-                                                        "code": 505,
-                                                        "message": "http version not supported"})
+async def custom_error_handler(message):
+    await logger_check("ERROR", f"<le><b>Argparse</b></le> | <lr>Argparse Error: <r><b>{message}</b></r></lr>")
+    sys.exit(2)
 
+async def add_arguments(parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Please select the type of application launch.", exit_on_error=False)) -> argparse.Namespace:
+    subparsers = parser.add_subparsers(dest="command")
 
-def fast_app_start() -> fastapi.FastAPI:
-    """"
-    start of fastapp
-    :return: fastapi.FastAPI
-    """
+    docker_parser = subparsers.add_parser("docker")
+    docker_parser.add_argument("actions", choices=["start", "stop", "build", "log"], help="Working with Docker teams.")
 
-    app: fastapi.FastAPI = fastapi.FastAPI()
+    database_parser = subparsers.add_parser("database")
+    database_parser.add_argument("actions", choices=["start", "stop", "docker-start", "docker-stop", "init"], help="run only the DBMS.")
 
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+    run_parser = subparsers.add_parser("run")
+    run_parser.add_argument("actions", nargs='*', choices=["server", "f-build", "f-watch"], help="Run server or watch.")
 
-    app.mount("/static", StaticFiles(directory="src/static"), name="static")
+    scripts_parser = subparsers.add_parser("scripts")
+    scripts_parser.add_argument("actions", nargs='*', choices=["c-venv", "c-config"], help="Run scripts in the scripts folder.")
+    return parser.parse_args()
 
-    import_routers(app)
-    init_codes(app)
+async def start() -> bool:
+    await version_checking()
+    args = await add_arguments()
+    if args.command is None and is_whether_dependencies_established:
+        await logger_check("INFO", "<le><b>Main</b></le> | <lc>No arguments passed, automatic start of the <c>server</c>.</lc> <v><ly>(<b>command</b>: run server)</ly></v>")
+        args.command = "run"; args.actions = ["server"]
 
-    return app
+    functions = {"docker": docker_function, "database": database_function, "run": run_function, "scripts": script_function}
+    if args.command in functions:
+        await functions[args.command](args.actions)
+    else:
+        await logger_check("ERROR", "<le><b>Main</b></le> | <lr><b>Unknown option. Write to <u>'help'</u> for more information.</b></lr>")
 
+    await logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program finished.</b></lm>")
 
-async def start() -> None:
-    """
-    start of all processes
-    :return: None
-    """
-
-    app: fastapi.FastAPI = fast_app_start()
-    config: uvicorn.Config = uvicorn.Config(app=app,
-                            host=settings.HOST,
-                            port=settings.PORT,
-                            loop="asyncio",)
-    server = uvicorn.Server(config=config)
-    await asyncio.gather(server.serve())
-
-
-if "__main__" == __name__:
+if __name__ == "__main__":
+    asyncio.run(logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program started.</b></lm>"))
     try:
         asyncio.run(start())
     except KeyboardInterrupt:
-        pass
+        asyncio.run(logger_check("INFO", "<le><b>Main</b></le> | <lm><b>Program shutdown by user.</b></lm>"))
+    except argparse.ArgumentError as e:
+        asyncio.run(custom_error_handler(str(e)))
+    except SystemExit as e:
+        if e.code != 0: asyncio.run(logger_check("WARNING", f"<le><b>Main</b></le> | <ly><b>System exit triggered: <y><v>{e}</v></y></b></ly>"))
+    except BaseException as e:
+        print(e)
+        asyncio.run(logger_check("CRITICAL", f"<le><b>Main</b></le> | <lr><b>The program has been shut down due to a critical error or unhandled exception, for more details: <r><v>{e}</v></r></b></lr>"))
+        raise e

@@ -4,13 +4,13 @@ import fastapi
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from main import import_routers
+from server import import_routers
 
 templates = Jinja2Templates(directory="src/templates")
 
 app = fastapi.FastAPI()
 
-app.mount("/static", StaticFiles(directory="src/static"), name="static")
+app.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
 
 import_routers(app)
 

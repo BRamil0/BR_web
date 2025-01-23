@@ -1,0 +1,193 @@
+body {
+    background-image: none;
+    background-color: var(--text-color);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: block;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, box-shadow 0.3s ease, border 0.3s ease, border-radius 0.3s ease, background-image 0.3s ease, background-size 0.3s ease, background-position 0.3s ease, background-attachment 0.3s ease, text-align 0.3s ease, margin 0.3s ease, padding 0.3s ease, flex-direction 0.3s ease, align-items 0.3s ease, justify-content 0.3s ease, display 0.3s ease, transition 0.3s ease;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.loading-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.1s ease;
+}
+
+.loading-banner.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-banner span {
+    text-align: center;
+    display: none;
+    width: 100%;
+}
+
+.loading-banner span.show {
+    display: block;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.main a {
+    color: var(--text-color);
+    border-radius: 1vmin;
+    padding: 0.1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    text-decoration: none;
+}
+
+button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 1vmin;
+    padding: 0.5vmin 1vmin;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+button.button-active {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.a-button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 1vmin;
+    padding: 0.5vmin 1vmin;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.a-button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.centered-list {
+    list-style-type: none;
+    padding: 0.2vmin;
+    text-align: center;
+}
+
+.centered-list li {
+    margin: calc(1vw + 1vh);
+}
+
+
+textarea, input {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: var(--bg-color) 0.05vmin solid;
+    border-radius: 1vmin;
+    padding: 1vmin 1vmin;
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease, border 0.3s ease;
+}
+
+textarea:focus, input:focus {
+    border-color: var(--text-color) 1vmin solid;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.navigation-buttons {
+    position: fixed;
+    left: 1.5vw;
+    cursor: pointer;
+    z-index: 100;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: calc(0.5vw + 0.5vh);
+    border-radius: 1.8vmin;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.1s ease, visibility 0.1s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.navigation-buttons.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.navigation-buttons.top {
+    top: calc(50% - 1.5rem);
+    transform: translateY(-50%);
+}
+
+.navigation-buttons.boston {
+    top: calc(50% + 1.5rem);
+    transform: translateY(-50%);
+}
+
+::selection {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+::-moz-selection {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+a:active, button:active {
+    color: var(--bg-color);
+    background-color: var(--text-color);
+}
+
+a:focus, button:focus {
+    color: var(--bg-color) !important;
+    background-color: var(--text-color) !important;
+}
+
+button:-moz-focusring, a:-moz-focusring {
+    outline: none;
+}
+
+@media (max-height: 768px) {
+}

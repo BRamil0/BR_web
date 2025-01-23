@@ -1,0 +1,119 @@
+{
+  "info": {
+    "name": "English",
+    "original_name": "English",
+    "code_2": "en",
+    "code_3": "eng",
+    "original_code": "eng",
+    "emoji": "\uD83C\uDDEC\uD83C\uDDE7"
+  },
+  "current translation": "Translation to English is current as of: 2025.01.22",
+  "version_text": "Server and site version: ",
+  "version_api_text": "API version: ",
+  "debug_text": "Debug: ",
+
+  "yes": "Yes",
+  "no": "No",
+
+  "loading": "Loading...",
+  "loading_banner_text-1": "Loading...",
+  "loading-banner-text-2": "The site is taking a long time to load, please wait.",
+  "loading-banner-text-3": "The site might be unresponsive, please refresh it.",
+
+  "nav_blogs": "Blogs",
+  "nav_more": "More",
+
+  "footer_author_photo": "Photo by: <a href=\"\" id=\"author-photo-name\" class=\"link\">Radomyr</a>",
+  "footer_rights_reserved": "All rights reserved",
+  "footer_message_form": "Contact via form",
+
+  "home": "Home",
+  "projects": "My Projects",
+  "about": "About Me",
+  "about_site": "About the Site",
+  "contact": "Contact",
+  "site_map": "Site Map",
+  "account_profile": "My Profile",
+  "terms_of_use": "Terms of Use",
+  "privacy_policy": "Privacy Policy",
+  "cookie_policy": "Cookie Policy",
+  "content_used": "Content Used",
+  "email": "Email",
+
+  "modal_content_message_text": "Write a message",
+  "modal_content_message_name": "Message title (required)",
+  "modal_content_message_author": "Your name (optional)",
+  "modal_content_message_email": "Your email (optional)",
+  "modal_content_message_input_text": "Enter your message (required)",
+  "modal_content_message_send": "Send",
+  "modal_content_message_close": "Close",
+
+  "cookie_text": "This site uses cookies to enhance your user experience. By continuing to use our site, you agree to the use of cookies in accordance with our <a href=\"/cookie_policy\" class=\"link\">Cookie Policy</a>.",
+  "cookie_accept": "Accept all cookies",
+
+  "copy_text_success": "Text copied!",
+  "message_alert": "Message sent successfully!",
+
+  "success_register": "You have successfully registered!",
+  "success_login": "You have successfully logged in!",
+  "success_logout": "You have successfully logged out!",
+  "success_message_alert": "Message sent successfully!",
+
+  "error_empty_fields": "Please fill out all fields",
+  "error_invalid_username": "Invalid username",
+  "error_invalid_email": "Invalid email",
+  "error_invalid_password": "Invalid password",
+  "error_passwords_not_match": "Passwords do not match",
+  "error_receiving_request": "Error receiving request",
+  "error_sending_request": "Error sending request",
+  "error_too_many_requests": "Too many requests, try again later",
+  "error_cannot_login": "Cannot log in",
+  "error_cannot_register": "Cannot register",
+  "error_cannot_logout": "Cannot log out",
+  "error_when_patching": "Error during update",
+
+  "theme_light": "☀️ Light",
+  "theme_dark": "🌙 Dark",
+  "theme_system": "🖥️ System",
+
+  "code_404": "404: Page Not Found",
+  "code_500": "500: Server Error",
+
+  "contact_text": "Contacts and Social Media",
+  "content_text": "Content Used",
+  "post_list":"Post List",
+  "about_site_info": "Useful Information",
+
+  "project_BR_Web_description": "Personal Website",
+  "project_xChat_description": "A small single-channel messenger project",
+  "project_Temscale_description": "A library for working with temperature written in Python",
+
+  "account_login_button": "Log In",
+  "account_register_button": "Register",
+  "account_settings_button": "Settings",
+  "account_logout_button": "Log Out",
+
+  "login-title": "Log In",
+  "login-info": "Login is temporarily available only for site administration",
+  "form-register-email-input": "Email",
+  "form-register-password-input": "Password",
+  "form-login-button": "Log In",
+  "form-login-problems-button": "Problems logging in?",
+  "form-register-text": "Don't have an account?",
+  "form-login-text-link": "Register",
+
+  "register-title": "Register",
+  "form-register-username-input": "Username",
+  "form-register-password2-input": "Repeat Password",
+  "form-register-button": "Register",
+  "form-register-problems-button": "Problems registering?",
+  "form-login-text": "Already have an account?",
+  "form-register-text-link": "Log In",
+
+  "about_site_text": "This site is built on <a href=\"https://fastapi.tiangolo.com/\">FastAPI</a>, source code available on <a href=\"https://github.com/BRamil0/BR_web\">GitHub</a>.",
+  "about_text": "<h1>About Me</h1>\n    <p>My name is Radomyr, I am 18 years old, and I am a software and web developer. I like Python and C++, and I also know JavaScript.</p>\n    <p>I enjoy reading about economics and urbanization, and I am interested in history. My hobbies include programming, design, and reading Wikipedia.</p>\n    <p>I love geography, computer science, and law.</p>\n    <i>I live in Ukraine. My birthday is October 23.</i>\n    <p></p>",
+  "cookie_policy_text": "<h2>Cookie Policy</h2>\n\n    <h4>1. What are cookies?</h4>\n    <p>Cookies are small text files that are stored on your device (computer, tablet, smartphone) when you visit websites. They are used to remember information about your interaction with the site.</p>\n\n    <h4>2. How do we use cookies?</h4>\n    <p>We use cookies solely to improve and customize your experience on our site. This includes:</p>\n    <ul class=\"centered-list\">\n        <li>Remembering your preferences and settings;</li>\n        <li>Collecting technical information for site analysis.</li>\n    </ul>\n\n    <h4>3. What cookies do we use?</h4>\n    <p>We use both session (temporary) and persistent cookies. Session cookies are stored on your device only during your session, while persistent cookies remain on your device until deleted or expired.</p>\n\n    <h4>4. Managing cookies</h4>\n    <p>You can control the use of cookies through your browser settings. You have the option to delete stored cookies or disable them altogether. However, please note that this may affect the site's functionality.</p>\n\n    <h4>5. Changes to the cookie policy</h4>\n    <p>We reserve the right to change this policy at any time. All changes will be posted on this page. We recommend periodically reviewing this policy to stay informed about changes.</p>\n\n    <h4>6. Contact information</h4>\n    <p>If you have any questions or comments about this cookie policy, please contact us through the site's email.</p>\n",
+  "privacy_policy_text": "<h2>Privacy Policy</h2>\n    <i>Last updated: 2024.10.10</i>\n    <p>We value your privacy and are committed to protecting your personal data. This privacy policy describes what information we collect, how we use it, and how we protect it.</p>\n\n    <h4>1. Information Collection</h4>\n\n    <p>We do not collect any personal user data on our site. However, we may automatically collect technical information about your device and interaction with our site, such as:</p>\n    <ul class=\"centered-list\">\n        <li>IP address</li>\n        <li>Browser type</li>\n        <li>Date and time of access</li>\n        <li>Visited pages</li>\n    </ul>\n    <p>We use this information solely for traffic analysis and improving our site.</p>\n\n    <h4>2. Data Usage</h4>\n    <p>Since we do not collect personal data, we do not use it for purposes like marketing or advertising. The technical information we collect may be used to:</p>\n    <ul class=\"centered-list\">\n        <li>Improve site functionality</li>\n        <li>Analyze site performance</li>\n        <li>Identify technical issues</li>\n    </ul>\n\n    <h4>3. Information Protection</h4>\n    <p>We take appropriate measures to protect technical information from unauthorized access, alteration, or destruction. However, any information transmitted over the internet may be vulnerable, and we cannot guarantee absolute security.</p>\n\n    <h4>4. Changes to the Privacy Policy</h4>\n    <p>We reserve the right to make changes to this privacy policy. Please check this page periodically for updates. Continued use of our site after changes indicates your agreement with the updated policy.</p>\n\n    <h4>5. Contact Information</h4>\n    <p>If you have any questions or comments about this privacy policy, please contact us at <a href=\"mailto:qulowg@gmail.com\">qulowg@gmail.com</a>.</p>\n",
+  "terms_of_use_text": "    <h2>Terms of Use</h2>\n\n    <h4>1. Acceptance of Terms</h4>\n    <p>By using this site, you agree to these terms of use. If you do not agree with any part of these terms, please do not use our site.</p>\n\n    <h4>2. Use of Materials</h4>\n    <p>All materials on this site, including logos, texts, and photos, are copyrighted and are the property of BRamil. You may view, copy, and distribute materials from this site for non-commercial personal use, provided you retain all copyright notices and references to authorship. Any other use of the materials requires prior written permission.</p>\n\n    <h4>3. Privacy</h4>\n    <p>For information on how we collect, use, and protect user information, please see our <a href=\"/privacy_policy\" class=\"link\">Privacy Policy</a>.</p>\n\n    <h4>4. Site Functionality</h4>\n    <p>We make every effort to keep the site running smoothly and error-free. However, we are not responsible for temporary unavailability of the site due to technical issues beyond our control. We also reserve the right to make changes or discontinue site functionality at any time without prior notice.</p>\n\n    <h4>5. Changes to the Terms</h4>\n    <p>We reserve the right to make changes to these terms at any time. Please check this page periodically for updates. Continued use of our site after changes indicates your agreement with the updated terms.</p>\n\n    <h4>6. Contact Information</h4>\n    <p>If you have any questions or comments about these terms, please contact us through the site's email.</p>\n",
+  "content_used_text": "<h2>Content Used</h2>\n    <p>On this site, we use various free and open-source resources:</p>\n\n    <ul>\n        <li><b>Icons</b>: Some icons are provided by <a href=\"https://icons8.com/\" class=\"link\">Icons8</a>.</li>\n        <li><b>Fonts</b>: This site uses fonts provided by <a href=\"https://fonts.google.com/\" class=\"link\">Google Fonts</a>.</li>\n        <li><b>JavaScript libraries</b>: Various JavaScript libraries and frameworks that are open-source and publicly available.</li>\n        <li><b>Images</b>: Images from publicly available sources or provided by the site's author.</li>\n    </ul>\n"
+}

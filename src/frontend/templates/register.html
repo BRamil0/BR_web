@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="space-y-2">
+    <h1 data-translate="register-title">Реєстрація</h1>
+
+    <p><label for="form-register-username-input"></label><input id="form-register-username-input" class="jetbrains-mono-br w-96"  placeholder="Ім'я користувача" data-translate="form-register-username-input" type="text" required></p>
+    <p><label for="form-register-email-input"></label><input id="form-register-email-input" class="jetbrains-mono-br w-96"  placeholder="Електронна пошта" data-translate="form-register-email-input" type="email" required></p>
+    <p><label for="form-register-password-input"></label><input id="form-register-password-input" class="jetbrains-mono-br w-96"  placeholder="Пароль" data-translate="form-register-password-input " type="password" required></p>
+    <p><label for="form-register-password2-input"></label><input id="form-register-password2-input" class="jetbrains-mono-br w-96"  placeholder="Повторіть пароль" data-translate="form-register-password2-input" type="password" required></p>
+
+    <div class="space-y-2">
+        <div class="flex gap-2">
+            <button id="form-register-button" class="jetbrains-mono-br w-full" data-translate="form-register-button">Зареєструватися</button>
+            <button id="form-register-problems-button" class="jetbrains-mono-br w-full" data-translate="form-register-problems-button">Проблеми з реєстрацією?</button>
+        </div>
+        <p data-translate="form-login-text">Вже маєте обліковий запис? <a href="/account/login" data-translate="form-register-text-link" class="link">Увійти</a></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+.info-alert {
+    position: fixed;
+    font-size: 1rem;
+    bottom: 2vmin;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 1vb 2vw;
+    border-radius: 1.8vmin;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease, color 0.3s ease;
+    border: var(--text-color) 0.1vmin solid;
+    z-index: 10000;
+    box-shadow: var(--box-shadow);
+}
+
+.info-alert:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.info-alert.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width: 1000px) {
+}

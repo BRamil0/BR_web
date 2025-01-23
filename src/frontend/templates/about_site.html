@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="">
+    <h2 data-translate="about_site">Про сайт</h2>
+    <p data-translate-html="about_site_text">Цей сайт створено на основі <a href="https://fastapi.tiangolo.com/">FastAPI</a>, вихідний код доступний на <a href="https://github.com/BRamil0/BR_web">GitHub</a>.</p>
+    <h3 data-translate="about_site_info">Корисна інформація</h3>
+    <p data-translate="current translation">Актуальність перекладу на українську мову: 2025.01.22</p>
+    <p><span data-translate="version_text">Версія сервера та сайту: </span><span>{{ server_version }}</span>, <span data-translate="version_api_text">Версія API: </span><span>{{ api_version }}</span></p>
+    <p><span data-translate="debug_text">Налагодження (debug): </span>{% if DEBUG_MODE %}<span data-translate="yes">Так</span>{% else %}<span data-translate="no">Ні</span>{% endif %}</p>
+</div>
+{% endblock %}

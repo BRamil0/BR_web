@@ -1,0 +1,95 @@
+.nav-menu {
+    position: absolute;
+    background-color: rgba(var(--bg-color--rgb), var(--bg-color--alpha));
+    color: var(--text-color);
+    padding: 0.5em;
+    border-radius: 2vmin;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vb;
+}
+
+.nav-menu.center {
+    background-color: var(--bg-color);
+    left: 50%;
+    top: calc(0.5vh + 0.5rem);
+    transform: translateX(-50%);
+}
+
+.nav-menu.near {
+    top: calc(8vh + 1rem);
+    right: 0.1vw;
+}
+
+.nav-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-menu button {
+    transform: scale(1);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 1.4vmin;
+    border-radius: 1.4vmin;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+}
+
+.nav-menu button:hover {
+    transform: scale(1);
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+.nav-menu a {
+    color: var(--text-color);
+    padding: 1.4vmin;
+    border-radius: 1.4vmin;
+    background: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.nav-menu .a-button {
+    color: var(--text-color);
+    padding: 1.4vmin;
+    border-radius: 1.4vmin;
+    background: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.nav-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1vmin;
+    border-radius: 2vmin;
+}
+
+@media (max-width: 768px) {
+    .nav-menu.center {
+        top: calc(0.5vh + 0.5rem);
+    }
+
+    .nav-menu.near {
+        top: calc(4vh + 1rem);
+    }
+}

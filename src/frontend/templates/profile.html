@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="">
+    <h2>Профіль користувача</h2>
+    <div class="card-profile">
+        {% if experimental_functions %}<img src="/static/image/background/jpg/1.jpg" class="h-40 w-40 rounded-full" alt="logo profile">{% endif %}
+        <div class="text-left">
+            <h1>{{ user.username }}</h1>
+            <p>ID: <i>{{ user.id }}</i></p>
+            <p>Дата створення: <i>{{ user.created_at.strftime("%d.%m.%Y") }}</i></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
