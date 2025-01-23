@@ -7,18 +7,22 @@ export async function loadPage(url) {
     if (!isLoaded) {return}
     isLoaded = false;
     try {
-        // Сховати контент до завантаження нової сторінки
         const contentElement = document.getElementById('content');
         contentElement.classList.add("hide");
 
         // Завантажуємо сторінку
+        const startTime = performance.now();
         const response = await fetch(url);
         if (!response.ok) {
             console.error(`Failed to load page: ${url}`);
             return false;
         }
-
-        setTimeout(() => {}, 75);
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime) / 1000;
+        if (executionTime < 0.025) {
+            const remainingTime = 0.025 - executionTime;
+            setTimeout(() => {}, remainingTime);
+        }
 
         const html = await response.text();
 
