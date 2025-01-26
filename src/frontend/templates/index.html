@@ -2,18 +2,12 @@
 
 {% block content %}
 <div>
-    <h1>Головна</h1>
-    <p><i>Привіт!</i></p>
+    <h1 data-translate="home">Головна</h1>
+    <p data-translate="welcome">Ласкаво прошу</p>
     <div class="item-container">
-        <div class="item-base">
-            <a href="/project" class="link" data-translate="home_text_3">Мої проєкти</a>
-        </div>
-        <div class="item-base">
-            <a href="/about" class="link" data-translate="home_text_4">Про мене</a>
-        </div>
-        <div class="item-base">
-            <a href="/contact" class="link" data-translate="home_text_5">Контакти</a>
-        </div>
+        <a href="/project" class="link a-button w-40 h-5 text-center align-middle" data-translate="projects">Мої проєкти</a>
+        <a href="/about" class="link a-button w-40 h-5 text-center align-middle" data-translate="about">Про мене</a>
+        <a href="/contact" class="link a-button w-40 h-5 text-center align-middle" data-translate="contact">Контакти</a>
     </div>
 </div>
 {% endblock %}

@@ -7,7 +7,7 @@
     "original_code": "eng",
     "emoji": "\uD83C\uDDEC\uD83C\uDDE7"
   },
-  "current translation": "Translation to English is current as of: 2025.01.22",
+  "current translation": "Translation to English is current as of: 2025.01.26",
   "version_text": "Server and site version: ",
   "version_api_text": "API version: ",
   "debug_text": "Debug: ",
@@ -76,13 +76,19 @@
   "theme_dark": "🌙 Dark",
   "theme_system": "🖥️ System",
 
+  "code_400": "400: Bad Request",
+  "code_401": "401: Unauthorized",
+  "code_403": "403: Forbidden",
   "code_404": "404: Page Not Found",
+  "code_418": "418: I'm a teapot",
+  "code_429": "429: Too Many Requests",
   "code_500": "500: Server Error",
 
   "contact_text": "Contacts and Social Media",
   "content_text": "Content Used",
   "post_list":"Post List",
   "about_site_info": "Useful Information",
+  "welcome": "Welcome",
 
   "project_BR_Web_description": "Personal Website",
   "project_xChat_description": "A small single-channel messenger project",
