@@ -77,4 +77,7 @@
     .footer .none_768 {
         display: none;
     }
+    #form-button {
+        text-align: right;
+    }
 }
