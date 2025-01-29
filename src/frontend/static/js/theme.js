@@ -1,10 +1,11 @@
 import * as cookies from "./cookies.js";
+import {getURL} from "./tools.js";
 
 export let isLoaded = false;
 
 export async function getTheme() {
     try {
-        const response = await fetch(`/api/default_theme`);
+        const response = await fetch(await getURL(`/api/default_theme`));
         if (!response.ok) {
             console.error("Error fetching default theme");
             return "system";

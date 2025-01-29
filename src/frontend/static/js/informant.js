@@ -1,3 +1,5 @@
+import {getURL} from "./tools.js";
+
 export async function sendingDataToInformant() {
     const data = {
         innerWidth: window.innerWidth.toString(),
@@ -27,7 +29,7 @@ export async function sendingDataToInformant() {
     };
 
     try {
-        const response = await fetch('/api/telegram/info/', {
+        const response = await fetch(await getURL('/api/telegram/info/'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

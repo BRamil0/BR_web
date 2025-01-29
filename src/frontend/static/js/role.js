@@ -1,6 +1,8 @@
+import {getURL} from "./tools.js";
+
 export async function getRolesForUser(user) {
     try {
-        const response = await fetch(`/api/roles/get_roles_for_user/${user}`);
+        const response = await fetch(await getURL(`/api/roles/get_roles_for_user/${user}`));
         if (!response.ok) {
             console.error(`Failed to load language file for "role_list"`);
             return false;
@@ -15,7 +17,7 @@ export async function getRolesForUser(user) {
 
 export async function getRole(user, role_name) {
     try {
-        const response = await fetch(`/api/roles/get_roles_for_user/${user}`);
+        const response = await fetch(await getURL(`/api/roles/get_roles_for_user/${user}`));
         if (!response.ok) {
             console.error(`Failed to load language file for "role_list"`);
             return false;

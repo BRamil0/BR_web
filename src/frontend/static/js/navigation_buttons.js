@@ -1,8 +1,10 @@
+import {getURL} from "./tools.js";
+
 const topButton = document.getElementById("top-button");
 const bostonButton = document.getElementById("boston-button");
 
 export let isShowNavigationButtons = async () => {
-    const response = await fetch("/api/info/experimental_functions");
+    const response = await fetch(await getURL("/api/info/experimental_functions"));
     const data = await response.json();
     return data["experimental_functions"];
 };

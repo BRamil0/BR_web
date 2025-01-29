@@ -1,14 +1,11 @@
 import * as cookies from "./cookies.js";
+import {getURL} from "./tools.js";
 
 export let isLoaded = false;
 
-export async function isLoadedLanguage(valve) {
-    isLoaded = valve;
-}
-
 export async function getLanguage() {
     try {
-        const response = await fetch(`/api/default_language`);
+        const response = await fetch(await getURL(`/api/default_language`));
         if (!response.ok) {
             console.error(`Error fetching default language`);
             return "ukr";
@@ -31,7 +28,7 @@ export async function getTextForKeyInLanguage(lang, key) {
 
 export async function getTextInLanguage(lang) {
     try {
-        const response = await fetch(`/static/localizations/${lang}_language.json`);
+        const response = await fetch(await getURL(`/static/localizations/${lang}_language.json`));
         if (!response.ok) {
             console.error(`Failed to load language file for ${lang}`);
             return false;
@@ -45,7 +42,7 @@ export async function getTextInLanguage(lang) {
 
 export async function loadLocalization(lang) {
     try {
-        const response = await fetch(`/static/localizations/${lang}_language.json`);
+        const response = await fetch(await getURL(`/static/localizations/${lang}_language.json`));
         if (!response.ok) {
             console.error(`Localization file for "${lang}" not found.`);
             return false;
@@ -79,9 +76,10 @@ export async function loadLocalization(lang) {
             if (element) await setLanguageEmoji(data, element);
         }
 
-        document.documentElement.setAttribute('lang', lang);
+        document.documentElement.setAttribute('data-lang', data["info"]["code_3"]);
+        document.documentElement.setAttribute('lang', data["info"]["code_2"]);
 
-        await cookies.setCookie('language', lang, 7);
+        await cookies.setCookie('language', data["info"]["code_3"], 7);
         isLoaded = true;
 
         return true;

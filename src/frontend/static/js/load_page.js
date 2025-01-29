@@ -1,6 +1,7 @@
 import { main } from "./main.js";
 import * as theme from "./theme.js";
 import * as language from "./language.js";
+import {getURL} from "./tools.js";
 
 let isLoaded = true;
 export async function loadPage(url) {
@@ -12,7 +13,7 @@ export async function loadPage(url) {
 
         // Завантажуємо сторінку
         const startTime = performance.now();
-        const response = await fetch(url);
+        const response = await fetch(await getURL(url));
         if (!response.ok) {
             console.error(`Failed to load page: ${url}`);
             return false;

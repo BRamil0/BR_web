@@ -1,6 +1,7 @@
 import {showInfoAlert} from "./info_alert.js";
 import {setAccountMenu} from "./nav.js";
 import {loadPage} from "./load_page.js";
+import {getURL} from "./tools.js";
 
 let registerButton = document.getElementById("form-register-button");
 let loginButton = document.getElementById("form-login-button");
@@ -8,7 +9,7 @@ let logoutButton = document.getElementById("form-logout-button");
 
 export async function getCurrentUser() {
     try {
-        const response = await fetch("/api/auth/current_user", {
+        const response = await fetch(await getURL("/api/auth/current_user"), {
             method: "GET",
             credentials: "same-origin",
         });
@@ -32,7 +33,7 @@ export async function isAuthenticated(user) {
 
 export async function registerAccount(username, email, password) {
     try {
-        const response = await fetch("/api/auth/register", {
+        const response = await fetch(await getURL("/api/auth/register"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -62,7 +63,7 @@ export async function registerAccount(username, email, password) {
 
 export async function loginAccount(email, password) {
     try {
-        const response = await fetch("/api/auth/login", {
+        const response = await fetch(await getURL("/api/auth/login"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -89,7 +90,7 @@ export async function loginAccount(email, password) {
 
 export async function logoutAccount() {
     try {
-        const response = await fetch("/api/auth/logout");
+        const response = await fetch(await getURL("/api/auth/logout"));
         if (!response.ok) {
             await showInfoAlert("error_cannot_logout");
             return false
