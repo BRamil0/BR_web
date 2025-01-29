@@ -76,9 +76,10 @@ export async function loadLocalization(lang) {
             if (element) await setLanguageEmoji(data, element);
         }
 
-        document.documentElement.setAttribute('lang', lang);
+        document.documentElement.setAttribute('data-lang', data["info"]["code_3"]);
+        document.documentElement.setAttribute('lang', data["info"]["code_2"]);
 
-        await cookies.setCookie('language', lang, 7);
+        await cookies.setCookie('language', data["info"]["code_3"], 7);
         isLoaded = true;
 
         return true;
