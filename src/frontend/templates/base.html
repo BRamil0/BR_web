@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title data-translate="title-{{ title }}">{% if title %}{{ title }} | {% endif %}BR Web</title>
+    <meta name="description" content="{{ description if description else '' }}">
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url }}{{ link }}">
-    <meta property="og:title" content="BR Web">
-    <meta property="og:description" content="{{ title }}">
+    <meta property="og:site_name" content="BR Web">
+    <meta property="og:title" content="BR Web | {{ title if title else 'BR Web' }}">
+    <meta property="og:description" content="{{ description if description else '' }}">
     <meta property="og:image" content="/static/image/logo.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-
-    <title data-translate="title-{{ title }}">{% if title %}{{ title }} | {% endif %}BR Web</title>
 
     <link rel="icon" href="/static/image/favicon.ico">
 
