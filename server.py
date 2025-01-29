@@ -4,7 +4,6 @@ import asyncio
 import uvicorn
 import fastapi
 import slowapi
-import ssl
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -17,15 +16,6 @@ from src.backend.fastapi_app import auth_api, blog_api, api, auth, telegram, ind
 
 from src.logger.logger import logger, log_requests
 from src.logger.record_log import record_log
-
-def ssl_init() -> ssl.SSLContext:
-    """
-
-    :return:
-    """
-    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    ssl_context.load_cert_chain(settings.file_ssl_cert, settings.file_ssl_key)
-    return ssl_context
 
 def import_routers(app: fastapi.FastAPI) -> None:
     """
@@ -136,9 +126,10 @@ async def start() -> None:
                                             port=settings.port,
                                             loop="asyncio",
                                             reload=settings.DEBUG,
-                                            log_config=None)
+                                            log_config=None,)
     if settings.https:
-        config.ssl = ssl_init()
+        config.ssl_keyfile = settings.file_ssl_key
+        config.ssl_certfile = settings.file_ssl_cert
         host_ssl = "https"
     else:
         host_ssl = "http"
