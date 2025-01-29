@@ -1,4 +1,4 @@
-import {getURL} from "./tools";
+import {getURL} from "./tools.js";
 
 export async function sendingDataToInformant() {
     const data = {
