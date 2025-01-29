@@ -1,5 +1,6 @@
 import * as modal from "./modal.js";
 import * as info_alert from "./info_alert.js";
+import {getURL} from "./tools.js";
 
 const formMessageButton = document.getElementsByClassName("form-message-button");
 const sendModalMessageButton = document.getElementById("send-modal-message-button");
@@ -39,7 +40,7 @@ sendModalMessageButton.addEventListener("click", async function () {
     };
 
     try {
-        const response = await fetch('/api/telegram/message', {
+        const response = await fetch(await getURL('/api/telegram/message'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),

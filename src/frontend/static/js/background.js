@@ -1,3 +1,5 @@
+import {getURL} from "./tools.js";
+
 let loadedFullHD = false;
 let loaded2k = false;
 let loaded4k = false;
@@ -12,7 +14,7 @@ setInterval(async () => {
 export async function updateBackground() {
 
     try {
-        const response = await fetch('/api/background');
+        const response = await fetch(await getURL('/api/background'));
         if (!response.ok) {
             console.error("Error fetching background URL");
             return false;
