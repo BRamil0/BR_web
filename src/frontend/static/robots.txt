@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bramil.vercel.app/sitemap.xml
+Sitemap: https://radomyr.net/sitemap.xml
