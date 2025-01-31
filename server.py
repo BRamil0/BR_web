@@ -7,6 +7,7 @@ import slowapi
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware import Middleware
 from slowapi.errors import RateLimitExceeded
 
 from src.config.config import settings
@@ -99,6 +100,7 @@ def fast_app_start() -> fastapi.FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
     app.add_middleware(BaseHTTPMiddleware, dispatch=log_requests)
 
     app.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
