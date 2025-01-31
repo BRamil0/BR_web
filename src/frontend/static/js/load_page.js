@@ -5,24 +5,30 @@ import {getURL} from "./tools.js";
 
 let isLoaded = true;
 export async function loadPage(url) {
-    if (!isLoaded) {return}
+    if (!isLoaded) return;
     isLoaded = false;
+
     try {
         const contentElement = document.getElementById('content');
         contentElement.classList.add("hide");
 
-        // Завантажуємо сторінку
+        // Завантаження сторінки
         const startTime = performance.now();
-        const response = await fetch(await getURL(url));
+        const pageUrl = await getURL(url);
+        const response = await fetch(pageUrl);
+
         if (!response.ok) {
             console.error(`Failed to load page: ${url}`);
             return false;
         }
+
         const endTime = performance.now();
         const executionTime = (endTime - startTime) / 1000;
+
+        // Мінімальний час виконання – 0.025 сек
         if (executionTime < 0.025) {
-            const remainingTime = 0.025 - executionTime;
-            setTimeout(() => {}, remainingTime);
+            const remainingTime = (0.025 - executionTime) * 1000;
+            await new Promise(resolve => setTimeout(resolve, remainingTime));
         }
 
         const html = await response.text();
@@ -38,30 +44,24 @@ export async function loadPage(url) {
         }
 
         // Очищуємо поточний контент
-        while (contentElement.firstChild) {
-            contentElement.removeChild(contentElement.firstChild);
-        }
+        contentElement.innerHTML = '';
 
-        // Додаємо новий контент до реального DOM
+        // Додаємо новий контент
         for (const child of Array.from(newContent.childNodes)) {
             contentElement.appendChild(child);
         }
 
-        // Завантажуємо локалізацію вже для нового контенту
-        const languageCode = await language.getLanguage();
-        await language.loadLocalization(languageCode);
+        Promise.all([
+            language.loadLocalization(await language.getLanguage()),
+            theme.applyTheme(await theme.getTheme()),
+            main()
+            ]);
 
-        // Завантажуємо тему
-        const themeName = await theme.getTheme();
-        await theme.applyTheme(themeName);
+        // Оновлення заголовка
+        const titleElement = newDocument.querySelector('title');
+        document.title = titleElement && titleElement.textContent?.trim() ? titleElement.textContent.trim() : 'Default Title';
 
-        // Виконуємо основні скрипти
-        await main();
-
-        // Оновлюємо заголовок
-        document.title = newDocument.querySelector('title')?.textContent || 'Default Title';
-
-        // Оновлюємо історію
+        // Оновлення історії
         history.pushState(null, '', url);
 
         // Показуємо контент після всіх змін
