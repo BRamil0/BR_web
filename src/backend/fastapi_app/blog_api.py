@@ -25,7 +25,13 @@ async def get_database() -> typing.AsyncGenerator[DataBase, None]:
 @router.get("/post_list/")
 @limiter.limit("5/10s")
 async def post_list(request: Request, db: DataBase = Depends(get_database)):
-    return {"posts": await db.get_all_posts()}
+    posts = await db.get_all_posts()
+    for post in posts:
+        post["created_at"] = post["created_at"].strftime("%Y-%m-%d %H:%M")
+        post["updated_at"] = post["updated_at"].strftime("%Y-%m-%d %H:%M")
+        post["user_id"] = str(post["user_id"])
+        post["_id"] = str(post["_id"])
+    return {"posts": posts}
 
 @router.get("/get_post/")
 @limiter.limit("5/10s")
@@ -37,6 +43,11 @@ async def get_post_list(request: Request):
 async def get_post(request: Request, post_url: str, db: DataBase = Depends(get_database)):
     post = await db.get_post(SearchTypeForPost.url, post_url)
     if not post: post = await db.get_post(SearchTypeForPost.id, post_url)
+    post = post[0]
+    post["created_at"] = post["created_at"].strftime("%Y-%m-%d %H:%M")
+    post["updated_at"] = post["updated_at"].strftime("%Y-%m-%d %H:%M")
+    post["user_id"] = str(post["user_id"])
+    post["_id"] = str(post["_id"])
     return {"post": post}
 
 @router.post("/create_post")

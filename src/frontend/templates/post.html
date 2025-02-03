@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="">
-    <h1>{{ post.title }}</h1>
-    <i>{{ post.author }} {{ post._id }}</i>
-    <p>{{ post.content }}</p>
+    <h1>{{ post["contents"][0]["title"] }}</h1>
+    <div>{{ post["contents"][0]["content"] | safe }}</div>
+    <i>{{ post["contents"][0]["author"] }} {{ post["created_at"] }}</i>
 </div>
 {% endblock %}
