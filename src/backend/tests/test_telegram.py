@@ -1,10 +1,10 @@
 import pytest
 from fastapi.testclient import TestClient
-from server import fast_app_start
+from server import create_fastapi_app
 
 @pytest.fixture
 def client():
-    app = fast_app_start()
+    app = create_fastapi_app()
     return TestClient(app)
 
 def test_info(client):
