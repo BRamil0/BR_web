@@ -55,6 +55,15 @@ export async function loadLocalization(lang) {
                 if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     element.setAttribute('placeholder', data[key]);
                 }
+                else if (element.tagName === 'META') {
+                    if ("og:title" === element.hasAttribute('property')) {
+                        element.setAttribute('content', data[key] + " | BR Web");
+                    }
+                    element.setAttribute('content', data[key]);
+                }
+                else if (element.tagName === 'TITLE') {
+                    element.textContent = data[key] + " | BR Web";
+                }
                 else {
                     const isHTML = element.hasAttribute('data-translate-html');
                     if (isHTML) {

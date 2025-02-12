@@ -8,7 +8,7 @@
     "emoji": "\uD83C\uDDFA\uD83C\uDDE6"
   },
 
-  "current translation": "Актуальність перекладу на українську мову: 2025.01.26",
+  "current translation": "Актуальність перекладу на українську мову: 2025.02.12",
   "version_text": "Версія сервера та сайту: ",
   "version_api_text": "Версія API: ",
   "debug_text": "Налагодження (debug): ",
@@ -20,6 +20,8 @@
   "loading_banner_text-1": "Завантаження...",
   "loading-banner-text-2": "Сайт довго завантажується, будь ласка, зачекайте.",
   "loading-banner-text-3": "Можливо сайт завис, тому, будь ласка, перезавантажте його.",
+
+  "meta_author": "Радомир",
 
   "nav_blogs": "Блоги",
   "nav_more": "Більше",

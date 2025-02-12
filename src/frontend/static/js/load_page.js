@@ -38,8 +38,11 @@ export async function loadPage(url) {
         const newDocument = parser.parseFromString(html, 'text/html');
 
         const newContent = newDocument.querySelector('main#content');
+        const newDescription = newDocument.querySelector('meta[name="description"]');
+        const newOGTitle = newDocument.querySelector('meta[property="og:title"]');
+        const newOGDescription = newDocument.querySelector('meta[property="og:description"]');
         if (!newContent) {
-            console.error('No main content found in the response.');
+            console.error('No content found in the response.');
             return false;
         }
 
@@ -51,6 +54,17 @@ export async function loadPage(url) {
             contentElement.appendChild(child);
         }
 
+        // Оновлення метатегів
+        if (newDescription) {
+            document.querySelector('meta[name="description"]').setAttribute('content', newDescription.getAttribute('content'));
+        }
+        if (newOGTitle) {
+            document.querySelector('meta[property="og:title"]').setAttribute('content', newOGTitle.getAttribute('content'));
+        }
+        if (newOGDescription) {
+            document.querySelector('meta[property="og:description"]').setAttribute('content', newOGDescription.getAttribute('content'));
+        }
+
         Promise.all([
             language.loadLocalization(await language.getLanguage()),
             theme.applyTheme(await theme.getTheme()),
@@ -59,7 +73,7 @@ export async function loadPage(url) {
 
         // Оновлення заголовка
         const titleElement = newDocument.querySelector('title');
-        document.title = titleElement && titleElement.textContent?.trim() ? titleElement.textContent.trim() : 'Default Title';
+        document.title = titleElement && titleElement.textContent?.trim() ? titleElement.textContent.trim() : 'BR Web';
 
         // Оновлення історії
         history.pushState(null, '', url);
