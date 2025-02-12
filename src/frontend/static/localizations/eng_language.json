@@ -7,7 +7,7 @@
     "original_code": "eng",
     "emoji": "\uD83C\uDDEC\uD83C\uDDE7"
   },
-  "current translation": "Translation to English is current as of: 2025.01.26",
+  "current translation": "Translation to English is current as of: 2025.02.12",
   "version_text": "Server and site version: ",
   "version_api_text": "API version: ",
   "debug_text": "Debug: ",
@@ -19,6 +19,8 @@
   "loading_banner_text-1": "Loading...",
   "loading-banner-text-2": "The site is taking a long time to load, please wait.",
   "loading-banner-text-3": "The site might be unresponsive, please refresh it.",
+
+  "meta_author": "Radomyr",
 
   "nav_blogs": "Blogs",
   "nav_more": "More",
