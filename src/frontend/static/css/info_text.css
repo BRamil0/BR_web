@@ -11,12 +11,18 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease, color 0.3s ease;
-    border: var(--text-color) 0.1vmin solid;
+    border: var(--text-color) 0.2vmin solid;
     z-index: 10000;
     box-shadow: var(--box-shadow);
 }
 
 .info-alert:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.info-alert:focus {
+    outline: 3px solid var(--highlight-color);
     background-color: var(--text-color);
     color: var(--bg-color);
 }
