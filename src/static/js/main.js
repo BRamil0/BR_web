@@ -17,7 +17,7 @@ window.onload = async () => {
         hideLoadingBanner()
     }, 350);
     console.log("Page loaded");
-    about("Ця версія сайту застаріла. Будь ласка, перейдіть на radomyr.net. Якщо посилання не працює — напишіть мені: github.com/BRamil0")
+    alert("Ця версія сайту застаріла. Будь ласка, перейдіть на radomyr.net. Якщо посилання не працює — напишіть мені: github.com/BRamil0")
 };
 
 // Функція для отримання значення куків
