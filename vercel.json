@@ -2,9 +2,9 @@
     "version": 2,
     "builds": [
         {
-            "src": "app.py",
+            "src": "server.py",
             "use": "@vercel/python",
-            "config": { "runtime": "python3.12" }
+            "config": { "runtime": "python3.13" }
         },
         {
             "src": "src/frontend/css/tailwindcss.css",
@@ -14,7 +14,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "app.py"
+            "dest": "server.py"
         },
         {
             "src": "/static/(.*)",

@@ -2,8 +2,8 @@ import asyncio
 import sys
 import argparse
 
-MINIMUM_VERSION_PYTHON = (3, 12, 0)
-RECOMMENDED_VERSION_PYTHON = (3, 12, 7)
+MINIMUM_VERSION_PYTHON = (3, 13, 0)
+RECOMMENDED_VERSION_PYTHON = (3, 13, 2)
 
 try:
     from src.logger.logger import logger

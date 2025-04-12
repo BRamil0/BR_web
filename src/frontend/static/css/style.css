@@ -130,9 +130,8 @@ textarea, input {
 }
 
 textarea:focus, input:focus {
-    border-color: var(--text-color) 1vmin solid;
-    transition: border-color 0.3s ease;
-    outline: none;
+    border-color: var(--highlight-color) 1vmin solid;
+    outline: 3px solid var(--highlight-color);
 }
 
 .navigation-buttons {
@@ -168,11 +167,16 @@ textarea:focus, input:focus {
 ::selection {
     background-color: var(--text-color);
     color: var(--bg-color);
+
 }
 
 ::-moz-selection {
     background-color: var(--text-color);
     color: var(--bg-color);
+}
+
+:focus {
+    outline: 3px solid var(--highlight-color) !important;
 }
 
 a:active, button:active {
@@ -181,12 +185,13 @@ a:active, button:active {
 }
 
 a:focus, button:focus {
+    outline: 3px solid var(--highlight-color) !important;
     color: var(--bg-color) !important;
     background-color: var(--text-color) !important;
 }
 
 button:-moz-focusring, a:-moz-focusring {
-    outline: none;
+    outline: 3px solid var(--highlight-color) !important;
 }
 
 @media (max-height: 768px) {

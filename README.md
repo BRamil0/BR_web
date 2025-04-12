@@ -1,19 +1,25 @@
 ## BR Web
-My personal website
+Мій особистий сайт
 
-### Install
-1. Install Python 3.12.x if it is not already installed
-2. Clone the repository from GitHub
-3. Install all dependencies from `requirements.txt`
-```
-pip install -r requirements.txt
-```
-4. Write `main.py scripts c-venv` and `main.py scripts c-config` to create the virtual environment and the configuration file
+### Встановлення
+1. Встановіть **Python 3.13** якщо він ще не встановлений.
+2. Клонувати репозиторій з GitHub.
+3. Створити віртуальне середовище.
+4. Встановіть залежності з файлу `requirements.txt` за допомогою `pip`.
+5. Встановіть **Node.js v23** та **npm**.
+6. Встановіть залежності з `package.json` або `package-lock.json` за допомогою `npm`.
+7. Для створення конфігураційних файлів запустіть у терміналі:
+   ```bash
+   main.py scripts c-config
+   ```
 
-###  Use
-1. Write your configurations in `.config.env`
-2. Run `main.py run server` to start the server
-3. Go to the IP and port you wrote in the configuration
+###  Використання
+1. Налаштуйте проєкт.
+2. Запустіть сервер командою:
+    ```bash
+    main.py run server f-watch
+    ```
+3. За бажанням, налаштуйте **Nginx** або **Apache**.
 
-### License
-The project is licensed under the MIT license, see more details in the License file
+### Ліцензія
+Цей проєкт ліцензовано за ліцензією **MIT**. Детальніше дивіться у файлі [LICENSE](LICENSE).

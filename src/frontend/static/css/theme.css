@@ -16,6 +16,9 @@
     --bg-color--rgb: 255, 255, 255;
     --text-color--rgb: 0, 0, 0;
 
+    --highlight-color: #00ca8b;
+
+
     --invert: 0; /* if prefers-color-scheme: light */
 }
 
@@ -36,6 +39,8 @@
 
     --bg-color--rgb: 0, 0, 0;
     --text-color--rgb: 255, 255, 255;
+
+    --highlight-color: #00dc94;
 
     --invert: 1; /* if prefers-color-scheme: dark */
 }

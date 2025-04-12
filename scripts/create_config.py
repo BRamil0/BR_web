@@ -44,7 +44,7 @@ async def create_configs_files(file_type: str = get_file_type(), data: dict = ge
             with open(f'{file_path}config.{file_type}', 'w') as file:
                 file_types[file_type].dump(data['config'], file)
 
-        if os.path.exists(f'{file_path}.env'):
+        if os.path.exists(f'{file_path}.config.env'):
             print(f"Env file already exists: {file_path}.env")
         else:
             print(f"Env file created: {file_path}.env")
