@@ -19,6 +19,10 @@ async def index(request: Request):
 async def home():
     return RedirectResponse(url="/")
 
+@router.get("/radomyr.net")
+async def home():
+    return RedirectResponse(url="https://radomyr.net/")
+
 @router.get("/terms_of_use", response_class=HTMLResponse)
 async def terms_of_use(request: Request):
     return templates.TemplateResponse("terms_of_use.html", {"request": request,
