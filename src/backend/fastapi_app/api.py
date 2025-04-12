@@ -22,14 +22,14 @@ async def background(request: Request):
         if int(ran) not in not_use:
             break
 
-    return {"image4k": f"/static/image/background/jpg/{ran}.jpg",
+    return {"image4k": f"/static/image/background/4k/{ran}.webp",
             "image2k": f"/static/image/background/2k/{ran}.webp",
             "image1k": f"/static/image/background/1k/{ran}.webp",}
 
 @router.get("/background/{background_id}")
 @limiter.limit("5/1c")
 async def background(request: Request, background_id: int):
-    return {"image4k": f"/static/image/background/jpg/{background_id}.jpg",
+    return {"image4k": f"/static/image/background/4k/{background_id}.webp",
             "image2k": f"/static/image/background/2k/{background_id}.webp",
             "image1k": f"/static/image/background/1k/{background_id}.webp",}
 
