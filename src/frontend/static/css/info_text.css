@@ -12,7 +12,7 @@
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease, color 0.3s ease;
     border: var(--text-color) 0.2vmin solid;
-    z-index: 10000;
+    z-index: 5000;
     box-shadow: var(--box-shadow);
 }
 
