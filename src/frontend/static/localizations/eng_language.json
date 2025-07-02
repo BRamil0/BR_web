@@ -7,7 +7,7 @@
     "original_code": "eng",
     "emoji": "\uD83C\uDDEC\uD83C\uDDE7"
   },
-  "current translation": "Translation to English is current as of: 2025.02.12",
+  "current translation": "Translation to English is current as of: 2025.07.02",
   "version_text": "Server and site version: ",
   "version_api_text": "API version: ",
   "debug_text": "Debug: ",
@@ -93,6 +93,7 @@
   "welcome": "Welcome",
 
   "project_BR_Web_description": "Personal Website",
+  "project_Translitslovnyk_description": "Transliteration according to the dictionary",
   "project_xChat_description": "A small single-channel messenger project",
   "project_Temscale_description": "A library for working with temperature written in Python",
 
