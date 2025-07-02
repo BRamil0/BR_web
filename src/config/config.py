@@ -49,6 +49,8 @@ class Settings(pydantic_settings.BaseSettings):
     log_dir: str = "./temp/logs/"
     is_log_record: bool = False
 
+    unused_images: list[int] = [2, 10, 12, 15]
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
