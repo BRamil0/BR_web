@@ -10,7 +10,9 @@ import * as informant from "./informant.js";
 import * as modal from "./modal.js";
 import * as message_form from "./message_form.js";
 import * as load_page from "./load_page.js";
-import "./cookie_banner.js";
+import("./cookie_banner.js").catch(e => {
+    console.warn("cookie_banner.js was blocked or failed to load:", e);
+});
 
 export async function main() {
     await nav.updateNavButtons();
