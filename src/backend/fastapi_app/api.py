@@ -11,15 +11,12 @@ router = APIRouter(
     tags=["api"],
 )
 
-not_use: list[int] = [2, 10, 12, 15]
-
-
 @router.get("/background")
 @limiter.limit("5/1c")
 async def background(request: Request):
     while True:
         ran: int = random.randint(1, 20)
-        if int(ran) not in not_use:
+        if int(ran) not in settings.unused_images:
             break
 
     return {"image4k": f"/static/image/background/4k/{ran}.webp",

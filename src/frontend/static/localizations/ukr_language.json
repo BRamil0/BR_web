@@ -8,7 +8,7 @@
     "emoji": "\uD83C\uDDFA\uD83C\uDDE6"
   },
 
-  "current translation": "Актуальність перекладу на українську мову: 2025.02.12",
+  "current translation": "Актуальність перекладу на українську мову: 2025.07.02",
   "version_text": "Версія сервера та сайту: ",
   "version_api_text": "Версія API: ",
   "debug_text": "Налагодження (debug): ",
@@ -94,6 +94,7 @@
   "welcome": "Ласкаво прошу",
 
   "project_BR_Web_description": "Особистий вебсайт",
+  "project_Translitslovnyk_description": "Транслітерація за словником",
   "project_xChat_description": "Невеликий проект про одноканальний месенджер",
   "project_Temscale_description": "Бібліотека для роботи з температурою, написана на Python",
 
