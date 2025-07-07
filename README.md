@@ -1,6 +1,8 @@
 ## BR Web
 Мій особистий сайт
 
+[GitHub](https://github.com/BRamil0/BR_web) [GitLab](https://gitlab.com/BRamil/BR_web)
+
 ### Встановлення
 1. Встановіть **Python 3.13** якщо він ще не встановлений.
 2. Клонувати репозиторій з GitHub.
