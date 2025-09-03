@@ -7,7 +7,7 @@
     "original_code": "eng",
     "emoji": "\uD83C\uDDEC\uD83C\uDDE7"
   },
-  "current translation": "Translation to English is current as of: 2025.07.02",
+  "current translation": "Translation to English is current as of: 2025.09.03",
   "version_text": "Server and site version: ",
   "version_api_text": "API version: ",
   "debug_text": "Debug: ",
@@ -27,7 +27,7 @@
 
   "footer_author_photo": "Photo by: <a href=\"\" id=\"author-photo-name\" class=\"link\">Radomyr</a>",
   "footer_rights_reserved": "All rights reserved",
-  "footer_message_form": "Contact via form",
+  "footer_message_form": "Send",
 
   "home": "Home",
   "projects": "My Projects",

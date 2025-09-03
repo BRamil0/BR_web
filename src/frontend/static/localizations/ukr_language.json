@@ -8,7 +8,7 @@
     "emoji": "\uD83C\uDDFA\uD83C\uDDE6"
   },
 
-  "current translation": "Актуальність перекладу на українську мову: 2025.07.02",
+  "current translation": "Актуальність перекладу на українську мову: 2025.09.03",
   "version_text": "Версія сервера та сайту: ",
   "version_api_text": "Версія API: ",
   "debug_text": "Налагодження (debug): ",
@@ -28,7 +28,7 @@
 
   "footer_author_photo": "Автор фотографії: <a href=\"\" id=\"author-photo-name\" class=\"link\">Radomyr</a>",
   "footer_rights_reserved": "Всі права захищено",
-  "footer_message_form": "Написати через форму",
+  "footer_message_form": "Написати",
 
   "home": "Головна",
   "projects": "Мої проєкти",
