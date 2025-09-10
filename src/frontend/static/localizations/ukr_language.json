@@ -95,6 +95,7 @@
 
   "project_BR_Web_description": "Особистий вебсайт",
   "project_Translitslovnyk_description": "Транслітерація за словником",
+  "project_Jizhak_description": "Невелика бібліотека на C++",
   "project_xChat_description": "Невеликий проект про одноканальний месенджер",
   "project_Temscale_description": "Бібліотека для роботи з температурою, написана на Python",
 
