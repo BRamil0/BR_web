@@ -34,7 +34,7 @@ async def post_list(request: Request, db: DataBase = Depends(get_database)):
         post["updated_at"] = post["updated_at"].strftime("%Y-%m-%d %H:%M")
         post["user_id"] = str(post["user_id"])
         post["_id"] = str(post["_id"])
-    return templates.TemplateResponse("post_list.html", {"request": request, "posts": posts, "title": "Список постів"})
+    return templates.TemplateResponse(request, "post_list.html", {  "posts": posts, "title": "Список постів"})
 
 
 @router.get("/post")
@@ -52,9 +52,9 @@ async def get_post(request: Request, post_url: str, db: DataBase = Depends(get_d
     post["updated_at"] = post["updated_at"].strftime("%Y-%m-%d %H:%M")
     post["user_id"] = str(post["user_id"])
     post["_id"] = str(post["_id"])
-    return templates.TemplateResponse("post.html", {"request": request, "post": post})
+    return templates.TemplateResponse(request, "post.html", {  "post": post})
 
 @router.get("/create_post", response_class=HTMLResponse)
 async def post_create(request: Request, token_data: dict = Depends(auth_utils.token_verification_no_exceptions)):
     if not token_data: return RedirectResponse("/account/login", status_code=302)
-    return templates.TemplateResponse("post_create.html", {"request": request})
+    return templates.TemplateResponse(request, "post_create.html", {"request": request})

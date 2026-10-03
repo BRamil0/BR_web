@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tailwindcss -c src/frontend/tailwind.config.js build -i src/frontend/css/tailwindcss.css -o src/frontend/static/css/tailwindcss.css",
     "dev": "vite",
     "start": "python3 -m main.py",
-    "watch": "tailwindcss -c src/frontend/tailwind.config.js build -i src/frontend/css/tailwindcss.css -o src/frontend/static/css/tailwindcss.css --watch"
+    "watch": "npx @tailwindcss/cli -i src/frontend/css/tailwindcss.css -o src/frontend/static/css/tailwindcss.css --watch"
   },
   "author": "Qulow (Radomyr B.)",
   "license": "MIT",
@@ -18,6 +17,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "autoprefixer": "^10.0.0",
     "jest": "^30.5.2",
     "postcss": "^8.0.0",

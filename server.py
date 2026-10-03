@@ -44,7 +44,7 @@ def configure_app(app: fastapi.FastAPI) -> None:
     def create_error_handler(error_status_code: int, error_title: str, error_message: str):
         async def error_handler(request, __):
             return templates.TemplateResponse(
-                "code.html", {"request": request, "title": error_title, "code": error_status_code, "message": error_message}
+                "code.html", {  "title": error_title, "code": error_status_code, "message": error_message}
             )
         return error_handler
 
